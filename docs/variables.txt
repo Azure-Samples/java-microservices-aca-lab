@@ -1,0 +1,53 @@
+UNIQUEID=<>
+APPNAME=petclinic
+RESOURCE_GROUP=rg-$APPNAME-$UNIQUEID
+LOCATION=eastus
+
+
+VIRTUAL_NETWORK_NAME=vnet-$APPNAME-$UNIQUEID
+SUBNET_ID=$(az network vnet subnet show --resource-group $RESOURCE_GROUP --vnet-name $VIRTUAL_NETWORK_NAME --name aca-subnet --query id -o tsv)
+
+ACA_ENVIRONMENT=aca-$APPNAME-int-$UNIQUEID
+
+MYSQL_SERVER_NAME=mysql-$APPNAME-$UNIQUEID
+MYSQL_ADMIN_USERNAME=myadmin
+MYSQL_ADMIN_PASSWORD=<YOUR PASSWORD>
+DATABASE_NAME=petclinic
+
+JAVA_COMPONENT_NAME=myconfigserver
+APP_NAME=config-server
+URI="https://github.com/<user-name>/spring-petclinic-microservices-config.git"
+USERNAME=<user-name>
+PASSWORD=<PASSWORD>
+
+JAVA_COMPONENT_NAME2=eureka
+
+ACA_IDENTITY=uid-petclinic-$UNIQUEID
+USER_ID=$(az identity show --resource-group $RESOURCE_GROUP --name $ACA_IDENTITY --query id --output tsv)
+SP_ID=$(az identity show --resource-group $RESOURCE_GROUP --name $ACA_IDENTITY --query principalId --output tsv)
+echo $USER_ID
+echo $SP_ID
+
+WORKSPACE=la-$APPNAME-$UNIQUEID
+
+WORKSPACECID=$(az monitor log-analytics workspace show -n $WORKSPACE -g $RESOURCE_GROUP --query customerId -o tsv)
+
+WORKSPACEKEY=$(az monitor log-analytics workspace get-shared-keys -n $WORKSPACE -g $RESOURCE_GROUP --query primarySharedKey -o tsv)
+
+WORKSPACEID=$(az monitor log-analytics workspace show -n $WORKSPACE -g $RESOURCE_GROUP --query id -o tsv)
+AINAME=ai-$APPNAME-$UNIQUEID
+
+AI_CONNECTIONSTRING=$(az monitor app-insights component show --app $AINAME -g $RESOURCE_GROUP --query connectionString)
+
+
+      AI_CONNECTIONSTRING="${AI_CONNECTIONSTRING//\"/}"
+   echo $AI_CONNECTIONSTRING
+
+
+  
+
+    appgw=$(az network application-gateway show -g $RESOURCE_GROUP -n $APPGW_NAME)
+
+
+    KEYVAULT_NAME=kv-petclinic-b6eff4
+
