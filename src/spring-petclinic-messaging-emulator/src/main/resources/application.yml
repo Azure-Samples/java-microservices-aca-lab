@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: messaging-emulator
+  config:
+    import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888/}
+  sql:
+    init:
+      mode: always
+      platform: hsqldb
+server:
+  port: 8080
