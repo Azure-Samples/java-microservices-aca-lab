@@ -1,12 +1,12 @@
-title: Java microservices on AKS
-description: This lab walks you through the creation of a Java microservices application on AKS integrated with multiple Azure services
+title: Java microservices on ACA
+description: This lab walks you through the creation of a Java microservices application on Azure Container Apps integrated with multiple Azure services
 theme: just-the-docs
 
 # url: https://Azure-Samples.github.io/java-microservices-aks-lab
 
 aux_links:
-  "Java microservices on AKS lab on GitHub": 
-    - "https://github.com/Azure-Samples/java-microservices-aks-lab"
+  "Java microservices on ACA lab on GitHub": 
+    - "https://github.com/Azure-Samples/java-microservices-aca-lab"
 
 
 callouts_level: quiet # or loud
