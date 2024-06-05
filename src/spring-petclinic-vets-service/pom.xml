@@ -17,7 +17,6 @@
     <properties>
         <docker.image.exposed.port>8081</docker.image.exposed.port>
         <docker.image.dockerfile.dir>${basedir}/../docker</docker.image.dockerfile.dir>
-        <version.spring.cloud.azure>5.2.0</version.spring.cloud.azure>
     </properties>
 
 	<dependencies>
@@ -86,19 +85,11 @@
 			<artifactId>hsqldb</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-
-	    <dependency>
-            <groupId>com.azure.spring</groupId>
-            <artifactId>spring-cloud-azure-starter-jdbc-mysql</artifactId>
-        </dependency>
-        <dependency>
-           <groupId>com.azure.spring</groupId>
-           <artifactId>spring-cloud-azure-dependencies</artifactId>
-           <version>${version.spring.cloud.azure}</version>
-           <type>pom</type>
-           <scope>import</scope>
-         </dependency> 
-
+		<dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+			<scope>runtime</scope>
+		</dependency>
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
