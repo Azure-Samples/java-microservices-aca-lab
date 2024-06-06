@@ -11,7 +11,7 @@ has_children: true
 
 ## Lab scenario
 
-You have created your Azure container Apps, deployed your applications to it and exposed them through the api-gateway service. Now that everything is up and running, it would be nice to monitor the availability of your applications and to be able to see in case any errors or exceptions in your applications occur. In this lab you will add end-to-end monitoring to your applications.
+You have created your Azure Container Apps environment, deployed your applications to it and exposed them through the api-gateway service. Now that everything is up and running, it would be nice to monitor the availability of your applications and to be able to see if any errors or exceptions occur in your applications. In this lab you will add monitoring and end-to-end tracing to your applications.
 
 ## Objectives
 
