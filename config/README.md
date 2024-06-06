@@ -4,4 +4,4 @@
 
 Configuration repository for distributed Spring Petclinic application
 
-This folder for the config repository is a close copy of the [spring-petclinic-microservices-config](https://github.com/spring-petclinic/spring-petclinic-microservices-config) repository and is used in the [Java microservices on AKS](https://azure-samples.github.io/java-microservices-aks-lab/) lab.
+This folder for the config repository is a close copy of the [spring-petclinic-microservices-config](https://github.com/spring-petclinic/spring-petclinic-microservices-config) repository and is used in the [Java microservices on AKS](https://azure-samples.github.io/java-microservices-aca-lab/) lab.

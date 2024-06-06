@@ -14,13 +14,12 @@ MYSQL_ADMIN_USERNAME=myadmin
 MYSQL_ADMIN_PASSWORD=<YOUR PASSWORD>
 DATABASE_NAME=petclinic
 
-JAVA_COMPONENT_NAME=myconfigserver
-APP_NAME=config-server
+JAVA_CONFIG_COMP_NAME=myconfigserver
 URI="https://github.com/<user-name>/spring-petclinic-microservices-config.git"
 USERNAME=<user-name>
 PASSWORD=<PASSWORD>
 
-JAVA_COMPONENT_NAME2=eureka
+JAVA_EUREKA_COMP_NAME=eureka
 
 ACA_IDENTITY=uid-petclinic-$UNIQUEID
 USER_ID=$(az identity show --resource-group $RESOURCE_GROUP --name $ACA_IDENTITY --query id --output tsv)

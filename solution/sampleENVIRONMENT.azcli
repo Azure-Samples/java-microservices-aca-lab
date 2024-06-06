@@ -10,8 +10,8 @@ az acr login --name $MYACR
 
 VIRTUAL_NETWORK_NAME=vnet-$APPNAME-$UNIQUEID
 AKS_SUBNET_CIDR=10.1.0.0/24
-SUBNET_ID=$(az network vnet subnet show --resource-group $RESOURCE_GROUP --vnet-name $VIRTUAL_NETWORK_NAME --name aks-subnet --query id -o tsv)
-AKSCLUSTER=aks-$APPNAME-$UNIQUEID
+SUBNET_ID=$(az network vnet subnet show --resource-group $RESOURCE_GROUP --vnet-name $VIRTUAL_NETWORK_NAME --name aca-subnet --query id -o tsv)
+ACA_ENVIRONMENT=acaenv-$APPNAME-$UNIQUEID
 MYSQL_SERVER_NAME=mysql-$APPNAME-$UNIQUEID
 MYSQL_ADMIN_USERNAME=myadmin
 MYSQL_ADMIN_PASSWORD=<your-admin-pw>
