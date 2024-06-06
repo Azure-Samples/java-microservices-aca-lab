@@ -49,7 +49,7 @@ To rebuild and redeploy a failing microservice:
 1. Navigate to the root of the application and rebuild the specific microservice.
 
    ```bash
-   cd ~/workspaces/java-microservices-aks-lab/src
+   cd ~/workspaces/java-microservices-aca-lab/src
    mvn clean package -DskipTests -rf :spring-petclinic-<microservice-name>
    ```
 
@@ -124,7 +124,7 @@ In case you made an error in the config repo. Fixing that error in the config re
 1. re-apply the yaml file.
 
    ```bash
-   cd ~/workspaces/java-microservices-aks-lab/src/kubernetes
+   cd ~/workspaces/java-microservices-aca-lab/src/kubernetes
    kubectl apply -f spring-petclinic-<service-name>.yml
    ```
 
@@ -166,8 +166,8 @@ So no worries, make your config repo public and proceed! You may need to also re
 
 In case you are using a codespace for running this lab, your environment variables will be lost if the codespace restarts. For persisting these environment variables, you can either use the [guidance that GitHub provides for this](https://docs.github.com/en/enterprise-cloud@latest/codespaces/developing-in-codespaces/persisting-environment-variables-and-temporary-files). We recommend the [single workspace](https://docs.github.com/en/enterprise-cloud@latest/codespaces/developing-in-codespaces/persisting-environment-variables-and-temporary-files#for-a-single-codespace) approach, since that is the easiest to set up and doesn't require workspace restart.
 
-You can find a [samplebashrc file](https://github.com/Azure-Samples/java-microservices-aks-lab/blob/main/solution/samplebashrc) in this repository. You will need to update a couple of values in this file for your specific situation.
+You can find a [samplebashrc file](https://github.com/Azure-Samples/java-microservices-aca-lab/blob/main/solution/samplebashrc) in this repository. You will need to update a couple of values in this file for your specific situation.
 
 Another approach would be to create a dedicated _.azcli_ file where you keep all environment variables. After a workspace restart, you first rerun all the steps in this file and you are good to go again.
 
-You can find a [sampleENVIRONMENT.azcli file](https://github.com/Azure-Samples/java-microservices-aks-lab/blob/main/solution/sampleENVIRONMENT.azcli) in this repository. You will need to update a couple of values in this file for your specific situation.
+You can find a [sampleENVIRONMENT.azcli file](https://github.com/Azure-Samples/java-microservices-aca-lab/blob/main/solution/sampleENVIRONMENT.azcli) in this repository. You will need to update a couple of values in this file for your specific situation.

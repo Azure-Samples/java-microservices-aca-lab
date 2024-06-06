@@ -17,9 +17,9 @@ For running this lab with all the needed tooling, there are 3 options available:
 
 ## Using a GitHub Codespace
 
-The [git repository of this lab](https://github.com/Azure-Samples/java-microservices-aks-lab) contains a dev container for Java development. This container contains all the needed tools for running this lab. In case you want to use this dev container you can use a [GitHub CodeSpace](https://github.com/features/codespaces) in case your GitHub account is enabled for Codespaces. 
+The [git repository of this lab](https://github.com/Azure-Samples/java-microservices-aca-lab) contains a dev container for Java development. This container contains all the needed tools for running this lab. In case you want to use this dev container you can use a [GitHub CodeSpace](https://github.com/features/codespaces) in case your GitHub account is enabled for Codespaces. 
 
-1. Navigate to the [GitHub repository of this lab](https://github.com/Azure-Samples/java-microservices-aks-lab) and select **Fork**.
+1. Navigate to the [GitHub repository of this lab](https://github.com/Azure-Samples/java-microservices-aca-lab) and select **Fork**.
 
    {: .note }
    > In case you are using a GitHub EMU account, it might be you are not able to fork a public repository. In that case, create a new repository with the same name, clone the original repository, add your new repository as a remote and push to this new remote.
@@ -38,7 +38,7 @@ The [git repository of this lab](https://github.com/Azure-Samples/java-microserv
 
 ## Using Visual Studio Code with remote containers
 
-The [git repository of this lab](https://github.com/Azure-Samples/java-microservices-aks-lab) contains a dev container for Java development. This container contains all the needed tools for running this lab. For this option you need the following tools to be installed on your local system:
+The [git repository of this lab](https://github.com/Azure-Samples/java-microservices-aca-lab) contains a dev container for Java development. This container contains all the needed tools for running this lab. For this option you need the following tools to be installed on your local system:
 
 - Visual Studio Code available from [Visual Studio Code Downloads](https://code.visualstudio.com/download)
 - Git for Windows 2.3.61 available from [Git Downloads](https://git-scm.com/downloads), or similar on another OS.
@@ -55,7 +55,7 @@ git config --global user.name "<your-full-name>"
 
 To get started follow the below step by step instructions: 
 
-1. Navigate to the [GitHub repository of this lab](https://github.com/Azure-Samples/java-microservices-aks-lab) and select **Fork**.
+1. Navigate to the [GitHub repository of this lab](https://github.com/Azure-Samples/java-microservices-aca-lab) and select **Fork**.
 
 1. Make sure your own username is indicated as the fork `Owner`
 
@@ -69,7 +69,7 @@ To get started follow the below step by step instructions:
    ```bash
    mkdir workspaces
    cd workspaces
-   git clone https://github.com/<your-github-account>/java-microservices-aks-lab.git
+   git clone https://github.com/<your-github-account>/java-microservices-aca-lab.git
    ```
 
 1. When prompted to sign in to GitHub, select the **Sign in with your browser** option. This will automatically open a new tab in the web browser window, prompting you to provide your GitHub username and password.
@@ -81,10 +81,10 @@ To get started follow the below step by step instructions:
    {: .note }
    > However in one of the lab steps you will put a GitHub PAT token in one of the configuration files, make sure to **not** commit this PAT token, since it will immediately get invalidated by GitHub. Once invalidated your next lab steps will fail. You can use the [LabTips]({% link LabTips.md %}) to recover from this.
 
-1. Navigate into the `java-microservices-aks-lab/src` folder that got created.
+1. Navigate into the `java-microservices-aca-lab/src` folder that got created.
 
    ```bash
-   cd java-microservices-aks-lab/src
+   cd java-microservices-aca-lab/src
    ```
 
 1. Open the project with Visual Studio Code
@@ -142,7 +142,7 @@ git config --global user.name "<your-full-name>"
 
 Once all these tools are installed, to get started you need to:
 
-1. Navigate to the [GitHub repository of this lab](https://github.com/Azure-Samples/java-microservices-aks-lab) and select **Fork**.
+1. Navigate to the [GitHub repository of this lab](https://github.com/Azure-Samples/java-microservices-aca-lab) and select **Fork**.
 
    {: .note }
    > In case you are using a GitHub EMU account, it might be you are not able to fork a public repository. In that case, create a new repository with the same name, clone the original repository, add your new repository as a remote and push to this new remote.
@@ -156,7 +156,7 @@ Once all these tools are installed, to get started you need to:
    ```bash
    mkdir workspaces
    cd workspaces
-   git clone https://github.com/<your-github-account>/java-microservices-aks-lab.git
+   git clone https://github.com/<your-github-account>/java-microservices-aca-lab.git
    ```
 
 1. When prompted to sign in to GitHub, select the **Sign in with your browser** option. This will automatically open a new tab in the web browser window, prompting you to provide your GitHub username and password.
@@ -165,10 +165,10 @@ Once all these tools are installed, to get started you need to:
 
 1. In workspaces folder double check that the spring petclinic application got cloned correctly. You can use the repository in your workspaces folder to regularly push your changes to.
 
-1. Navigate into the _java-microservices-aks-lab/src_ folder that got created.
+1. Navigate into the _java-microservices-aca-lab/src_ folder that got created.
 
    ```bash
-   cd java-microservices-aks-lab/src
+   cd java-microservices-aca-lab/src
    ```
 
 1. Open the project with Visual Studio Code

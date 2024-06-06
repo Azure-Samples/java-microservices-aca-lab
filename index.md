@@ -4,24 +4,22 @@ layout: home
 nav_order: 1
 ---
 
-# Lab: Deploying and running Java Applications in Azure Kubernetes
+# Lab: Deploying and running Java Applications in Azure Container Apps
 
-This lab teaches you how to deploy the [Spring Petclinic Microservices](https://github.com/Azure-Samples/java-microservices-aks-lab/tree/main/src) application to an AKS cluster and integrate it with additional Azure services.
+This lab teaches you how to deploy the [Spring Petclinic Microservices](https://github.com/Azure-Samples/java-microservices-aca-lab/tree/main/src) application to an Container Apps environment and integrate it with additional Azure services.
 
 ## Modules
 
 This lab has modules on:
 
-* Plan a Java application migration to Azure Kubernetes Service
-* Migrate a Spring Apps microservices application to Azure Kubernetes Service
+* Plan a Java application migration to Azure Container Apps Service
+* Migrate a Spring Apps microservices application to Azure Container Apps Service
 * Enable monitoring and end-to-end tracing
 * Secure application secrets using Key Vault
-* Create and configure Azure Service Bus for sending messages between microservices
-* Create and configure Azure Event Hubs for sending events between microservices
 * Protect endpoints using Web Application Firewalls
 * Secure MySQL database and Key Vault using a Private Endpoint
 
-The lab is available as GitHub pages [here](https://azure-samples.github.io/java-microservices-aks-lab/)
+The lab is available as GitHub pages [here](https://azure-samples.github.io/java-microservices-aca-lab/)
 
 ## Getting Started
 
