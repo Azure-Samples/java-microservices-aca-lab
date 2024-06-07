@@ -34,7 +34,7 @@ The below image illustrates the end state you will be building in this lab.
 
 In this lab, you will:
 
-- Inspect your ACA  in the Azure Portal
+- Inspect your ACA in the Azure Portal
 - Configure ACA monitoring
 - Configure Application Insights to receive monitoring information from your applications
 - Analyze application specific monitoring data
