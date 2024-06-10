@@ -17,8 +17,8 @@ You have created your Azure Container Apps environment, deployed your applicatio
 
 After you complete this lab, you will be able to:
 
-- Inspect your ACA in the Azure Portal
-- Configure ACA monitoring
+- Inspect your Azure Container Apps in the Azure Portal
+- Configure Azure Container Apps environment monitoring
 - Configure Application Insights to receive monitoring information from your applications
 - Analyze application specific monitoring data
 
@@ -34,8 +34,8 @@ The below image illustrates the end state you will be building in this lab.
 
 In this lab, you will:
 
-- Inspect your ACA in the Azure Portal
-- Configure ACA monitoring
+- Inspect your Azure Container Apps in the Azure Portal
+- Configure Azure Container Apps environment monitoring
 - Configure Application Insights to receive monitoring information from your applications
 - Analyze application specific monitoring data
 - Analyze logs
