@@ -17,7 +17,9 @@ Your team is now running a first version of the spring-petclinic microservice ap
 
 After you complete this lab, you will be able to:
 
-- Connect to the database without using username and password
+- Create a database administrator account
+- Create service connections from the microservices to the database server
+- Update the applications to use passwordless connectivity
 
 The below image illustrates the end state you will be building in this lab.
 
@@ -32,7 +34,9 @@ The below image illustrates the end state you will be building in this lab.
 During this lab, you will:
 
 
-- Connect to the database without using username and password
+- Create a database administrator account
+- Create service connections from the microservices to the database server
+- Update the applications to use passwordless connectivity
 
 {: .note }
 > The instructions provided in this exercise assume that you successfully completed the previous exercise and are using the same lab environment, including your Git Bash session with the relevant environment variables already set.
