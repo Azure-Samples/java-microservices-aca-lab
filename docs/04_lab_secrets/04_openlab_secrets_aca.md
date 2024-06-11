@@ -23,7 +23,7 @@ After you complete this lab, you will be able to:
 
 The below image illustrates the end state you will be building in this lab.
 
-![lab 4 overview](../../images/lab4.png)
+![lab 4 overview](../../images/acalab4.png)
 
 ## Lab Duration
 
