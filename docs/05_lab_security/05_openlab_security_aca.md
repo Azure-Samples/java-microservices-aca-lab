@@ -5,7 +5,7 @@ nav_order: 7
 has_children: true
 ---
 
-# Lab 07: Protect endpoints using Web Application Firewall
+# Lab 05: Protect endpoints using Web Application Firewall
 
 # Student manual
 
