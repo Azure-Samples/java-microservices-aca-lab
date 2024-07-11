@@ -5,7 +5,7 @@ nav_order: 8
 has_children: true
 ---
 
-# Lab 08: Secure MySQL database and Key Vault using a Private Endpoint
+# Lab 06: Secure MySQL database and Key Vault using a Private Endpoint
 
 # Student manual
 
