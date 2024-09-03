@@ -36,17 +36,9 @@ WORKSPACEKEY=$(az monitor log-analytics workspace get-shared-keys -n $WORKSPACE 
 WORKSPACEID=$(az monitor log-analytics workspace show -n $WORKSPACE -g $RESOURCE_GROUP --query id -o tsv)
 AINAME=ai-$APPNAME-$UNIQUEID
 
-AI_CONNECTIONSTRING=$(az monitor app-insights component show --app $AINAME -g $RESOURCE_GROUP --query connectionString)
+AI_CONNECTIONSTRING=$(az monitor app-insights component show --app $AINAME -g $RESOURCE_GROUP --query connectionString -o tsv)
 
+appgw=$(az network application-gateway show -g $RESOURCE_GROUP -n $APPGW_NAME)
 
-      AI_CONNECTIONSTRING="${AI_CONNECTIONSTRING//\"/}"
-   echo $AI_CONNECTIONSTRING
-
-
-  
-
-    appgw=$(az network application-gateway show -g $RESOURCE_GROUP -n $APPGW_NAME)
-
-
-    KEYVAULT_NAME=kv-petclinic-b6eff4
+KEYVAULT_NAME=kv-$APPNAME-$UNIQUEID
 
