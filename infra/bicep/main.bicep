@@ -21,10 +21,13 @@ param sqlAdminPassword string
 param configGitRepo string
 param configGitBranch string = 'main'
 
-param acrIdentityId string
 param acrRegistry string
-param simpleHelloImage string
-param imageTag string
+param acrIdentityId string
+param apiGatewayImage string
+param customerServiceImage string
+param vetsServiceImage string
+param visitsServiceImage string
+param adminServerImage string
 
 param vnetPrefix string = '10.1.0.0/16'
 param infraSubnetPrefix string = '10.1.0.0/24'
@@ -117,12 +120,11 @@ module applications 'modules/app/petclinic.bicep' = {
     mysqlUserAssignedIdentityClientId: mysql.outputs.userAssignedIdentityClientId
     acrRegistry: acrRegistry
     acrIdentityId: acrIdentityId
-    imageTag: !empty(imageTag) ? imageTag : 'latest'
-    apiGatewayImage: simpleHelloImage
-    customerServiceImage: simpleHelloImage
-    vetsServiceImage: simpleHelloImage
-    visitsServiceImage: simpleHelloImage
-    adminServerImage: simpleHelloImage
+    apiGatewayImage: apiGatewayImage
+    customerServiceImage: customerServiceImage
+    vetsServiceImage: vetsServiceImage
+    visitsServiceImage: visitsServiceImage
+    adminServerImage: adminServerImage
     targetPort: 8080
   }
 }

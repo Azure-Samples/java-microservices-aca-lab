@@ -14,8 +14,26 @@
         "configGitBranch": {
             "value": "main"
         },
-        "simpleHelloImage": {
-            "value": "azuredocs/containerapps-helloworld"
+        "acrRegistry": {
+            "value": "sonwanacr.azurecr.io"
+        },
+        "acrIdentityId": {
+            "value": "/subscriptions/d0822b01-62ea-4eb9-885b-95c60e4250b4/resourcegroups/capps-sonwan-dev-rg/providers/microsoft.managedidentity/userassignedidentities/umi-sonwanacr"
+        },
+        "apiGatewayImage": {
+            "value": "spring-petclinic-api-gateway:latest"
+        },
+        "customerServiceImage": {
+            "value": "spring-petclinic-customers-service:latest"
+        },
+        "vetsServiceImage": {
+            "value": "spring-petclinic-api-gateway:latest"
+        },
+        "visitsServiceImage": {
+            "value": "spring-petclinic-api-gateway:latest"
+        },
+        "adminServerImage": {
+            "value": "spring-petclinic-api-gateway:latest"
         }
     }
 }
