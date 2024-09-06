@@ -7,7 +7,6 @@ param configServerId string
 param mysqlDBId string
 param mysqlUserAssignedIdentityClientId string
 
-param imageTag string
 param acrRegistry string
 param acrIdentityId string
 
@@ -32,7 +31,7 @@ module apiGateway '../containerapps/containerapp.bicep' = {
     eurekaId: eurekaId
     configServerId: configServerId
     registry: acrRegistry
-    image: '${apiGatewayImage}:${imageTag}'
+    image: apiGatewayImage
     containerRegistryUserAssignedIdentityId: acrIdentityId
     external: true
     targetPort: targetPort
@@ -50,7 +49,7 @@ module customerService '../containerapps/containerapp.bicep' = {
     eurekaId: eurekaId
     configServerId: configServerId
     registry: acrRegistry
-    image: '${customerServiceImage}:${imageTag}'
+    image: customerServiceImage
     containerRegistryUserAssignedIdentityId: acrIdentityId
     external: false
     targetPort: targetPort
@@ -68,7 +67,7 @@ module vetsService '../containerapps/containerapp.bicep' = {
     eurekaId: eurekaId
     configServerId: configServerId
     registry: acrRegistry
-    image: '${vetsServiceImage}:${imageTag}'
+    image: vetsServiceImage
     containerRegistryUserAssignedIdentityId: acrIdentityId
     external: false
     targetPort: targetPort
@@ -86,7 +85,7 @@ module visitsService '../containerapps/containerapp.bicep' = {
     eurekaId: eurekaId
     configServerId: configServerId
     registry: acrRegistry
-    image: '${visitsServiceImage}:${imageTag}'
+    image: visitsServiceImage
     containerRegistryUserAssignedIdentityId: acrIdentityId
     external: false
     targetPort: targetPort
@@ -104,7 +103,7 @@ module adminServer '../containerapps/containerapp.bicep' = {
     eurekaId: eurekaId
     configServerId: configServerId
     registry: acrRegistry
-    image: '${adminServerImage}:${imageTag}'
+    image: adminServerImage
     containerRegistryUserAssignedIdentityId: acrIdentityId
     external: true
     targetPort: targetPort

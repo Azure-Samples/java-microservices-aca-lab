@@ -1,7 +1,7 @@
 param location string
 param managedEnvironmentId string
-param registry string = 'mcr.microsoft.com'
-param image string = 'k8se/quickstart'
+param registry string
+param image string
 param appName string
 param eurekaId string
 param configServerId string
@@ -41,10 +41,6 @@ resource app 'Microsoft.App/containerApps@2024-02-02-preview' = {
           imageType: 'ContainerImage'
           name: appName
           env: [
-            {
-              name: 'SPRING_PROFILES_ACTIVE'
-              value: 'passwordless'
-            }
           ]
           resources: {
             cpu: 1
