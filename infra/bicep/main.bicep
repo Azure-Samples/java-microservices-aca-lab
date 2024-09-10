@@ -12,6 +12,8 @@ param location string
 param resourceGroupName string = ''
 param managedEnvironmentsName string = ''
 
+param vnetEndpointInternal bool = false
+
 // mysql
 param sqlServerName string = ''
 param sqlAdmin string
@@ -29,14 +31,16 @@ param vetsServiceImage string
 param visitsServiceImage string
 param adminServerImage string
 
-param vnetPrefix string = '10.1.0.0/16'
-param infraSubnetPrefix string = '10.1.0.0/24'
-param sqlSubnetPrefix string = '10.1.2.64/28'
+param logAnalyticsName string = ''
+
+param applicationInsightsConnString string
+
+var vnetPrefix = '10.1.0.0/16'
+var infraSubnetPrefix = '10.1.0.0/24'
+var infraSubnetName = '${abbrs.networkVirtualNetworksSubnets}infra'
 
 var abbrs = loadJsonContent('./abbreviations.json')
 var tags = { 'azd-env-name': environmentName }
-
-var infraSubnetName = '${abbrs.networkVirtualNetworksSubnets}infra'
 
 @description('Organize resources in a resource group')
 resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
@@ -72,15 +76,25 @@ module vnet './modules/network/vnet.bicep' = {
   }
 }
 
+module logAnalytics 'modules/shared/logAnalyticsWorkspace.bicep' = {
+  name: 'log-analytics'
+  scope: rg
+  params: {
+    name: !empty(logAnalyticsName) ? logAnalyticsName : 'la-${environmentName}'
+    tags: tags
+  }
+}
+
 module managedEnvironment 'modules/containerapps/aca-environment.bicep' = {
   name: 'managedEnvironment'
   scope: rg
   params: {
     name: !empty(managedEnvironmentsName) ? managedEnvironmentsName : 'aca-env-${environmentName}'
     location: location
-    vnetEndpointInternal: false
-    tags: tags
+    vnetEndpointInternal: vnetEndpointInternal
+    diagnosticWorkspaceId: logAnalytics.outputs.logAnalyticsWsId
     subnetId: first(filter(vnet.outputs.vnetSubnets, x => x.name == infraSubnetName)).id
+    tags: tags
   }
 }
 
@@ -103,9 +117,6 @@ module mysql 'modules/database/mysql.bicep' = {
     serverName: !empty(sqlServerName) ? sqlServerName : '${abbrs.sqlServers}${environmentName}'
     databaseName: 'petclinic'
     version: '8.0.21'
-    vnetId: vnet.outputs.vnetId
-    subnetName: '${abbrs.networkVirtualNetworksSubnets}sql'
-    mysqlSubnetPrefix: sqlSubnetPrefix
   }
 }
 
@@ -113,7 +124,7 @@ module applications 'modules/app/petclinic.bicep' = {
   name: 'petclinic-microservices'
   scope: rg
   params: {
-    managedEnvironmentsName: managedEnvironmentsName
+    managedEnvironmentsName: managedEnvironment.outputs.containerAppsEnvironmentName
     eurekaId: javaComponents.outputs.eurekaId
     configServerId: javaComponents.outputs.configServerId
     mysqlDBId: mysql.outputs.databaseId
@@ -126,11 +137,13 @@ module applications 'modules/app/petclinic.bicep' = {
     visitsServiceImage: visitsServiceImage
     adminServerImage: adminServerImage
     targetPort: 8080
+    applicationInsightsConnString: applicationInsightsConnString
   }
 }
 
-// output fqdn string = applications.outputs.fqdn
-// output eurekaId string = javaComponents.outputs.eurekaId
-// output configServerId string = javaComponents.outputs.configServerId
-// output databaseId string = mysql.outputs.databaseId
-// output userAssignedIdentityClientId string = mysql.outputs.userAssignedIdentityClientId
+output gatewayFqdn string = applications.outputs.gatewayFqdn
+output adminFqdn string = applications.outputs.adminFqdn
+output eurekaId string = javaComponents.outputs.eurekaId
+output configServerId string = javaComponents.outputs.configServerId
+output databaseId string = mysql.outputs.databaseId
+output userAssignedIdentityClientId string = mysql.outputs.userAssignedIdentityClientId

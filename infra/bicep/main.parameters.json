@@ -2,38 +2,44 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "vnetEndpointInternal": {
+            "value": false
+        },
         "sqlAdmin": {
-            "value": "azureuser"
+            "value": "myadmin"
         },
         "sqlAdminPassword": {
-            "value": "Password#123"
+            "value": "<myadmin-password>"
         },
         "configGitRepo": {
-            "value": "https://github.com/sonwan2020/spring-petclinic-microservices-config"
+            "value": "<config-server-url>"
         },
         "configGitBranch": {
-            "value": "main"
+            "value": "<passwordless-config-branch>"
         },
         "acrRegistry": {
-            "value": "sonwanacr.azurecr.io"
+            "value": "<your-acr>.azurecr.io"
         },
         "acrIdentityId": {
-            "value": "/subscriptions/d0822b01-62ea-4eb9-885b-95c60e4250b4/resourcegroups/capps-sonwan-dev-rg/providers/microsoft.managedidentity/userassignedidentities/umi-sonwanacr"
+            "value": "<acr-repo-user-mi-id>"
         },
         "apiGatewayImage": {
-            "value": "spring-petclinic-api-gateway:latest"
+            "value": "java-microservices-aca-lab/spring-petclinic-api-gateway:passwordless"
         },
         "customerServiceImage": {
-            "value": "spring-petclinic-customers-service:latest"
+            "value": "java-microservices-aca-lab/spring-petclinic-customers-service:passwordless"
         },
         "vetsServiceImage": {
-            "value": "spring-petclinic-api-gateway:latest"
+            "value": "java-microservices-aca-lab/spring-petclinic-vets-service:passwordless"
         },
         "visitsServiceImage": {
-            "value": "spring-petclinic-api-gateway:latest"
+            "value": "java-microservices-aca-lab/spring-petclinic-visits-service:passwordless"
         },
         "adminServerImage": {
-            "value": "spring-petclinic-api-gateway:latest"
+            "value": "java-microservices-aca-lab/spring-petclinic-admin-server:passwordless"
+        },
+        "applicationInsightsConnString": {
+            "value": "<application-insights-connection-string>"
         }
     }
 }

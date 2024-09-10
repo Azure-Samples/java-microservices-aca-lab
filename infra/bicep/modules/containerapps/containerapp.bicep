@@ -7,9 +7,11 @@ param eurekaId string
 param configServerId string
 param external bool = false
 param containerRegistryUserAssignedIdentityId string
-param mysqlDBId string
-param mysqlUserAssignedIdentityClientId string
+param env array = []
 param targetPort int
+param createSqlConnection bool = false
+param mysqlDBId string = ''
+param mysqlUserAssignedIdentityClientId string = ''
 
 resource app 'Microsoft.App/containerApps@2024-02-02-preview' = {
   name: appName
@@ -33,6 +35,11 @@ resource app 'Microsoft.App/containerApps@2024-02-02-preview' = {
           identity: containerRegistryUserAssignedIdentityId
         }
       ]
+      runtime: {
+        java: {
+          enableMetrics: true
+        }
+      }
     }
     template: {
       containers: [
@@ -40,8 +47,12 @@ resource app 'Microsoft.App/containerApps@2024-02-02-preview' = {
           image: '${registry}/${image}'
           imageType: 'ContainerImage'
           name: appName
-          env: [
-          ]
+          env: concat(env, [
+            {
+              name: 'SPRING_PROFILES_ACTIVE'
+              value: 'passwordless'
+            }
+          ])
           resources: {
             cpu: 1
             memory: '2Gi'
@@ -50,7 +61,7 @@ resource app 'Microsoft.App/containerApps@2024-02-02-preview' = {
       ]
       scale: {
         minReplicas: 1
-        maxReplicas: 5
+        maxReplicas: 3
       }
       serviceBinds: [
         {
@@ -67,20 +78,19 @@ resource app 'Microsoft.App/containerApps@2024-02-02-preview' = {
 }
 
 var mysqlToken = !empty(mysqlDBId) ? split(mysqlDBId, '/') : array('')
-var mysqlSubscriptionId = mysqlToken[2]
-var normalizedAppName = replace(appName, '-', '_')
+var mysqlSubscriptionId = length(mysqlToken) > 2 ? mysqlToken[2] : ''
 
-resource connectDB 'Microsoft.ServiceLinker/linkers@2023-04-01-preview' = {
-  name: '${normalizedAppName}_mysql'
+resource connectDB 'Microsoft.ServiceLinker/linkers@2023-04-01-preview' = if (createSqlConnection) {
+  name: 'mysql_conn'
   scope: app
-  properties: { 
+  properties: {
     scope: appName
     clientType: 'springBoot'
     authInfo: {
       authType: 'userAssignedIdentity'
       clientId: mysqlUserAssignedIdentityClientId
       subscriptionId: mysqlSubscriptionId
-      userName: 'aad_${normalizedAppName}_mysql'
+      userName: 'aad_mysql_conn'
     }
     targetService: {
       type: 'AzureResource'
