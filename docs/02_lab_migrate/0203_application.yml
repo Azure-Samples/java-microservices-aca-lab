@@ -43,6 +43,11 @@ spring.cloud.refresh.refreshable: false
 # Logging
 logging.level.org.springframework: INFO
 
+# enable health probes
+management.health.livenessState.enabled: true
+management.health.readinessState.enabled: true
+management.endpoint.health.probes.enabled: true
+
 # Metrics
 management:
   endpoint:
