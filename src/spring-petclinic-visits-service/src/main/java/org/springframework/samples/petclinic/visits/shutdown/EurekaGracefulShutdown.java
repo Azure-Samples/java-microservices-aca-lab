@@ -20,7 +20,7 @@ public class EurekaGracefulShutdown {
     // The wait time shoud be the maximum time for all eureka clients to refresh their cache, consider
     // eureka client config: eureka.client.registryFetchIntervalSeconds and ribbon.ServerListRefreshInterval
     // eureka server eureka.server.responseCacheUpdateIntervalMs
-    private static final int WAIT_SECONDS = 40;
+    private static final int WAIT_SECONDS = 30;
 
     @EventListener
     public void onShutdown(ContextClosedEvent event) {
