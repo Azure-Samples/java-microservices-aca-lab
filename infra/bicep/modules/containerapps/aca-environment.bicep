@@ -49,7 +49,6 @@ param diagnosticEventHubAuthorizationRuleId string = ''
 @description('Optional. Name of the diagnostic event hub within the namespace to which logs are streamed. Without this, an event hub is created for each log category. For security reasons, it is recommended to set diagnostic settings to send data to either storage account, log analytics workspace or event hub.')
 param diagnosticEventHubName string = ''
 
-
 @description('Optional. The name of logs that will be streamed. "allLogs" includes all possible logs for the resource.')
 @allowed([
   'allLogs'
@@ -108,7 +107,6 @@ var effectiveWorkloadProfiles = workloadProfiles != [] ? concat(defaultWorkloadP
 // RESOURCES
 // ------------------
 
-
 resource acaEnvironment 'Microsoft.App/managedEnvironments@2023-05-01' = {
   name: name
   location: location
@@ -121,9 +119,9 @@ resource acaEnvironment 'Microsoft.App/managedEnvironments@2023-05-01' = {
       infrastructureSubnetId: subnetId
     }
     workloadProfiles: effectiveWorkloadProfiles
-    appLogsConfiguration:  {
-      destination: 'azure-monitor'
-    }
+    appLogsConfiguration: {
+        destination: 'azure-monitor'
+      }
     infrastructureResourceGroup: empty(infrastructureResourceGroupName) ? take('ME_${resourceGroup().name}_${name}', 63) : infrastructureResourceGroupName
   }
 }

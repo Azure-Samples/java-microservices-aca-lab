@@ -10,15 +10,19 @@ param mysqlUserAssignedIdentityClientId string
 param acrRegistry string
 param acrIdentityId string
 
-param apiGatewayImage string = 'spring-petclinic-api-gateway'
-param customerServiceImage string = 'spring-petclinic-customers-service'
-param vetsServiceImage string = 'spring-petclinic-vets-service'
-param visitsServiceImage string = 'spring-petclinic-visits-service'
-param adminServerImage string = 'spring-petclinic-admin-server'
+param apiGatewayImage string
+param customerServiceImage string
+param vetsServiceImage string
+param visitsServiceImage string
+param adminServerImage string
+
+param applicationInsightsConnString string = ''
 
 param targetPort int = 8080
 
-resource environment 'Microsoft.App/managedEnvironments@2024-03-01' existing = {
+var env = []
+
+resource environment 'Microsoft.App/managedEnvironments@2024-02-02-preview' existing = {
   name: managedEnvironmentsName
 }
 
@@ -35,8 +39,17 @@ module apiGateway '../containerapps/containerapp.bicep' = {
     containerRegistryUserAssignedIdentityId: acrIdentityId
     external: true
     targetPort: targetPort
-    mysqlDBId: mysqlDBId
-    mysqlUserAssignedIdentityClientId: mysqlUserAssignedIdentityClientId
+    createSqlConnection: false
+    env: concat(env, empty(applicationInsightsConnString) ? [] : [
+      {
+        name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
+        value: applicationInsightsConnString
+      }
+      {
+        name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
+        value: '{"role": {"name": "api-gateway"}}'
+      }
+    ])
   }
 }
 
@@ -53,8 +66,19 @@ module customerService '../containerapps/containerapp.bicep' = {
     containerRegistryUserAssignedIdentityId: acrIdentityId
     external: false
     targetPort: targetPort
+    createSqlConnection: true
     mysqlDBId: mysqlDBId
     mysqlUserAssignedIdentityClientId: mysqlUserAssignedIdentityClientId
+    env: concat(env, empty(applicationInsightsConnString) ? [] : [
+      {
+        name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
+        value: applicationInsightsConnString
+      }
+      {
+        name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
+        value: '{"role": {"name": "customer-service"}}'
+      }
+    ])
   }
 }
 
@@ -71,8 +95,19 @@ module vetsService '../containerapps/containerapp.bicep' = {
     containerRegistryUserAssignedIdentityId: acrIdentityId
     external: false
     targetPort: targetPort
+    createSqlConnection: true
     mysqlDBId: mysqlDBId
     mysqlUserAssignedIdentityClientId: mysqlUserAssignedIdentityClientId
+    env: concat(env, empty(applicationInsightsConnString) ? [] : [
+      {
+        name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
+        value: applicationInsightsConnString
+      }
+      {
+        name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
+        value: '{"role": {"name": "vets-service"}}'
+      }
+    ])
   }
 }
 
@@ -89,8 +124,19 @@ module visitsService '../containerapps/containerapp.bicep' = {
     containerRegistryUserAssignedIdentityId: acrIdentityId
     external: false
     targetPort: targetPort
+    createSqlConnection: true
     mysqlDBId: mysqlDBId
     mysqlUserAssignedIdentityClientId: mysqlUserAssignedIdentityClientId
+    env: concat(env, empty(applicationInsightsConnString) ? [] : [
+      {
+        name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
+        value: applicationInsightsConnString
+      }
+      {
+        name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
+        value: '{"role": {"name": "visits-service"}}'
+      }
+    ])
   }
 }
 
@@ -107,8 +153,17 @@ module adminServer '../containerapps/containerapp.bicep' = {
     containerRegistryUserAssignedIdentityId: acrIdentityId
     external: true
     targetPort: targetPort
-    mysqlDBId: mysqlDBId
-    mysqlUserAssignedIdentityClientId: mysqlUserAssignedIdentityClientId
+    createSqlConnection: false
+    env: concat(env, empty(applicationInsightsConnString) ? [] : [
+      {
+        name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
+        value: applicationInsightsConnString
+      }
+      {
+        name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
+        value: '{"role": {"name": "admin-server"}}'
+      }
+    ])
   }
 }
 

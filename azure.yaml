@@ -41,5 +41,3 @@ infra:
 #   predeploy:
 #     shell: bash
 #     run: cd src; maven package
-    
-  

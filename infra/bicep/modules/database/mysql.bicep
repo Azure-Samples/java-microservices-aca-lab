@@ -12,17 +12,6 @@ param databaseName string
 param version string
 param tags object = {}
 
-param mysqlSubnetPrefix string
-
-@description('The id of the vNet to which the private endpoint will be connected.')
-param subnetName string
-
-@description('The resource ID of the existing virtual network.')
-param vnetId string
-
-var vnetTokens = !empty(vnetId) ? split(vnetId, '/') : array('')
-var vnetName = vnetTokens[8]
-
 resource mysqlUserAssignedIdentityRW 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
   name: 'mysqluserassignedidentity-rw'
   location: location
@@ -33,38 +22,7 @@ resource mysqlUserAssignedIdentityAdmin 'Microsoft.ManagedIdentity/userAssignedI
   location: location
 }
 
-@description('The Private DNS zone containing the mysql IP')
-module privateDnsZone '../network/private-dns-zone.bicep' = {
-  name: 'mysqlPrivateDnsZone-${uniqueString(resourceGroup().id)}'
-  params: {
-    name: '${serverName}.private.mysql.database.azure.com'
-    virtualNetworkLinks: [
-      {
-        vnetName: vnetName
-        vnetId: vnetId
-        registrationEnabled: false
-      }
-    ]
-    tags: tags
-  }
-}
-
-resource mysqlSubnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  name: '${vnetName}/${subnetName}'
-  properties: {
-    addressPrefix: mysqlSubnetPrefix
-    delegations: [
-      {
-        name: 'MySQLflexibleServers'
-        properties: {
-          serviceName: 'Microsoft.DBforMySQL/flexibleServers'
-        }
-      }
-    ]
-  }
-}
-
-resource server 'Microsoft.DBforMySQL/flexibleServers@2021-12-01-preview' = {
+resource server 'Microsoft.DBforMySQL/flexibleServers@2023-06-30' = {
   name: serverName
   location: location
   tags: tags
@@ -84,8 +42,7 @@ resource server 'Microsoft.DBforMySQL/flexibleServers@2021-12-01-preview' = {
     administratorLogin: administratorLogin
     administratorLoginPassword: administratorLoginPassword
     network: {
-      delegatedSubnetResourceId: mysqlSubnet.id
-      privateDnsZoneResourceId: privateDnsZone.outputs.privateDnsZonesId
+      publicNetworkAccess: 'Enabled'
     }
     storage: {
       storageSizeGB: 20
@@ -102,7 +59,16 @@ resource server 'Microsoft.DBforMySQL/flexibleServers@2021-12-01-preview' = {
   }
 }
 
-resource database 'Microsoft.DBforMySQL/flexibleServers/databases@2021-12-01-preview' = {
+resource SQLAllConnectionsAllowed 'Microsoft.DBforMySQL/flexibleServers/firewallRules@2023-06-30' = {
+  name: 'AllConnectionsAllowed'
+  parent: server
+  properties: {
+    startIpAddress: '0.0.0.0'
+    endIpAddress: '255.255.255.255'
+  }
+}
+
+resource database 'Microsoft.DBforMySQL/flexibleServers/databases@2023-06-30' = {
   parent: server
   name: databaseName
   properties: {
