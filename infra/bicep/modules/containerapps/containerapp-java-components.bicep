@@ -1,6 +1,7 @@
 param managedEnvironmentsName string
 param configServerGitRepo string
 param configServerGitBranch string
+param configServerGitPath string
 
 resource managedEnvironmentsResource 'Microsoft.App/managedEnvironments@2024-03-01' existing = {
   name: managedEnvironmentsName
@@ -19,6 +20,10 @@ resource configServer 'Microsoft.App/managedEnvironments/javaComponents@2024-02-
       {
         propertyName: 'spring.cloud.config.server.git.default-label'
         value: configServerGitBranch
+      }
+      {
+        propertyName: 'spring.cloud.config.server.git.search-paths'
+        value: configServerGitPath
       }
     ]
   }

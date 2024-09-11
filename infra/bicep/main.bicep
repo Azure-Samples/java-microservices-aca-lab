@@ -22,6 +22,7 @@ param sqlAdminPassword string
 
 param configGitRepo string
 param configGitBranch string = 'main'
+param configGitPath string
 
 param acrRegistry string
 param acrIdentityId string
@@ -105,6 +106,7 @@ module javaComponents 'modules/containerapps/containerapp-java-components.bicep'
     managedEnvironmentsName: managedEnvironment.outputs.containerAppsEnvironmentName
     configServerGitRepo: configGitRepo
     configServerGitBranch: configGitBranch
+    configServerGitPath: configGitPath
   }
 }
 
