@@ -1,11 +1,5 @@
 # COMMON APPLICATION PROPERTIES
 
-server:
-  # start services on random port by default
-  # port: 0
-  # The stop processing uses a timeout which provides a grace period during which existing requests will be allowed to complete but no new requests will be permitted
-  shutdown: graceful
- 
 # embedded database init, supports mysql too trough the 'mysql' spring profile
 spring:
   datasource:
@@ -68,5 +62,6 @@ eureka:
     serviceUrl:
       defaultZone: http://discovery-server:8761/eureka/
     enableSelfPreservation: true
+    registryFetchIntervalSeconds: 20
   instance:
     preferIpAddress: true
