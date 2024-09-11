@@ -6,16 +6,16 @@
             "value": false
         },
         "sqlAdmin": {
-            "value": "myadmin"
+            "value": "<sql-admin>"
         },
         "sqlAdminPassword": {
-            "value": "<myadmin-password>"
+            "value": "<sql-admin-password>"
         },
         "configGitRepo": {
-            "value": "<config-server-url>"
+            "value": "https://github.com/Azure-Samples/java-microservices-aca-lab"
         },
-        "configGitBranch": {
-            "value": "<passwordless-config-branch>"
+        "configGitPath": {
+            "value": "config"
         },
         "acrRegistry": {
             "value": "<your-acr>.azurecr.io"
