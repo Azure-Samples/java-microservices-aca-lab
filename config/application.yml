@@ -2,7 +2,7 @@
 
 server:
   # start services on random port by default
-  port: 0
+  # port: 0
   # The stop processing uses a timeout which provides a grace period during which existing requests will be allowed to complete but no new requests will be permitted
   shutdown: graceful
 
@@ -65,7 +65,7 @@ management:
 spring:
   config:
     activate:
-      on-profile: chaos-monkey      
+      on-profile: chaos-monkey
 management.endpoint.chaosmonkey.enabled: true
 chaos:
   monkey:
@@ -86,6 +86,17 @@ spring:
     url: jdbc:mysql://localhost:3306/petclinic?useSSL=false
     username: root
     password: petclinic
+  sql:
+    init:
+      schema-locations: classpath*:db/mysql/schema.sql
+      data-locations: classpath*:db/mysql/data.sql
+      mode: ALWAYS
+
+---
+spring:
+  config:
+    activate:
+      on-profile: passwordless
   sql:
     init:
       schema-locations: classpath*:db/mysql/schema.sql
