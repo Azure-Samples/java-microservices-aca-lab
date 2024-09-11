@@ -92,15 +92,3 @@ spring:
       data-locations: classpath*:db/mysql/data.sql
       mode: ALWAYS
 
----
-spring:
-  config:
-    activate:
-      on-profile: passwordless
-server:
-  port: 8080
-  sql:
-    init:
-      schema-locations: classpath*:db/mysql/schema.sql
-      data-locations: classpath*:db/mysql/data.sql
-      mode: ALWAYS
