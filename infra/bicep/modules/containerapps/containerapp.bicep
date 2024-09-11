@@ -12,8 +12,8 @@ param targetPort int
 param createSqlConnection bool = false
 param mysqlDBId string = ''
 param mysqlUserAssignedIdentityClientId string = ''
-param readnessProbeinitialDelaySeconds int = 10
-param livenessProbeinitialDelaySeconds int = 30
+param readinessProbeInitialDelaySeconds int = 10
+param livenessProbeInitialDelaySeconds int = 30
 
 resource app 'Microsoft.App/containerApps@2024-02-02-preview' = {
   name: appName
@@ -69,7 +69,7 @@ resource app 'Microsoft.App/containerApps@2024-02-02-preview' = {
                 port: 8080
                 scheme: 'HTTP'
               }
-              initialDelaySeconds: livenessProbeinitialDelaySeconds
+              initialDelaySeconds: livenessProbeInitialDelaySeconds
               periodSeconds: 5
               successThreshold: 1
               timeoutSeconds: 3
@@ -82,7 +82,7 @@ resource app 'Microsoft.App/containerApps@2024-02-02-preview' = {
                 port: 8080
                 scheme: 'HTTP'
               }
-              initialDelaySeconds: readnessProbeinitialDelaySeconds
+              initialDelaySeconds: readinessProbeInitialDelaySeconds
               periodSeconds: 3
               successThreshold: 1
               timeoutSeconds: 3
