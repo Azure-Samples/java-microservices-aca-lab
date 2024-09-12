@@ -69,6 +69,8 @@ module customerService '../containerapps/containerapp.bicep' = {
     createSqlConnection: true
     mysqlDBId: mysqlDBId
     mysqlUserAssignedIdentityClientId: mysqlUserAssignedIdentityClientId
+    readinessProbeInitialDelaySeconds: 20
+    livenessProbeInitialDelaySeconds: 40
     env: concat(env, empty(applicationInsightsConnString) ? [] : [
       {
         name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'

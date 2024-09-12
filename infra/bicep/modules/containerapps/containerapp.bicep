@@ -12,6 +12,8 @@ param targetPort int
 param createSqlConnection bool = false
 param mysqlDBId string = ''
 param mysqlUserAssignedIdentityClientId string = ''
+param readinessProbeInitialDelaySeconds int = 10
+param livenessProbeInitialDelaySeconds int = 30
 
 resource app 'Microsoft.App/containerApps@2024-02-02-preview' = {
   name: appName
@@ -42,6 +44,7 @@ resource app 'Microsoft.App/containerApps@2024-02-02-preview' = {
       }
     }
     template: {
+      terminationGracePeriodSeconds: 60
       containers: [
         {
           image: '${registry}/${image}'
@@ -57,6 +60,34 @@ resource app 'Microsoft.App/containerApps@2024-02-02-preview' = {
             cpu: 1
             memory: '2Gi'
           }
+          probes: [
+            {
+              type: 'Liveness'
+              failureThreshold: 3
+              httpGet: {
+                path: '/actuator/health/liveness'
+                port: 8080
+                scheme: 'HTTP'
+              }
+              initialDelaySeconds: livenessProbeInitialDelaySeconds
+              periodSeconds: 5
+              successThreshold: 1
+              timeoutSeconds: 3
+            }
+            {
+              type: 'Readiness'
+              failureThreshold: 5
+              httpGet: {
+                path: '/actuator/health/readiness'
+                port: 8080
+                scheme: 'HTTP'
+              }
+              initialDelaySeconds: readinessProbeInitialDelaySeconds
+              periodSeconds: 3
+              successThreshold: 1
+              timeoutSeconds: 3
+            }
+          ]
         }
       ]
       scale: {
