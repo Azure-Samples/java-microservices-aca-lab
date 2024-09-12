@@ -9,13 +9,20 @@ zuul:
 
 server:
   port: 8080
+  # The stop processing uses a timeout which provides a grace period during which existing requests will be allowed to complete but no new requests will be permitted
+  shutdown: graceful
   compression:
     enabled: true
     mime-types: application/json,text/css,application/javascript
     min-response-size: 2048
 
-# Internationalization
-spring.messages.basename: messages/messages
+spring:
+  message:
+    basename: messages/messages
+  cloud:
+    loadbalancer:
+      cache:
+        enabled: false
 
 ---
 spring:

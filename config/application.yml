@@ -1,11 +1,5 @@
 # COMMON APPLICATION PROPERTIES
 
-server:
-  # start services on random port by default
-  port: 0
-  # The stop processing uses a timeout which provides a grace period during which existing requests will be allowed to complete but no new requests will be permitted
-  shutdown: graceful
-
 # embedded database init, supports mysql too trough the 'mysql' spring profile
 spring:
   sql:
@@ -16,6 +10,10 @@ spring:
     sampler:
       probability: 1.0
   cloud:
+    # disable ribbon cache to facilate cache refresh
+    loadbalancer:
+      cache:
+        enabled: false
     config:
       # Allow the microservices to override the remote properties with their own System properties or config file
       allow-override: true
@@ -36,8 +34,17 @@ management.endpoints.web.exposure.include: "*"
 spring.cloud.refresh.refreshable: false
 
 
+eureka:
+  client:
+    registryFetchIntervalSeconds: 20
+
 # Logging
 logging.level.org.springframework: INFO
+
+# enable health probes
+management.health.livenessState.enabled: true
+management.health.readinessState.enabled: true
+management.endpoint.health.probes.enabled: true
 
 # Metrics
 management:
@@ -60,7 +67,7 @@ management:
 spring:
   config:
     activate:
-      on-profile: chaos-monkey      
+      on-profile: chaos-monkey
 management.endpoint.chaosmonkey.enabled: true
 chaos:
   monkey:
@@ -86,3 +93,4 @@ spring:
       schema-locations: classpath*:db/mysql/schema.sql
       data-locations: classpath*:db/mysql/data.sql
       mode: ALWAYS
+
