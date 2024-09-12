@@ -1,34 +1,14 @@
 package org.springframework.samples.petclinic.messagingemulator.entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class PetClinicMessageResponse {
     int requestId;
     Boolean confirmed;
     String reason;
-
-    public PetClinicMessageResponse() {
-    }
-
-    public String getReason() {
-        return reason;
-    }
-
-    public void setReason(String reason) {
-        this.reason = reason;
-    }
-
-    public int getRequestId() {
-        return requestId;
-    }
-
-    public void setRequestId(int requestId) {
-        this.requestId = requestId;
-    }
-
-    public Boolean getConfirmed() {
-        return confirmed;
-    }
-
-    public void setConfirmed(Boolean confirmed) {
-        this.confirmed = confirmed;
-    }
 }
