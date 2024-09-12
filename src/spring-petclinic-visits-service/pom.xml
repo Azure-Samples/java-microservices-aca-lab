@@ -49,6 +49,12 @@
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
 
+        <!-- Azure Service Bus starter -->
+        <dependency>
+            <groupId>com.azure.spring</groupId>
+            <artifactId>spring-cloud-azure-starter-servicebus-jms</artifactId>
+        </dependency>
+
         <!-- Third parties -->
         <dependency>
             <groupId>org.projectlombok</groupId>
