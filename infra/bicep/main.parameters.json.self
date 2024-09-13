@@ -26,7 +26,7 @@
         "apiGatewayImage": {
             "value": "java-microservices-aca-lab/spring-petclinic-api-gateway:passwordless"
         },
-        "customersServiceImage": {
+        "customerServiceImage": {
             "value": "java-microservices-aca-lab/spring-petclinic-customers-service:passwordless"
         },
         "vetsServiceImage": {

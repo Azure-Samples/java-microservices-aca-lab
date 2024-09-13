@@ -27,7 +27,7 @@ param configGitPath string
 param acrRegistry string
 param acrIdentityId string
 param apiGatewayImage string
-param customerServiceImage string
+param customersServiceImage string
 param vetsServiceImage string
 param visitsServiceImage string
 param adminServerImage string
@@ -134,7 +134,7 @@ module applications 'modules/app/petclinic.bicep' = {
     acrRegistry: acrRegistry
     acrIdentityId: acrIdentityId
     apiGatewayImage: apiGatewayImage
-    customerServiceImage: customerServiceImage
+    customersServiceImage: customersServiceImage
     vetsServiceImage: vetsServiceImage
     visitsServiceImage: visitsServiceImage
     adminServerImage: adminServerImage

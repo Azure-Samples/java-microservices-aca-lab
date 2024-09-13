@@ -11,7 +11,7 @@ param acrRegistry string
 param acrIdentityId string
 
 param apiGatewayImage string
-param customerServiceImage string
+param customersServiceImage string
 param vetsServiceImage string
 param visitsServiceImage string
 param adminServerImage string
@@ -54,15 +54,15 @@ module apiGateway '../containerapps/containerapp.bicep' = {
 }
 
 module customerService '../containerapps/containerapp.bicep' = {
-  name: 'customer-service'
+  name: 'customers-service'
   params: {
     location: environment.location
     managedEnvironmentId: environment.id
-    appName: 'customer-service'
+    appName: 'customers-service'
     eurekaId: eurekaId
     configServerId: configServerId
     registry: acrRegistry
-    image: customerServiceImage
+    image: customersServiceImage
     containerRegistryUserAssignedIdentityId: acrIdentityId
     external: false
     targetPort: targetPort
@@ -76,7 +76,7 @@ module customerService '../containerapps/containerapp.bicep' = {
       }
       {
         name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
-        value: '{"role": {"name": "customer-service"}}'
+        value: '{"role": {"name": "customers-service"}}'
       }
     ])
   }
