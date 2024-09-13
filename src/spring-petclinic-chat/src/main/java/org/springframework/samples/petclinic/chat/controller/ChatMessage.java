@@ -2,11 +2,7 @@ package org.springframework.samples.petclinic.chat.controller;
 
 import lombok.*;
 
-/**
- * Represents a chat message in the chat application.
- */
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -17,6 +13,30 @@ public class ChatMessage {
     private String sender;
 
     private MessageType type;
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public void setSender(String sender) {
+        this.sender = sender;
+    }
+
+    public MessageType getType() {
+        return type;
+    }
+
+    public void setType(MessageType type) {
+        this.type = type;
+    }
 
     public enum MessageType {
 

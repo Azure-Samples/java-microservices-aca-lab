@@ -39,7 +39,7 @@ public class AgentConfig {
 
     @Bean
     public VectorStore simpleVectorStore(EmbeddingModel embeddingModel) {
-        Resource resource = new DefaultResourceLoader().getResource("classpath:petclinic-terms-of-use.txt");
+        Resource resource = new DefaultResourceLoader().getResource("classpath:/ai/petclinic-terms-of-use.txt");
         TextReader textReader = new TextReader(resource);
         List<Document> documents = new TokenTextSplitter().apply(textReader.get());
         VectorStore store = new SimpleVectorStore(embeddingModel);

@@ -27,7 +27,7 @@ public class ChatAgent {
     @Autowired
     private ChatClient chatClient;
 
-    @Value("classpath:/system-message.st")
+    @Value("classpath:/ai/system-message.st")
     private Resource systemResource;
 
     public String chat(String userMessage, String username) {

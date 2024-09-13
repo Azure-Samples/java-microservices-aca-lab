@@ -50,10 +50,4 @@ public class ChatController {
 		chatMessage.setSender(agentName);
 		return chatMessage;
 	}
-
-	@GetMapping("/chat.html")
-	public String chatPage() {
-		return "chat/chat";
-	}
-
 }
