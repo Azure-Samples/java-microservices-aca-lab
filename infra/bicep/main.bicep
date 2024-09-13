@@ -33,8 +33,7 @@ param visitsServiceImage string
 param adminServerImage string
 
 param logAnalyticsName string = ''
-
-param applicationInsightsConnString string
+param applicationInsightsName string = ''
 
 var vnetPrefix = '10.1.0.0/16'
 var infraSubnetPrefix = '10.1.0.0/24'
@@ -86,6 +85,18 @@ module logAnalytics 'modules/shared/logAnalyticsWorkspace.bicep' = {
   }
 }
 
+@description('Azure Application Insights, the workload\' log & metric sink and APM tool')
+module applicationInsights 'modules/shared/applicationInsights.bicep' = {
+  name: 'application-insights'
+  scope: rg
+  params: {
+    name: !empty(applicationInsightsName) ? applicationInsightsName : 'ai-${environmentName}'
+    location: location
+    workspaceResourceId: logAnalytics.outputs.logAnalyticsWsId
+    tags: tags
+  }
+}
+
 module managedEnvironment 'modules/containerapps/aca-environment.bicep' = {
   name: 'managedEnvironment'
   scope: rg
@@ -118,7 +129,6 @@ module mysql 'modules/database/mysql.bicep' = {
     administratorLoginPassword: sqlAdminPassword
     serverName: !empty(sqlServerName) ? sqlServerName : '${abbrs.sqlServers}${environmentName}'
     databaseName: 'petclinic'
-    version: '8.0.21'
   }
 }
 
@@ -139,7 +149,7 @@ module applications 'modules/app/petclinic.bicep' = {
     visitsServiceImage: visitsServiceImage
     adminServerImage: adminServerImage
     targetPort: 8080
-    applicationInsightsConnString: applicationInsightsConnString
+    applicationInsightsConnString: applicationInsights.outputs.connectionString
   }
 }
 

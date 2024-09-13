@@ -37,9 +37,6 @@
         },
         "adminServerImage": {
             "value": "java-microservices-aca-lab/spring-petclinic-admin-server:passwordless"
-        },
-        "applicationInsightsConnString": {
-            "value": "<application-insights-connection-string>"
         }
     }
 }
