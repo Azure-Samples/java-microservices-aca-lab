@@ -18,6 +18,13 @@ param workspaceResourceId string
 ])
 param publicNetworkAccessForIngestion string = 'Enabled'
 
+@description('Optional. Determines whether or not new ApplicationInsights should be provisioned.')
+@allowed([
+  'new'
+  'existing'
+])
+param newOrExisting string = 'new'
+
 @description('Optional. The network access type for accessing Application Insights query. - Enabled or Disabled.')
 @allowed([
   'Enabled'
@@ -50,11 +57,10 @@ param kind string = ''
 @description('Optional. Location for all Resources.')
 param location string
 
-
 @description('Optional. Tags of the resource.')
 param tags object = {}
 
-resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
+resource aiNew 'Microsoft.Insights/components@2020-02-02' = if (newOrExisting == 'new') {
   name: name
   location: location
   tags: tags
@@ -70,17 +76,18 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
   }
 }
 
+resource aiExisting 'Microsoft.Insights/components@2020-02-02' existing = if (newOrExisting == 'existing') {
+  name: name
+}
+
 @description('The name of the application insights component.')
-output appInsNname string = applicationInsights.name
+output name string = ((newOrExisting == 'new') ? aiNew.name : aiExisting.name)
 
 @description('The resource ID of the application insights component.')
-output appInsResourceId string = applicationInsights.id
+output resourceId string = ((newOrExisting == 'new') ? aiNew.id : aiExisting.id)
 
 @description('The applicationInsights Instrumentation Key.')
-output appInsInstrumentationKey string = applicationInsights.properties.InstrumentationKey
+output instrumentationKey string = ((newOrExisting == 'new') ? aiNew.properties.InstrumentationKey : aiExisting.properties.InstrumentationKey)
 
 @description('The applicationInsights Connection String.')
-output appInsConnectionString string = applicationInsights.properties.ConnectionString
-
-@description('The application ID of the application insights component.')
-output applicationId string = applicationInsights.properties.AppId
+output connectionString string = ((newOrExisting == 'new') ? aiNew.properties.ConnectionString : aiExisting.properties.ConnectionString)

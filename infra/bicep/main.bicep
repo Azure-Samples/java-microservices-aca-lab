@@ -129,7 +129,6 @@ module mysql 'modules/database/mysql.bicep' = {
     administratorLoginPassword: sqlAdminPassword
     serverName: !empty(sqlServerName) ? sqlServerName : '${abbrs.sqlServers}${environmentName}'
     databaseName: 'petclinic'
-    version: '8.0.21'
   }
 }
 
@@ -150,7 +149,7 @@ module applications 'modules/app/petclinic.bicep' = {
     visitsServiceImage: visitsServiceImage
     adminServerImage: adminServerImage
     targetPort: 8080
-    applicationInsightsConnString: applicationInsights.outputs.appInsConnectionString
+    applicationInsightsConnString: applicationInsights.outputs.connectionString
   }
 }
 
