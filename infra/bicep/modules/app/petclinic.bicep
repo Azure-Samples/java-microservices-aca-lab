@@ -78,7 +78,7 @@ module customerService '../containerapps/containerapp.bicep' = {
       }
       {
         name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
-        value: '{"role": {"name": "api-gateway"}}'
+        value: '{"role": {"name": "customers-service"}}'
       }
     ])
   }
@@ -107,7 +107,7 @@ module vetsService '../containerapps/containerapp.bicep' = {
       }
       {
         name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
-        value: '{"role": {"name": "api-gateway"}}'
+        value: '{"role": {"name": "vets-service"}}'
       }
     ])
   }
@@ -136,7 +136,7 @@ module visitsService '../containerapps/containerapp.bicep' = {
       }
       {
         name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
-        value: '{"role": {"name": "api-gateway"}}'
+        value: '{"role": {"name": "visits-service"}}'
       }
     ])
   }
@@ -163,7 +163,7 @@ module adminServer '../containerapps/containerapp.bicep' = {
       }
       {
         name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
-        value: '{"role": {"name": "api-gateway"}}'
+        value: '{"role": {"name": "admin-server"}}'
       }
     ])
   }
