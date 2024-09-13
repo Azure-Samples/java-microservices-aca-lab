@@ -12,7 +12,7 @@
             "value": "Password#123"
         },
         "configGitRepo": {
-            "value": "https://github.com/sonwan2020/java-microservices-aca-lab"
+            "value": "https://github.com/Azure-Samples/java-microservices-aca-lab"
         },
         "configGitPath": {
             "value": "config"

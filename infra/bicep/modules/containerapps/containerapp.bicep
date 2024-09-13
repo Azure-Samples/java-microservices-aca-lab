@@ -31,14 +31,12 @@ resource app 'Microsoft.App/containerApps@2024-02-02-preview' = {
         external: external
         targetPort: targetPort
       }
-      registries: containerRegistryUserAssignedIdentityId == null
-        ? null
-        : [
-            {
-              server: registry
-              identity: containerRegistryUserAssignedIdentityId
-            }
-          ]
+      registries: containerRegistryUserAssignedIdentityId == null ? null : [
+        {
+          server: registry
+          identity: containerRegistryUserAssignedIdentityId
+        }
+      ]
       runtime: {
         java: {
           enableMetrics: true
