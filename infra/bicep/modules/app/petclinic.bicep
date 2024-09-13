@@ -41,16 +41,15 @@ module apiGateway '../containerapps/containerapp.bicep' = {
     targetPort: targetPort
     createSqlConnection: false
     env: concat(env, empty(applicationInsightsConnString) ? [] : [
-        {
-          name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
-          value: applicationInsightsConnString
-        }
-        {
-          name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
-          value: '{"role": {"name": "api-gateway"}}'
-        }
-      ]
-    )
+      {
+        name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
+        value: applicationInsightsConnString
+      }
+      {
+        name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
+        value: '{"role": {"name": "api-gateway"}}'
+      }
+    ])
   }
 }
 
@@ -73,16 +72,15 @@ module customerService '../containerapps/containerapp.bicep' = {
     readinessProbeInitialDelaySeconds: 20
     livenessProbeInitialDelaySeconds: 40
     env: concat(env, empty(applicationInsightsConnString) ? [] : [
-        {
-          name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
-          value: applicationInsightsConnString
-        }
-        {
-          name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
-          value: '{"role": {"name": "api-gateway"}}'
-        }
-      ]
-    )
+      {
+        name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
+        value: applicationInsightsConnString
+      }
+      {
+        name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
+        value: '{"role": {"name": "api-gateway"}}'
+      }
+    ])
   }
 }
 
@@ -103,16 +101,15 @@ module vetsService '../containerapps/containerapp.bicep' = {
     mysqlDBId: mysqlDBId
     mysqlUserAssignedIdentityClientId: mysqlUserAssignedIdentityClientId
     env: concat(env, empty(applicationInsightsConnString) ? [] : [
-        {
-          name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
-          value: applicationInsightsConnString
-        }
-        {
-          name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
-          value: '{"role": {"name": "api-gateway"}}'
-        }
-      ]
-    )
+      {
+        name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
+        value: applicationInsightsConnString
+      }
+      {
+        name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
+        value: '{"role": {"name": "api-gateway"}}'
+      }
+    ])
   }
 }
 
@@ -133,16 +130,15 @@ module visitsService '../containerapps/containerapp.bicep' = {
     mysqlDBId: mysqlDBId
     mysqlUserAssignedIdentityClientId: mysqlUserAssignedIdentityClientId
     env: concat(env, empty(applicationInsightsConnString) ? [] : [
-        {
-          name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
-          value: applicationInsightsConnString
-        }
-        {
-          name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
-          value: '{"role": {"name": "api-gateway"}}'
-        }
-      ]
-    )
+      {
+        name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
+        value: applicationInsightsConnString
+      }
+      {
+        name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
+        value: '{"role": {"name": "api-gateway"}}'
+      }
+    ])
   }
 }
 
@@ -161,16 +157,15 @@ module adminServer '../containerapps/containerapp.bicep' = {
     targetPort: targetPort
     createSqlConnection: false
     env: concat(env, empty(applicationInsightsConnString) ? [] : [
-        {
-          name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
-          value: applicationInsightsConnString
-        }
-        {
-          name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
-          value: '{"role": {"name": "api-gateway"}}'
-        }
-      ]
-    )
+      {
+        name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
+        value: applicationInsightsConnString
+      }
+      {
+        name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
+        value: '{"role": {"name": "api-gateway"}}'
+      }
+    ])
   }
 }
 
