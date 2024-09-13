@@ -40,16 +40,21 @@ module apiGateway '../containerapps/containerapp.bicep' = {
     external: true
     targetPort: targetPort
     createSqlConnection: false
-    env: concat(env, empty(applicationInsightsConnString) ? [] : [
-      {
-        name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
-        value: applicationInsightsConnString
-      }
-      {
-        name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
-        value: '{"role": {"name": "api-gateway"}}'
-      }
-    ])
+    env: concat(
+      env,
+      empty(applicationInsightsConnString)
+        ? []
+        : [
+            {
+              name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
+              value: applicationInsightsConnString
+            }
+            {
+              name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
+              value: '{"role": {"name": "api-gateway"}}'
+            }
+          ]
+    )
   }
 }
 
@@ -69,16 +74,23 @@ module customerService '../containerapps/containerapp.bicep' = {
     createSqlConnection: true
     mysqlDBId: mysqlDBId
     mysqlUserAssignedIdentityClientId: mysqlUserAssignedIdentityClientId
-    env: concat(env, empty(applicationInsightsConnString) ? [] : [
-      {
-        name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
-        value: applicationInsightsConnString
-      }
-      {
-        name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
-        value: '{"role": {"name": "customers-service"}}'
-      }
-    ])
+    readinessProbeInitialDelaySeconds: 20
+    livenessProbeInitialDelaySeconds: 40
+    env: concat(
+      env,
+      empty(applicationInsightsConnString)
+        ? []
+        : [
+            {
+              name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
+              value: applicationInsightsConnString
+            }
+            {
+              name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
+              value: '{"role": {"name": "customers-service"}}'
+            }
+          ]
+    )
   }
 }
 
@@ -98,16 +110,21 @@ module vetsService '../containerapps/containerapp.bicep' = {
     createSqlConnection: true
     mysqlDBId: mysqlDBId
     mysqlUserAssignedIdentityClientId: mysqlUserAssignedIdentityClientId
-    env: concat(env, empty(applicationInsightsConnString) ? [] : [
-      {
-        name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
-        value: applicationInsightsConnString
-      }
-      {
-        name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
-        value: '{"role": {"name": "vets-service"}}'
-      }
-    ])
+    env: concat(
+      env,
+      empty(applicationInsightsConnString)
+        ? []
+        : [
+            {
+              name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
+              value: applicationInsightsConnString
+            }
+            {
+              name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
+              value: '{"role": {"name": "vets-service"}}'
+            }
+          ]
+    )
   }
 }
 
@@ -127,16 +144,21 @@ module visitsService '../containerapps/containerapp.bicep' = {
     createSqlConnection: true
     mysqlDBId: mysqlDBId
     mysqlUserAssignedIdentityClientId: mysqlUserAssignedIdentityClientId
-    env: concat(env, empty(applicationInsightsConnString) ? [] : [
-      {
-        name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
-        value: applicationInsightsConnString
-      }
-      {
-        name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
-        value: '{"role": {"name": "visits-service"}}'
-      }
-    ])
+    env: concat(
+      env,
+      empty(applicationInsightsConnString)
+        ? []
+        : [
+            {
+              name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
+              value: applicationInsightsConnString
+            }
+            {
+              name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
+              value: '{"role": {"name": "visits-service"}}'
+            }
+          ]
+    )
   }
 }
 
@@ -154,16 +176,21 @@ module adminServer '../containerapps/containerapp.bicep' = {
     external: true
     targetPort: targetPort
     createSqlConnection: false
-    env: concat(env, empty(applicationInsightsConnString) ? [] : [
-      {
-        name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
-        value: applicationInsightsConnString
-      }
-      {
-        name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
-        value: '{"role": {"name": "admin-server"}}'
-      }
-    ])
+    env: concat(
+      env,
+      empty(applicationInsightsConnString)
+        ? []
+        : [
+            {
+              name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
+              value: applicationInsightsConnString
+            }
+            {
+              name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
+              value: '{"role": {"name": "admin-server"}}'
+            }
+          ]
+    )
   }
 }
 

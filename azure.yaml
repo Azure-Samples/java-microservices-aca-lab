@@ -65,4 +65,3 @@ hooks:
     posix:
       shell: sh
       run: 'cd src; chmod +x ./mvnw; ./mvnw package -DskipTests'
-

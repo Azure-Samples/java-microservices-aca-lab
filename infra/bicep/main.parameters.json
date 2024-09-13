@@ -18,10 +18,10 @@
             "value": "config"
         },
         "acrRegistry": {
-            "value": "sonwanacr.azurecr.io"
+            "value": "<your-acr>.azurecr.io"
         },
         "acrIdentityId": {
-            "value": "/subscriptions/d0822b01-62ea-4eb9-885b-95c60e4250b4/resourcegroups/capps-sonwan-dev-rg/providers/microsoft.managedidentity/userassignedidentities/umi-sonwanacr"
+            "value": "<acr-repo-user-mi-id>"
         },
         "apiGatewayImage": {
             "value": "java-microservices-aca-lab/spring-petclinic-api-gateway:passwordless"
@@ -39,7 +39,7 @@
             "value": "java-microservices-aca-lab/spring-petclinic-admin-server:passwordless"
         },
         "applicationInsightsConnString": {
-            "value": "InstrumentationKey=28ceb383-eaf8-484d-ae55-fdcff27cf4b0;IngestionEndpoint=https://eastus-8.in.applicationinsights.azure.com/;LiveEndpoint=https://eastus.livediagnostics.monitor.azure.com/;ApplicationId=aae093f1-4b3d-46ec-80e1-3ab4c684ea75"
+            "value": "<application-insights-connection-string>"
         }
     }
 }
