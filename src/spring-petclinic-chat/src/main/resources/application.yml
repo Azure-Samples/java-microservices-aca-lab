@@ -1,0 +1,25 @@
+spring:
+  web:
+    resources:
+      cache:
+        cachecontrol:
+          max-age: 12h
+  ai:
+    azure:
+      openai:
+        api-key: YOUR_API_KEY
+        endpoint: YOUR_API_ENDPOINT
+        chat:
+          options:
+            deployment-name: gpt-4
+            temperature: 0.8
+        embedding:
+          options:
+            deployment-name: text-embedding-ada-002
+    chat:
+      client:
+        enabled: true
+
+petclinic:
+  agent:
+    name: Petclinic Agent
