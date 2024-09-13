@@ -18,10 +18,10 @@
             "value": "config"
         },
         "acrRegistry": {
-            "value": "sonwanacr.azurecr.io"
+            "value": "<your-acr>.azurecr.io"
         },
         "acrIdentityId": {
-            "value": "/subscriptions/d0822b01-62ea-4eb9-885b-95c60e4250b4/resourcegroups/capps-sonwan-dev-rg/providers/microsoft.managedidentity/userassignedidentities/umi-sonwanacr"
+            "value": "<acr-repo-user-mi-id>"
         },
         "apiGatewayImage": {
             "value": "java-microservices-aca-lab/spring-petclinic-api-gateway:passwordless"
