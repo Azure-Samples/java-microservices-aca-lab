@@ -21,6 +21,7 @@
         <module>spring-petclinic-vets-service</module>
         <module>spring-petclinic-visits-service</module>
         <module>spring-petclinic-api-gateway</module>
+        <module>spring-petclinic-chat</module>
     </modules>
 
     <properties>
