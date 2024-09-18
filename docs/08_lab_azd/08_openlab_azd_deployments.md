@@ -1,7 +1,7 @@
 ---
-title: 'Lab 7: Use Azd to deploy the lab solution'
+title: 'Lab 8: Use Azd to deploy the lab solution'
 layout: default
-nav_order: 9
+nav_order: 10
 has_children: true
 ---
 

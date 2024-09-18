@@ -16,6 +16,7 @@ This lab has modules on:
 * Migrate a Spring Apps microservices application to Azure Container Apps Service
 * Enable monitoring and end-to-end tracing
 * Secure application secrets using Key Vault
+* Build intelligent Spring Apps with Azure OpenAI
 * Protect endpoints using Web Application Firewalls
 * Secure MySQL database and Key Vault using a Private Endpoint
 
