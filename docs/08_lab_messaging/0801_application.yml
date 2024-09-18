@@ -19,12 +19,12 @@ spring:
       mode: ALWAYS
   jms:
     servicebus:
-      namespace: <your-service-bus-namespace>
+      namespace: ${SERVICEBUS_NAMESPACE}
       pricing-tier: premium
       passwordless-enabled: true
       credential:
         managed-identity-enabled: true
-        client-id: <your-identity-cliend-id>
+        client-id: ${CLIENT_ID}
   sleuth:
     sampler:
       probability: 1.0
