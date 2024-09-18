@@ -27,6 +27,7 @@
         <maven-checkstyle.version>3.3.1</maven-checkstyle.version>
         <nohttp-checkstyle.version>0.0.11</nohttp-checkstyle.version>
         <spring-format.version>0.0.41</spring-format.version>
+        <azure-identity.version>1.13.2</azure-identity.version>
     </properties>
 
     <dependencyManagement>
@@ -72,6 +73,15 @@
             <artifactId>spring-websocket</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-azure-openai</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.azure</groupId>
+            <artifactId>azure-identity</artifactId>
+            <version>${azure-identity.version}</version>
+        </dependency>
 
         <!-- Webjars -->
         <dependency>

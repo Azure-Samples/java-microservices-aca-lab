@@ -7,7 +7,6 @@ spring:
   ai:
     azure:
       openai:
-        api-key: YOUR_API_KEY
         endpoint: YOUR_API_ENDPOINT
         chat:
           options:
