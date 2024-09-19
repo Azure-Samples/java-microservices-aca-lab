@@ -20,7 +20,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <spring-boot-admin.version>3.0.0-M8</spring-boot-admin.version>
+        <spring-boot-admin.version>3.2.3</spring-boot-admin.version>
         <docker.image.exposed.port>9090</docker.image.exposed.port>
         <docker.image.dockerfile.dir>${basedir}/../docker</docker.image.dockerfile.dir>
     </properties>

@@ -37,8 +37,8 @@ spring:
   ai:
     azure:
       openai:
-        endpoint: https://haozhan-openai.openai.azure.com/
-        client-id: 679e595c-c11d-4c91-852c-516b7787f4dd
+        endpoint: ${AZURE_OPENAI_ENDPOINT}
+        client-id: ${CLIENT_ID}
         chat:
           options:
             deployment-name: gpt-4o
