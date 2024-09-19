@@ -24,13 +24,15 @@ param configGitRepo string
 param configGitBranch string = 'main'
 param configGitPath string
 
-param acrRegistry string
-param acrIdentityId string
-param apiGatewayImage string
-param customersServiceImage string
-param vetsServiceImage string
-param visitsServiceImage string
-param adminServerImage string
+param acrName string
+param acrGroupName string = ''
+param acrSubscription string = ''
+
+param apiGatewayImage string = 'azuredocs/containerapps-helloworld:latest'
+param customersServiceImage string = 'azuredocs/containerapps-helloworld:latest'
+param vetsServiceImage string = 'azuredocs/containerapps-helloworld:latest'
+param visitsServiceImage string = 'azuredocs/containerapps-helloworld:latest'
+param adminServerImage string = 'azuredocs/containerapps-helloworld:latest'
 
 param logAnalyticsName string = ''
 param applicationInsightsName string = ''
@@ -82,6 +84,36 @@ module logAnalytics 'modules/shared/logAnalyticsWorkspace.bicep' = {
   params: {
     name: !empty(logAnalyticsName) ? logAnalyticsName : 'la-${environmentName}'
     tags: tags
+    newOrExisting: 'existing'
+  }
+}
+
+var acrname = !empty(acrName) ? acrName : 'acr${uniqueString(environmentName)}'
+
+module umiAcrPull 'modules/shared/userAssignedIdentity.bicep' = {
+  name: 'umi-acr-pull'
+  scope: rg
+  params: {
+    name: 'umi-${acrname}-acrpull'
+  }
+}
+
+// group id: /subscriptions/<subscriptionId>/resourceGroups/<groupName>
+var acrSub = !empty(acrSubscription) ? acrSubscription : split(rg.id, '/')[2]
+var acrGroup = !empty(acrGroupName) ? acrGroupName : rg.name
+
+@description('roles for Azure Container Registry')
+module acrRoleAssignments 'modules/shared/containerRegistryRoleAssignment.bicep' = {
+  name: 'acr-roles-assignments'
+  scope: resourceGroup(acrSub, acrGroup)
+  params: {
+    name: acrName
+    roleAssignments: [
+      {
+        principalId: umiAcrPull.outputs.principalId
+        roleDefinitionIdOrName: 'AcrPull'
+      }
+    ]
   }
 }
 
@@ -94,6 +126,7 @@ module applicationInsights 'modules/shared/applicationInsights.bicep' = {
     location: location
     workspaceResourceId: logAnalytics.outputs.logAnalyticsWsId
     tags: tags
+    newOrExisting: 'existing'
   }
 }
 
@@ -129,6 +162,7 @@ module mysql 'modules/database/mysql.bicep' = {
     administratorLoginPassword: sqlAdminPassword
     serverName: !empty(sqlServerName) ? sqlServerName : '${abbrs.sqlServers}${environmentName}'
     databaseName: 'petclinic'
+    newOrExisting: 'existing'
   }
 }
 
@@ -141,8 +175,8 @@ module applications 'modules/app/petclinic.bicep' = {
     configServerId: javaComponents.outputs.configServerId
     mysqlDBId: mysql.outputs.databaseId
     mysqlUserAssignedIdentityClientId: mysql.outputs.userAssignedIdentityClientId
-    acrRegistry: acrRegistry
-    acrIdentityId: acrIdentityId
+    acrRegistry: '${acrRoleAssignments.outputs.registryName}.azurecr.io'  // add dependency to make sure rolea are assigned
+    acrIdentityId: umiAcrPull.outputs.id
     apiGatewayImage: apiGatewayImage
     customersServiceImage: customersServiceImage
     vetsServiceImage: vetsServiceImage

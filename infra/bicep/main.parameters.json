@@ -17,26 +17,8 @@
         "configGitPath": {
             "value": "config"
         },
-        "acrRegistry": {
-            "value": "<your-acr>.azurecr.io"
-        },
-        "acrIdentityId": {
-            "value": "<acr-repo-user-mi-id>"
-        },
-        "apiGatewayImage": {
-            "value": "java-microservices-aca-lab/spring-petclinic-api-gateway:passwordless"
-        },
-        "customersServiceImage": {
-            "value": "java-microservices-aca-lab/spring-petclinic-customers-service:passwordless"
-        },
-        "vetsServiceImage": {
-            "value": "java-microservices-aca-lab/spring-petclinic-vets-service:passwordless"
-        },
-        "visitsServiceImage": {
-            "value": "java-microservices-aca-lab/spring-petclinic-visits-service:passwordless"
-        },
-        "adminServerImage": {
-            "value": "java-microservices-aca-lab/spring-petclinic-admin-server:passwordless"
+        "acrName": {
+            "value": "acrpetclinic"
         }
     }
 }

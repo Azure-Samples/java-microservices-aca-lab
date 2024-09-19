@@ -13,7 +13,7 @@ services:
     host: containerapp
     language: java
     docker:
-      registry: sonwanacr.azurecr.io
+      registry: acrpetclinic.azurecr.io
       image: java-microservices-aca-lab/spring-petclinic-api-gateway
       tag: passwordless
 
@@ -23,7 +23,7 @@ services:
     host: containerapp
     language: java
     docker:
-      registry: sonwanacr.azurecr.io
+      registry: acrpetclinic.azurecr.io
       image: java-microservices-aca-lab/spring-petclinic-customers-service
       tag: passwordless
 
@@ -33,7 +33,7 @@ services:
     host: containerapp
     language: java
     docker:
-      registry: sonwanacr.azurecr.io
+      registry: acrpetclinic.azurecr.io
       image: java-microservices-aca-lab/spring-petclinic-vets-service
       tag: passwordless
 
@@ -43,7 +43,7 @@ services:
     host: containerapp
     language: java
     docker:
-      registry: sonwanacr.azurecr.io
+      registry: acrpetclinic.azurecr.io
       image: java-microservices-aca-lab/spring-petclinic-visits-service
       tag: passwordless
 
@@ -53,7 +53,7 @@ services:
     host: containerapp
     language: java
     docker:
-      registry: sonwanacr.azurecr.io
+      registry: acrpetclinic.azurecr.io
       image: java-microservices-aca-lab/spring-petclinic-admin-server
       tag: passwordless
 

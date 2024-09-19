@@ -30,12 +30,12 @@ param tags object = {}
 param version string = '8.0.21'
 
 resource mysqlUserAssignedIdentityRW 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
-  name: 'mysqluserassignedidentity-rw'
+  name: 'umi-${serverName}-rw'
   location: location
 }
 
 resource mysqlUserAssignedIdentityAdmin 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
-  name: 'mysqluserassignedidentity-admin'
+  name: 'umi-${serverName}-admin'
   location: location
 }
 
@@ -110,7 +110,10 @@ resource databaseExisting 'Microsoft.DBforMySQL/flexibleServers/databases@2023-0
   }
 }
 
+// var database = (newOrExisting == 'new') ? databaseNew : databaseExisting
+
 @description('The resource id of the database.')
+// output databaseId string = database.id
 output databaseId string = ((newOrExisting == 'new') ? databaseNew.id : databaseExisting.id)
 
 @description('The client id of the user assigned identity with r/w permission.')
