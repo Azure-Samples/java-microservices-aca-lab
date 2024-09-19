@@ -62,7 +62,7 @@ public class AgentConfig {
 	 * Configure a bean of type OpenAIClient, which is used to construct ChatModel and EmbeddingModel
 	 */
 	@Bean
-	@ConditionalOnProperty(ChatModelProperties.PREFIX + ".client-id")
+	@ConditionalOnProperty(ChatModelProperties.PREFIX + ".endpoint")
 	public OpenAIClient openAIClient(ChatModelProperties properties) {
 		return new OpenAIClientBuilder()
 			.endpoint(properties.getEndpoint())
