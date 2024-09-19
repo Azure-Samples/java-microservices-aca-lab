@@ -12,6 +12,13 @@ param location string = resourceGroup().location
 
 param tags object = {}
 
+@description('Optional. Determines whether or not new Log Analytics Workspace Service should be provisioned.')
+@allowed([
+  'new'
+  'existing'
+])
+param newOrExisting string = 'new'
+
 @description('Optional. Service Tier: PerGB2018, Free, Standalone, PerGB or PerNode.')
 @allowed([
   'Free'
@@ -47,7 +54,7 @@ var lawsMaxLength = 63
 var lawsNameSantized = replace(replace(name, '_', '-'), '.', '-')
 var lawsName = length(lawsNameSantized) > lawsMaxLength ? substring(lawsNameSantized, 0, lawsMaxLength) : lawsNameSantized
 
-resource laws 'Microsoft.OperationalInsights/workspaces@2023-09-01' = {
+resource lawsNew 'Microsoft.OperationalInsights/workspaces@2023-09-01' = if (newOrExisting == 'new') {
   location: location
   name: lawsName
   tags: tags
@@ -64,8 +71,12 @@ resource laws 'Microsoft.OperationalInsights/workspaces@2023-09-01' = {
   }
 }
 
+resource lawsExisting 'Microsoft.OperationalInsights/workspaces@2023-09-01' existing = if (newOrExisting == 'existing') {
+  name: name
+}
+
 @description('The name of the resource.')
-output logAnalyticsWsName string = laws.name
+output logAnalyticsWsName string = ((newOrExisting == 'new') ? lawsNew.name : lawsExisting.name)
 
 @description('The resource ID of the resource.')
-output logAnalyticsWsId string = laws.id
+output logAnalyticsWsId string = ((newOrExisting == 'new') ? lawsNew.id : lawsExisting.id)

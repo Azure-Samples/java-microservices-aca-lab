@@ -27,7 +27,7 @@ resource app 'Microsoft.App/containerApps@2024-02-02-preview' = {
   properties: {
     managedEnvironmentId: managedEnvironmentId
     configuration: {
-      ingress:{
+      ingress: {
         external: external
         targetPort: targetPort
       }

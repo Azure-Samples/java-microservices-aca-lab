@@ -14,6 +14,9 @@ spring:
       data-locations: classpath*:db/mysql/data.sql
       mode: ALWAYS
   jms:
+    queue:
+      visits-requests: visits-requests
+      visits-confirmations: visits-confirmations
     servicebus:
       namespace: ${SERVICEBUS_NAMESPACE}
       pricing-tier: premium

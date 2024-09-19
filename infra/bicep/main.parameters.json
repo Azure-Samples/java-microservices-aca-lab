@@ -6,10 +6,10 @@
             "value": false
         },
         "sqlAdmin": {
-            "value": "<sql-admin>"
+            "value": "azureuser"
         },
         "sqlAdminPassword": {
-            "value": "<sql-admin-password>"
+            "value": "Password#123"
         },
         "configGitRepo": {
             "value": "https://github.com/Azure-Samples/java-microservices-aca-lab"
@@ -26,7 +26,7 @@
         "apiGatewayImage": {
             "value": "java-microservices-aca-lab/spring-petclinic-api-gateway:passwordless"
         },
-        "customerServiceImage": {
+        "customersServiceImage": {
             "value": "java-microservices-aca-lab/spring-petclinic-customers-service:passwordless"
         },
         "vetsServiceImage": {
@@ -37,9 +37,6 @@
         },
         "adminServerImage": {
             "value": "java-microservices-aca-lab/spring-petclinic-admin-server:passwordless"
-        },
-        "applicationInsightsConnString": {
-            "value": "<application-insights-connection-string>"
         }
     }
 }
