@@ -40,6 +40,8 @@
         <docker.plugin.version>1.2.0</docker.plugin.version>
 
         <version.spring.cloud.azure>5.15.0</version.spring.cloud.azure>
+
+        <spring-ai.version>1.0.0-SNAPSHOT</spring-ai.version>
     </properties>
 
     <dependencyManagement>
@@ -74,6 +76,15 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependencies>
+                <dependency>
+                    <groupId>org.springframework.ai</groupId>
+                    <artifactId>spring-ai-bom</artifactId>
+                    <version>${spring-ai.version}</version>
+                    <type>pom</type>
+                    <scope>import</scope>
+                </dependency>
+            </dependencies>
         </dependencies>
     </dependencyManagement>
 
