@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.visits.service;
 
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.samples.petclinic.visits.entities.VisitRequest;
@@ -21,17 +22,23 @@ public class VisitsReceiver {
 
     private final JmsTemplate jmsTemplate;
 
-    @JmsListener(destination = "visits-requests")
+    @Value("${spring.jms.queue.visits-requests:visits-requests}")
+    private String requestQueueName;
+
+    @Value("${spring.jms.queue.visits-responses:visits-confirmations}")
+    private String confirmationsQueueName;
+
+    @JmsListener(destination = requestQueueName)
     void receiveVisitRequests(VisitRequest visitRequest) {
         log.info("Received message: {}", visitRequest.getMessage());
         try {
             Visit visit = new Visit(null, new Date(), visitRequest.getMessage(),
                 visitRequest.getPetId());
             visitsRepository.save(visit);
-            jmsTemplate.convertAndSend("visits-confirmations", new VisitResponse(visitRequest.getRequestId(), true, "Your visit request has been accepted"));
+            jmsTemplate.convertAndSend(confirmationsQueueName, new VisitResponse(visitRequest.getRequestId(), true, "Your visit request has been accepted"));
         } catch (Exception ex) {
             log.error("Error saving visit: {}", ex.getMessage());
-            jmsTemplate.convertAndSend("visits-confirmations", new VisitResponse(visitRequest.getRequestId(), false, ex.getMessage()));
+            jmsTemplate.convertAndSend(confirmationsQueueName, new VisitResponse(visitRequest.getRequestId(), false, ex.getMessage()));
         }
     }
 

@@ -7,6 +7,9 @@ spring:
       schema-locations: classpath*:db/hsqldb/schema.sql
       data-locations: classpath*:db/hsqldb/data.sql
   jms:
+    queue:
+      visits-requests: visits-requests
+      visits-confirmations: visits-confirmations
     servicebus:
       namespace: ${SERVICEBUS_NAMESPACE}
       pricing-tier: premium
