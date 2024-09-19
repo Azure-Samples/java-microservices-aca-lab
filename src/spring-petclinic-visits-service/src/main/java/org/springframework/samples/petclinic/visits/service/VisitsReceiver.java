@@ -28,7 +28,7 @@ public class VisitsReceiver {
     @Value("${spring.jms.queue.visits-responses:visits-confirmations}")
     private String confirmationsQueueName;
 
-    @JmsListener(destination = requestQueueName)
+    @JmsListener(destination = "#{@QueueConfig.visitsResponsesQueue}")
     void receiveVisitRequests(VisitRequest visitRequest) {
         log.info("Received message: {}", visitRequest.getMessage());
         try {
