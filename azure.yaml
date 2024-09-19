@@ -1,6 +1,67 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
 
 name: java-microservices-aca-lab
+resourceGroup: rg-sonwan-petclinic
 infra:
   provider: bicep
   path: infra/bicep
+
+services:
+  api-gateway:
+    resourceName: api-gateway
+    project: ./src/spring-petclinic-api-gateway
+    host: containerapp
+    language: java
+    docker:
+      registry: sonwanacr.azurecr.io
+      image: java-microservices-aca-lab/spring-petclinic-api-gateway
+      tag: passwordless
+
+  customers-service:
+    resourceName: customers-service
+    project: ./src/spring-petclinic-customers-service
+    host: containerapp
+    language: java
+    docker:
+      registry: sonwanacr.azurecr.io
+      image: java-microservices-aca-lab/spring-petclinic-customers-service
+      tag: passwordless
+
+  vets-service:
+    resourceName: vets-service
+    project: ./src/spring-petclinic-vets-service
+    host: containerapp
+    language: java
+    docker:
+      registry: sonwanacr.azurecr.io
+      image: java-microservices-aca-lab/spring-petclinic-vets-service
+      tag: passwordless
+
+  visits-service:
+    resourceName: visits-service
+    project: ./src/spring-petclinic-visits-service
+    host: containerapp
+    language: java
+    docker:
+      registry: sonwanacr.azurecr.io
+      image: java-microservices-aca-lab/spring-petclinic-visits-service
+      tag: passwordless
+
+  admin-server:
+    resourceName: admin-server
+    project: ./src/spring-petclinic-admin-server
+    host: containerapp
+    language: java
+    docker:
+      registry: sonwanacr.azurecr.io
+      image: java-microservices-aca-lab/spring-petclinic-admin-server
+      tag: passwordless
+
+hooks:
+  prepackage:
+    windows:
+      shell: pwsh
+      run: 'cd src; .\mvnw.cmd package -DskipTests'
+    posix:
+      shell: sh
+      run: 'cd src; chmod +x ./mvnw; ./mvnw package -DskipTests'

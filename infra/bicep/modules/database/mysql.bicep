@@ -1,16 +1,33 @@
 targetScope = 'resourceGroup'
 
+@description('Required. Name of your MySQL server.')
+param serverName string
+
 @description('The location where the resources will be created.')
 param location string = resourceGroup().location
 
+@description('The server admin login name.')
 param administratorLogin string
+
+@description('The server admin login password.')
 @secure()
 param administratorLoginPassword string
 
-param serverName string
+@description('The name of the database to create.')
 param databaseName string
-param version string
+
+@description('Optional. Determines whether or not new ApplicationInsights should be provisioned.')
+@allowed([
+  'new'
+  'existing'
+])
+param newOrExisting string = 'new'
+
+@description('Optional. Tags of the resource.')
 param tags object = {}
+
+@description('Optional. The version of MySQL.')
+param version string = '8.0.21'
 
 resource mysqlUserAssignedIdentityRW 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
   name: 'mysqluserassignedidentity-rw'
@@ -22,7 +39,8 @@ resource mysqlUserAssignedIdentityAdmin 'Microsoft.ManagedIdentity/userAssignedI
   location: location
 }
 
-resource server 'Microsoft.DBforMySQL/flexibleServers@2023-06-30' = {
+// new
+resource serverNew 'Microsoft.DBforMySQL/flexibleServers@2023-06-30' = if (newOrExisting == 'new') {
   name: serverName
   location: location
   tags: tags
@@ -59,17 +77,17 @@ resource server 'Microsoft.DBforMySQL/flexibleServers@2023-06-30' = {
   }
 }
 
-resource SQLAllConnectionsAllowed 'Microsoft.DBforMySQL/flexibleServers/firewallRules@2023-06-30' = {
+resource SQLAllConnectionsAllowed 'Microsoft.DBforMySQL/flexibleServers/firewallRules@2023-06-30' = if (newOrExisting == 'new') {
   name: 'AllConnectionsAllowed'
-  parent: server
+  parent: serverNew
   properties: {
     startIpAddress: '0.0.0.0'
     endIpAddress: '255.255.255.255'
   }
 }
 
-resource database 'Microsoft.DBforMySQL/flexibleServers/databases@2023-06-30' = {
-  parent: server
+resource databaseNew 'Microsoft.DBforMySQL/flexibleServers/databases@2023-06-30' = if (newOrExisting == 'new') {
+  parent: serverNew
   name: databaseName
   properties: {
     charset: 'utf8'
@@ -77,6 +95,26 @@ resource database 'Microsoft.DBforMySQL/flexibleServers/databases@2023-06-30' = 
   }
 }
 
-output databaseId string = database.id
+// existing
+resource serverExisting 'Microsoft.DBforMySQL/flexibleServers@2023-06-30' existing = if (newOrExisting == 'existing') {
+  name: serverName
+}
+
+// the 'parent' property only permit direct references to resources
+resource databaseExisting 'Microsoft.DBforMySQL/flexibleServers/databases@2023-06-30' = if (newOrExisting == 'existing') {
+  parent: serverExisting
+  name: databaseName
+  properties: {
+    charset: 'utf8'
+    collation: 'utf8_general_ci'
+  }
+}
+
+@description('The resource id of the database.')
+output databaseId string = ((newOrExisting == 'new') ? databaseNew.id : databaseExisting.id)
+
+@description('The client id of the user assigned identity with r/w permission.')
 output userAssignedIdentityClientId string = mysqlUserAssignedIdentityRW.properties.clientId
+
+@description('The resource id of the user assigned identity with r/w permission.')
 output userAssignedIdentity string = mysqlUserAssignedIdentityRW.id
