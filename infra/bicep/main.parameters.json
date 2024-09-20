@@ -23,6 +23,12 @@
         "acrIdentityId": {
             "value": "<acr-repo-user-mi-id>"
         },
+        "miClientId": {
+            "value": "<mi-principal-id>"
+        },
+        "miPrincipalId": {
+            "value": "<mi-client-id>"
+        },
         "apiGatewayImage": {
             "value": "java-microservices-aca-lab/spring-petclinic-api-gateway:passwordless"
         },
@@ -34,6 +40,9 @@
         },
         "visitsServiceImage": {
             "value": "java-microservices-aca-lab/spring-petclinic-visits-service:passwordless"
+        },
+        "chatAgentImage": {
+            "value": "java-microservices-aca-lab/spring-petclinic-chat-agent:passwordless"
         },
         "adminServerImage": {
             "value": "java-microservices-aca-lab/spring-petclinic-admin-server:passwordless"

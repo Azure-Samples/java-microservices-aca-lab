@@ -26,11 +26,14 @@ param configGitPath string
 
 param acrRegistry string
 param acrIdentityId string
+param miClientId string
+param miPrincipalId string
 param apiGatewayImage string
 param customersServiceImage string
 param vetsServiceImage string
 param visitsServiceImage string
 param adminServerImage string
+param chatAgentImage string
 
 param logAnalyticsName string = ''
 param applicationInsightsName string = ''
@@ -132,6 +135,16 @@ module mysql 'modules/database/mysql.bicep' = {
   }
 }
 
+module openai 'modules/ai/openai.bicep' = {
+  name: 'openai'
+  scope: rg
+  params: {
+    accountName: 'openai-${environmentName}'
+    location: location
+    appPrincipalId: miPrincipalId
+  }
+}
+
 module applications 'modules/app/petclinic.bicep' = {
   name: 'petclinic-microservices'
   scope: rg
@@ -148,8 +161,11 @@ module applications 'modules/app/petclinic.bicep' = {
     vetsServiceImage: vetsServiceImage
     visitsServiceImage: visitsServiceImage
     adminServerImage: adminServerImage
+    chatAgentImage: chatAgentImage
     targetPort: 8080
     applicationInsightsConnString: applicationInsights.outputs.connectionString
+    azureOpenAiEndpoint: openai.outputs.endpoint
+    openAiClientId: acrIdentityId
   }
 }
 

@@ -15,8 +15,11 @@ param customersServiceImage string
 param vetsServiceImage string
 param visitsServiceImage string
 param adminServerImage string
+param chatAgentImage string
 
 param applicationInsightsConnString string = ''
+param azureOpenAiEndpoint string
+param openAiClientId string
 
 param targetPort int = 8080
 
@@ -137,6 +140,33 @@ module visitsService '../containerapps/containerapp.bicep' = {
       {
         name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
         value: '{"role": {"name": "visits-service"}}'
+      }
+    ])
+  }
+}
+
+module chatAgent '../containerapps/containerapp.bicep' = {
+  name: 'chat-agent'
+  params: {
+    location: environment.location
+    managedEnvironmentId: environment.id
+    appName: 'chat-agent'
+    eurekaId: eurekaId
+    configServerId: configServerId
+    registry: acrRegistry
+    image: chatAgentImage
+    containerRegistryUserAssignedIdentityId: acrIdentityId
+    external: true
+    targetPort: targetPort
+    createSqlConnection: false
+    env: concat(env, empty(applicationInsightsConnString) ? [] : [
+      {
+        name: 'SPRING_AI_AZURE_OPENAI_ENDPOINT'
+        value: azureOpenAiEndpoint
+      }
+      {
+        name: 'SPRING_AI_AZURE_OPENAI_CLIENT_ID'
+        value: openAiClientId
       }
     ])
   }
