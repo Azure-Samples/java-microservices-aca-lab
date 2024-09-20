@@ -15,7 +15,7 @@
             "value": false
         },
         "sqlAdmin": {
-            "value": "sqladin"
+            "value": "sqladmin"
         },
         "sqlAdminPassword": {
             "value": "Password#123"

@@ -13,13 +13,13 @@ param location string
 param resourceGroupName string
 
 @description('Name of the the new containerapp environment. Default: aca-env-{environmentName}')
-param managedEnvironmentsName string
+param managedEnvironmentsName string = ''
 
 @description('Boolean indicating the aca environment only has an internal load balancer. ')
 param vnetEndpointInternal bool = false
 
 @description('Name of the the sql server. Default: sql-{environmentName}')
-param sqlServerName string
+param sqlServerName string = ''
 
 @description('Name of the the sql admin.')
 param sqlAdmin string = 'sqladmin'
@@ -40,25 +40,25 @@ param configGitPath string
 @description('Name of the azure container registry.')
 param acrName string
 @description('Resource group of the azure container registry.')
-param acrGroupName string
+param acrGroupName string = ''
 @description('Subscription of the azure container registry.')
-param acrSubscription string
+param acrSubscription string = ''
 
 @description('Name of the log analytics server. Default la-{environmentName}')
-param logAnalyticsName string
+param logAnalyticsName string = ''
 
 @description('Name of the log analytics server. Default ai-{environmentName}')
-param applicationInsightsName string
+param applicationInsightsName string = ''
 
 @description('Images for petclinic services, will replaced by new images on step `azd deploy`')
-param apiGatewayImage string
-param customersServiceImage string
-param vetsServiceImage string
-param visitsServiceImage string
-param adminServerImage string
+param apiGatewayImage string = ''
+param customersServiceImage string = ''
+param vetsServiceImage string = ''
+param visitsServiceImage string = ''
+param adminServerImage string = ''
 
 @description('Name of the virtual network. Default vnet-{environmentName}')
-param vnetName string
+param vnetName string = ''
 
 var vnetPrefix = '10.1.0.0/16'
 var infraSubnetPrefix = '10.1.0.0/24'
