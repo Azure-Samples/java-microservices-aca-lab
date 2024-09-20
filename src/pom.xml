@@ -6,12 +6,12 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.2</version>
+        <version>3.2.5</version>
     </parent>
 
     <groupId>org.springframework.samples</groupId>
     <artifactId>spring-petclinic-microservices</artifactId>
-    <version>3.0.2</version>
+    <version>3.2.5</version>
     <name>${project.artifactId}</name>
     <packaging>pom</packaging>
 
@@ -22,13 +22,14 @@
         <module>spring-petclinic-visits-service</module>
         <module>spring-petclinic-api-gateway</module>
         <module>spring-petclinic-messaging-emulator</module>
+        <module>spring-petclinic-chat-agent</module>
     </modules>
 
     <properties>
         <java.version>17</java.version>
-        <assertj.version>3.17.1</assertj.version>
+        <assertj.version>3.26.0</assertj.version>
 
-        <spring-cloud.version>2022.0.1</spring-cloud.version>
+        <spring-cloud.version>2023.0.1</spring-cloud.version>
         <chaos-monkey-spring-boot.version>2.3.10</chaos-monkey-spring-boot.version>
         <jolokia-core.version>1.7.1</jolokia-core.version>
 
@@ -38,7 +39,9 @@
         <docker.image.dockerize.version>v0.6.1</docker.image.dockerize.version>
         <docker.plugin.version>1.2.0</docker.plugin.version>
 
-        <version.spring.cloud.azure>5.13.0</version.spring.cloud.azure>
+        <version.spring.cloud.azure>5.15.0</version.spring.cloud.azure>
+
+        <spring-ai.version>1.0.0-SNAPSHOT</spring-ai.version>
     </properties>
 
     <dependencyManagement>
@@ -73,8 +76,34 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-bom</artifactId>
+                <version>${spring-ai.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <repositories>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>spring-snapshots</id>
+            <name>Spring Snapshots</name>
+            <url>https://repo.spring.io/snapshot</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+    </repositories>
 
     <profiles>
         <profile>
