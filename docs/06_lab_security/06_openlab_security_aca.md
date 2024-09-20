@@ -1,7 +1,7 @@
 ---
-title: 'Lab 5: Protect endpoints using Web Application Firewalls'
+title: 'Lab 6: Protect endpoints using Web Application Firewalls'
 layout: default
-nav_order: 7
+nav_order: 8
 has_children: true
 ---
 

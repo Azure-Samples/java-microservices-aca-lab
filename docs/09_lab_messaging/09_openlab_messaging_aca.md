@@ -1,7 +1,7 @@
 ---
-title: 'Lab 8: Send messages between microservices'
+title: 'Lab 9: Send messages between microservices'
 layout: default
-nav_order: 10
+nav_order: 11
 has_children: true
 ---
 

@@ -1,7 +1,7 @@
 ---
-title: 'Lab 6: Secure MySQL database and Key Vault using a Private Endpoint'
+title: 'Lab 7: Secure MySQL database and Key Vault using a Private Endpoint'
 layout: default
-nav_order: 8
+nav_order: 9
 has_children: true
 ---
 
