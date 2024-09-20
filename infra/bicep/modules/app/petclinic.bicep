@@ -53,7 +53,7 @@ module apiGateway '../containerapps/containerapp.bicep' = {
   }
 }
 
-module customerService '../containerapps/containerapp.bicep' = {
+module customersService '../containerapps/containerapp.bicep' = {
   name: 'customers-service'
   params: {
     location: environment.location
@@ -171,3 +171,12 @@ module adminServer '../containerapps/containerapp.bicep' = {
 
 output gatewayFqdn string = apiGateway.outputs.appFqdn
 output adminFqdn string = adminServer.outputs.appFqdn
+
+output customersServiceName string = customersService.outputs.appName
+output customersServiceId string = customersService.outputs.appId
+output vetsServiceName string = vetsService.outputs.appName
+output vetsServiceId string = vetsService.outputs.appId
+output visitsServiceName string = visitsService.outputs.appName
+output visitsServiceId string = visitsService.outputs.appId
+
+output connectionName string = customersService.outputs.connectionName

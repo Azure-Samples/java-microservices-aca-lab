@@ -2,11 +2,20 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "environmentName": {
+            "value": "petclinic"
+        },
+        "resourceGroupName": {
+            "value": "rg-petclinic"
+        },
+        "location": {
+            "value": "westus2"
+        },
         "vnetEndpointInternal": {
             "value": false
         },
         "sqlAdmin": {
-            "value": "azureuser"
+            "value": "sqladin"
         },
         "sqlAdminPassword": {
             "value": "Password#123"
@@ -18,7 +27,13 @@
             "value": "config"
         },
         "acrName": {
-            "value": "acrpetclinic"
+            "value": "sonwanacr"
+        },
+        "acrGroupName": {
+            "value": "capps-sonwan-dev-rg"
+        },
+        "acrSubscription": {
+            "value": "d0822b01-62ea-4eb9-885b-95c60e4250b4"
         }
     }
 }

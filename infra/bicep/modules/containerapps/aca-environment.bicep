@@ -71,6 +71,12 @@ param diagnosticMetricsToEnable array = [
 @description('Optional. The name of the diagnostic setting, if deployed. If left empty, it defaults to "<resourceName>-diagnosticSettings".')
 param diagnosticSettingsName string = ''
 
+@description('Optional. Enables system assigned managed identity on the resource.')
+param systemAssignedIdentity bool = false
+
+@description('Optional. The ID(s) to assign to the resource.')
+param userAssignedIdentities object = {}
+
 
 // ------------------
 // VARIABLES
@@ -103,14 +109,22 @@ var defaultWorkloadProfile = [
 
 var effectiveWorkloadProfiles = workloadProfiles != [] ? concat(defaultWorkloadProfile, workloadProfiles) : defaultWorkloadProfile
 
+var identityType = systemAssignedIdentity ? (!empty(userAssignedIdentities) ? 'SystemAssigned, UserAssigned' : 'SystemAssigned') : (!empty(userAssignedIdentities) ? 'UserAssigned' : 'None')
+
+var identity = identityType != 'None' ? {
+  type: identityType
+  userAssignedIdentities: !empty(userAssignedIdentities) ? userAssignedIdentities : null
+} : null
+
 // ------------------
 // RESOURCES
 // ------------------
 
-resource acaEnvironment 'Microsoft.App/managedEnvironments@2023-05-01' = {
+resource acaEnvironment 'Microsoft.App/managedEnvironments@2024-02-02-preview' = {
   name: name
   location: location
   tags: tags
+  identity: identity
   properties: {
     zoneRedundant: zoneRedundant
     daprAIInstrumentationKey: appInsightsInstrumentationKey
