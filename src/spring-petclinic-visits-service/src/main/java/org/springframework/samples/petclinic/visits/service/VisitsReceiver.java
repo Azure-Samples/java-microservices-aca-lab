@@ -3,6 +3,7 @@ package org.springframework.samples.petclinic.visits.service;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.samples.petclinic.visits.entities.VisitRequest;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+@ConditionalOnProperty(name = "spring.jms.servicebus.enabled", havingValue = "true")
 @Component
 @Slf4j
 @RequiredArgsConstructor

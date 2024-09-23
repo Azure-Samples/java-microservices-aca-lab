@@ -11,6 +11,7 @@ spring:
       visits-requests: visits-requests
       visits-confirmations: visits-confirmations
     servicebus:
+      enabled: false  # disable messaging support by default
       namespace: ${SERVICEBUS_NAMESPACE}
       pricing-tier: premium
       passwordless-enabled: true
