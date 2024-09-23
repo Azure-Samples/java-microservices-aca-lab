@@ -7,10 +7,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Description;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.samples.petclinic.agent.owner.Owner;
-import org.springframework.samples.petclinic.agent.owner.OwnerRepository;
+import org.springframework.samples.petclinic.agent.dto.OwnerDto;
+import org.springframework.samples.petclinic.agent.service.OwnerService;
 
 import java.util.List;
 import java.util.function.Function;
@@ -18,43 +16,42 @@ import java.util.function.Function;
 @Configuration
 public class OwnerTools {
 
-	private final OwnerRepository owners;
+	private final OwnerService ownerService;
 
-	public OwnerTools(OwnerRepository ownerRepository) {
-		this.owners = ownerRepository;
+	public OwnerTools(OwnerService ownerService) {
+		this.ownerService = ownerService;
 	}
 
 	@Bean
 	@Description("Query the owners by last name, the owner information include owner id, address, telephone, city, first name and last name"
 			+ "\n The owner also include the pets information, include the pet name, pet type and birth"
 			+ "\n The pet include serveral visit record, include the visit name and visit date")
-	public Function<OwnerQueryRequest, List<Owner>> queryOwners() {
+	public Function<OwnerQueryRequest, List<OwnerDto>> queryOwners() {
 		return name -> {
-			Pageable pageable = PageRequest.of(0, 10);
-			return owners.findByLastName(name.lastName, pageable).toList();
+			return ownerService.findByLastName(name.lastName);
 		};
 	}
 
 	@Bean
 	@Description("Create a new owner by providing the owner's firstName, lastName, address, telephone and city")
-	public Function<OwnerCURequest, Owner> addOwner() {
+	public Function<OwnerCURequest, OwnerDto> addOwner() {
 		return request -> {
-			Owner owner = new Owner();
+			OwnerDto owner = new OwnerDto();
 			owner.setAddress(request.address);
 			owner.setTelephone(request.telephone);
 			owner.setCity(request.city);
 			owner.setLastName(request.lastName);
 			owner.setFirstName(request.firstName);
-			this.owners.save(owner);
+			ownerService.save(owner);
 			return owner;
 		};
 	}
 
 	@Bean
 	@Description("update a owner's firstName, lastName, address, telephone and city by providing the owner id\"")
-	public Function<OwnerCURequest, Owner> updateOwner() {
+	public Function<OwnerCURequest, OwnerDto> updateOwner() {
 		return request -> {
-			Owner owner = owners.findById(Integer.parseInt(request.ownerId));
+			OwnerDto owner = ownerService.findById(Integer.parseInt(request.ownerId));
 			if (request.address != null) {
 				owner.setAddress(request.address);
 			}
@@ -70,7 +67,7 @@ public class OwnerTools {
 			if (request.firstName != null) {
 				owner.setFirstName(request.firstName);
 			}
-			this.owners.save(owner);
+			ownerService.save(owner);
 			return owner;
 		};
 	}

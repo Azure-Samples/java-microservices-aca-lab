@@ -7,8 +7,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Description;
-import org.springframework.samples.petclinic.agent.vet.Vet;
-import org.springframework.samples.petclinic.agent.vet.VetRepository;
+import org.springframework.samples.petclinic.agent.dto.VetDto;
+import org.springframework.samples.petclinic.agent.service.VetService;
 
 import java.util.Collection;
 import java.util.function.Function;
@@ -16,17 +16,17 @@ import java.util.function.Function;
 @Configuration
 public class VetTools {
 
-	private final VetRepository vetRepository;
+	private final VetService vetService;
 
-	public VetTools(VetRepository vetRepository) {
-		this.vetRepository = vetRepository;
+	public VetTools(VetService vetService) {
+		this.vetService = vetService;
 	}
 
 	@Bean
 	@Description("return list of Vets, include their specialties")
-	public Function<Request, Collection<Vet>> queryVets() {
+	public Function<Request, Collection<VetDto>> queryVets() {
 		return request -> {
-			return vetRepository.findAll();
+			return vetService.findAll();
 		};
 	}
 

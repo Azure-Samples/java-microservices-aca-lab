@@ -16,6 +16,10 @@
 package org.springframework.samples.petclinic.customers.model;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
 
 /**
  * Repository class for <code>Owner</code> domain objects All method names are compliant with Spring Data naming
@@ -27,4 +31,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Michael Isvy
  * @author Maciej Szarlinski
  */
-public interface OwnerRepository extends JpaRepository<Owner, Integer> { }
+public interface OwnerRepository extends JpaRepository<Owner, Integer> {
+
+    @Query("SELECT o FROM Owner o WHERE LOWER(o.lastName) = LOWER(:lastName)")
+    List<Owner> findByLastName(@Param("lastName") String lastName);
+}
