@@ -13,6 +13,11 @@ import org.springframework.samples.petclinic.visits.entities.VisitResponse;
 @Configuration
 public class MessagingConfig {
 
+    @Bean("QueueConfig")
+    public QueueConfig queueConfig() {
+        return new QueueConfig();
+    }
+
     @Bean
     public MessageConverter jackson2Converter() {
         MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();

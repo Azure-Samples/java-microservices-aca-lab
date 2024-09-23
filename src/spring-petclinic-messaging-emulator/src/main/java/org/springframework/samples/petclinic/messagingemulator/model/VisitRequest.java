@@ -34,7 +34,7 @@ public class VisitRequest {
     @Column(name="accepted")
     private Boolean accepted;
 
-    public VisitRequest( Integer petId, String message) {
+    public VisitRequest(Integer petId, String message) {
         this.petId = petId;
         this.message = message;
         accepted = false;
@@ -68,5 +68,5 @@ public class VisitRequest {
         this.accepted = accepted;
     }
 
-	
+
 }
