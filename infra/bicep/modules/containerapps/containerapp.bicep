@@ -111,8 +111,10 @@ resource app 'Microsoft.App/containerApps@2024-02-02-preview' = {
 var mysqlToken = !empty(mysqlDBId) ? split(mysqlDBId, '/') : array('')
 var mysqlSubscriptionId = length(mysqlToken) > 2 ? mysqlToken[2] : ''
 
+var connectionName = 'mysql_conn'
+
 resource connectDB 'Microsoft.ServiceLinker/linkers@2023-04-01-preview' = if (createSqlConnection) {
-  name: 'mysql_conn'
+  name: connectionName
   scope: app
   properties: {
     scope: appName
@@ -121,7 +123,7 @@ resource connectDB 'Microsoft.ServiceLinker/linkers@2023-04-01-preview' = if (cr
       authType: 'userAssignedIdentity'
       clientId: mysqlUserAssignedIdentityClientId
       subscriptionId: mysqlSubscriptionId
-      userName: 'aad_mysql_conn'
+      userName: 'aad_${connectionName}'
     }
     targetService: {
       type: 'AzureResource'
@@ -130,5 +132,8 @@ resource connectDB 'Microsoft.ServiceLinker/linkers@2023-04-01-preview' = if (cr
   }
 }
 
+output appName string = app.name
 output appId string = app.id
 output appFqdn string = app.properties.configuration.ingress != null ? app.properties.configuration.ingress.fqdn : ''
+
+output connectionName string = createSqlConnection ? connectionName : ''

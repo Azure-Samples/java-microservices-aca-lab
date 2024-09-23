@@ -87,7 +87,11 @@ output name string = ((newOrExisting == 'new') ? aiNew.name : aiExisting.name)
 output resourceId string = ((newOrExisting == 'new') ? aiNew.id : aiExisting.id)
 
 @description('The applicationInsights Instrumentation Key.')
-output instrumentationKey string = ((newOrExisting == 'new') ? aiNew.properties.InstrumentationKey : aiExisting.properties.InstrumentationKey)
+output instrumentationKey string = ((newOrExisting == 'new')
+  ? aiNew.properties.InstrumentationKey
+  : aiExisting.properties.InstrumentationKey)
 
 @description('The applicationInsights Connection String.')
-output connectionString string = ((newOrExisting == 'new') ? aiNew.properties.ConnectionString : aiExisting.properties.ConnectionString)
+output connectionString string = ((newOrExisting == 'new')
+  ? aiNew.properties.ConnectionString
+  : aiExisting.properties.ConnectionString)

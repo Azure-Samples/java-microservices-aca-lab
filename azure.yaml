@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
 
 name: java-microservices-aca-lab
-resourceGroup: rg-sonwan-petclinic
+resourceGroup: rg-petclinic
 infra:
   provider: bicep
   path: infra/bicep
@@ -13,7 +13,7 @@ services:
     host: containerapp
     language: java
     docker:
-      registry: sonwanacr.azurecr.io
+      registry: <your-acr>.azurecr.io
       image: java-microservices-aca-lab/spring-petclinic-api-gateway
       tag: passwordless
 
@@ -23,7 +23,7 @@ services:
     host: containerapp
     language: java
     docker:
-      registry: sonwanacr.azurecr.io
+      registry: <your-acr>.azurecr.io
       image: java-microservices-aca-lab/spring-petclinic-customers-service
       tag: passwordless
 
@@ -33,7 +33,7 @@ services:
     host: containerapp
     language: java
     docker:
-      registry: sonwanacr.azurecr.io
+      registry: <your-acr>.azurecr.io
       image: java-microservices-aca-lab/spring-petclinic-vets-service
       tag: passwordless
 
@@ -43,8 +43,18 @@ services:
     host: containerapp
     language: java
     docker:
-      registry: sonwanacr.azurecr.io
+      registry: <your-acr>.azurecr.io
       image: java-microservices-aca-lab/spring-petclinic-visits-service
+      tag: passwordless
+
+  chat-agent:
+    resourceName: chat-agent
+    project: ./src/spring-petclinic-chat-agent
+    host: containerapp
+    language: java
+    docker:
+      registry: <your-acr>.azurecr.io
+      image: java-microservices-aca-lab/spring-petclinic-chat-agent
       tag: passwordless
 
   admin-server:
@@ -53,7 +63,7 @@ services:
     host: containerapp
     language: java
     docker:
-      registry: sonwanacr.azurecr.io
+      registry: <your-acr>.azurecr.io
       image: java-microservices-aca-lab/spring-petclinic-admin-server
       tag: passwordless
 
@@ -61,7 +71,12 @@ hooks:
   prepackage:
     windows:
       shell: pwsh
-      run: 'cd src; .\mvnw.cmd package -DskipTests'
+      run: 'cd src; .\mvnw.cmd clean package -DskipTests'
     posix:
       shell: sh
-      run: 'cd src; chmod +x ./mvnw; ./mvnw package -DskipTests'
+      run: 'cd src; chmod +x ./mvnw; ./mvnw clean package -DskipTests'
+
+  postprovision:
+    posix:
+      shell: sh
+      run: ./infra/bicep/hooks/postprovision.sh

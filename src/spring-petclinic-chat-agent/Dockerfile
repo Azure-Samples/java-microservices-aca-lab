@@ -17,7 +17,7 @@ ARG VERSION=3.2.5
 
 COPY --from=build ./ai.jar ai.jar
 
-COPY ./target/spring-petclinic-api-gateway-$VERSION.jar app.jar
+COPY ./target/spring-petclinic-chat-agent-$VERSION.jar app.jar
 
 EXPOSE 8080
 

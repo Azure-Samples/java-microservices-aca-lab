@@ -2,11 +2,20 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "environmentName": {
+            "value": "petclinic"
+        },
+        "resourceGroupName": {
+            "value": "rg-petclinic"
+        },
+        "location": {
+            "value": "westus2"
+        },
         "vnetEndpointInternal": {
             "value": false
         },
         "sqlAdmin": {
-            "value": "azureuser"
+            "value": "sqladmin"
         },
         "sqlAdminPassword": {
             "value": "Password#123"
@@ -17,35 +26,14 @@
         "configGitPath": {
             "value": "config"
         },
-        "acrRegistry": {
-            "value": "<your-acr>.azurecr.io"
+        "acrName": {
+            "value": "<your-acr>"
         },
-        "acrIdentityId": {
-            "value": "<acr-repo-user-mi-id>"
+        "acrGroupName": {
+            "value": "<your-acr-group>"
         },
-        "miClientId": {
-            "value": "<mi-principal-id>"
-        },
-        "miPrincipalId": {
-            "value": "<mi-client-id>"
-        },
-        "apiGatewayImage": {
-            "value": "java-microservices-aca-lab/spring-petclinic-api-gateway:passwordless"
-        },
-        "customersServiceImage": {
-            "value": "java-microservices-aca-lab/spring-petclinic-customers-service:passwordless"
-        },
-        "vetsServiceImage": {
-            "value": "java-microservices-aca-lab/spring-petclinic-vets-service:passwordless"
-        },
-        "visitsServiceImage": {
-            "value": "java-microservices-aca-lab/spring-petclinic-visits-service:passwordless"
-        },
-        "chatAgentImage": {
-            "value": "java-microservices-aca-lab/spring-petclinic-chat-agent:passwordless"
-        },
-        "adminServerImage": {
-            "value": "java-microservices-aca-lab/spring-petclinic-admin-server:passwordless"
+        "acrSubscription": {
+            "value": "<your-acr-subscription>"
         }
     }
 }

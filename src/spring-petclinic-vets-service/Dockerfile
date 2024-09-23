@@ -13,7 +13,7 @@ RUN wget https://github.com/microsoft/ApplicationInsights-Java/releases/download
 # run
 FROM mcr.microsoft.com/openjdk/jdk:17-distroless
 
-ARG VERSION="3.0.2"
+ARG VERSION=3.2.5
 
 COPY --from=build ./ai.jar ai.jar
 

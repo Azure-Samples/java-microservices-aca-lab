@@ -34,6 +34,12 @@ resource eureka 'Microsoft.App/managedEnvironments/javaComponents@2024-02-02-pre
   name: 'eureka'
   properties: {
     componentType: 'SpringCloudEureka'
+    configurations: [
+      {
+        propertyName: 'eureka.server.response-cache-update-interval-ms'
+        value: '10000'
+      }
+    ]
   }
 }
 

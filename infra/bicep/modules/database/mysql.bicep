@@ -29,13 +29,8 @@ param tags object = {}
 @description('Optional. The version of MySQL.')
 param version string = '8.0.21'
 
-resource mysqlUserAssignedIdentityRW 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
-  name: 'mysqluserassignedidentity-rw'
-  location: location
-}
-
 resource mysqlUserAssignedIdentityAdmin 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
-  name: 'mysqluserassignedidentity-admin'
+  name: 'umi-${serverName}-admin'
   location: location
 }
 
@@ -51,7 +46,7 @@ resource serverNew 'Microsoft.DBforMySQL/flexibleServers@2023-06-30' = if (newOr
   identity: {
     type: 'UserAssigned'
     userAssignedIdentities: {
-      '${mysqlUserAssignedIdentityRW.id}': {}
+      '${mysqlUserAssignedIdentityAdmin.id}': {}
     }
   }
   properties: {
@@ -113,8 +108,8 @@ resource databaseExisting 'Microsoft.DBforMySQL/flexibleServers/databases@2023-0
 @description('The resource id of the database.')
 output databaseId string = ((newOrExisting == 'new') ? databaseNew.id : databaseExisting.id)
 
-@description('The client id of the user assigned identity with r/w permission.')
-output userAssignedIdentityClientId string = mysqlUserAssignedIdentityRW.properties.clientId
+@description('The client id of the user assigned identity with admin permission.')
+output adminIdentityClientId string = mysqlUserAssignedIdentityAdmin.properties.clientId
 
-@description('The resource id of the user assigned identity with r/w permission.')
-output userAssignedIdentity string = mysqlUserAssignedIdentityRW.id
+@description('The resource id of the user assigned identity with admin permission.')
+output adminIdentityId string = mysqlUserAssignedIdentityAdmin.id
