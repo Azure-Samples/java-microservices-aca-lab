@@ -27,13 +27,13 @@
             "value": "config"
         },
         "acrName": {
-            "value": "sonwanacr"
+            "value": "<your-acr>"
         },
         "acrGroupName": {
-            "value": "capps-sonwan-dev-rg"
+            "value": "<your-acr-group>"
         },
         "acrSubscription": {
-            "value": "d0822b01-62ea-4eb9-885b-95c60e4250b4"
+            "value": "<your-acr-subscription>"
         }
     }
 }
