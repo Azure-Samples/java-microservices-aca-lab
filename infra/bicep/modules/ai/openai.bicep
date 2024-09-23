@@ -1,3 +1,5 @@
+targetScope = 'resourceGroup'
+
 @description('Required. Name of your Azure OpenAI service account. ')
 param accountName string
 
@@ -18,7 +20,7 @@ param appPrincipalId string
 
 @description('Optional. The role definition ID for the Cognitive Services OpenAI User role. ')
 // https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles/ai-machine-learning#cognitive-services-openai-user
-param roleDefinitionId string = '5e0bd9bd-7b93-4f28-af87-19fc36ad61bd' 
+param roleDefinitionId string = '5e0bd9bd-7b93-4f28-af87-19fc36ad61bd'
 
 resource account 'Microsoft.CognitiveServices/accounts@2023-05-01' = {
   name: accountName
@@ -52,6 +54,7 @@ resource modelDeploymentTextEmbeddingAda002 'Microsoft.CognitiveServices/account
 
 resource modelDeploymentGpt4 'Microsoft.CognitiveServices/accounts/deployments@2023-05-01' = {
   name: modelGpt4
+  dependsOn: [ modelDeploymentTextEmbeddingAda002 ]
   parent: account
   properties: {
     model: {
@@ -68,10 +71,14 @@ resource modelDeploymentGpt4 'Microsoft.CognitiveServices/accounts/deployments@2
 
 resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid(resourceGroup().id, appPrincipalId, roleDefinitionId)
+  scope: account
+  dependsOn: [
+    modelDeploymentGpt4
+    modelDeploymentTextEmbeddingAda002
+  ]
   properties: {
-    roleDefinitionId: roleDefinitionId
+    roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', roleDefinitionId)
     principalId: appPrincipalId
-    principalType: 'ServicePrincipal'
   }
 }
 

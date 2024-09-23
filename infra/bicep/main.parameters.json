@@ -34,6 +34,18 @@
         },
         "acrSubscription": {
             "value": "<your-acr-subscription>"
+        },
+        "enableOpenAi": {
+            "value": true
+        },
+        "openAiResourceGroup": {
+            "value": "rg-openai"
+        },
+        "openAiLocation": {
+            "value": "westus"
+        },
+        "openAiSubscription": {
+            "value": "<your-openai-subscription>"
         }
     }
 }

@@ -44,6 +44,15 @@ param acrGroupName string = ''
 @description('Subscription of the azure container registry.')
 param acrSubscription string = ''
 
+@description('Enable OpenAI components')
+param enableOpenAi bool = false
+@description('Resource group of the Open AI')
+param openAiResourceGroup string
+@description('Location of the Open AI')
+param openAiLocation string
+@description('Subscription of the Open AI')
+param openAiSubscription string
+
 @description('Name of the log analytics server. Default la-{environmentName}')
 param logAnalyticsName string = ''
 
@@ -71,7 +80,7 @@ var abbrs = loadJsonContent('./abbreviations.json')
 var tags = { 'azd-env-name': environmentName }
 
 @description('Organize resources in a resource group')
-resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
+resource rg 'Microsoft.Resources/resourceGroups@2024-03-01' = {
   name: !empty(resourceGroupName) ? resourceGroupName : '${abbrs.resourcesResourceGroups}${environmentName}'
   location: location
   tags: tags
@@ -117,6 +126,17 @@ module vnet './modules/network/vnet.bicep' = {
       }
     ]
     tags: tags
+  }
+}
+
+module mysql 'modules/database/mysql.bicep' = {
+  name: 'mysql'
+  scope: rg
+  params: {
+    administratorLogin: sqlAdmin
+    administratorLoginPassword: sqlAdminPassword
+    serverName: !empty(sqlServerName) ? sqlServerName : '${abbrs.sqlServers}${environmentName}'
+    databaseName: 'petclinic'
   }
 }
 
@@ -188,23 +208,25 @@ module javaComponents 'modules/containerapps/containerapp-java-components.bicep'
   }
 }
 
-module mysql 'modules/database/mysql.bicep' = {
-  name: 'mysql'
-  scope: rg
+// You must use modules to deploy resources to a different scope.
+module rgOpenAi 'modules/shared/resourceGroup.bicep' = if (enableOpenAi) {
+  name: 'rg-openai'
+  scope: subscription(openAiSubscription)
   params: {
-    administratorLogin: sqlAdmin
-    administratorLoginPassword: sqlAdminPassword
-    serverName: !empty(sqlServerName) ? sqlServerName : '${abbrs.sqlServers}${environmentName}'
-    databaseName: 'petclinic'
+    resourceGroupName: openAiResourceGroup
+    resourceGroupLocation: location
   }
 }
 
-module openai 'modules/ai/openai.bicep' = {
+module openai 'modules/ai/openai.bicep' = if (enableOpenAi) {
   name: 'openai'
-  scope: rg
+  dependsOn: [
+    rgOpenAi
+  ]
+  scope: resourceGroup(openAiSubscription, openAiResourceGroup)
   params: {
     accountName: 'openai-${environmentName}'
-    location: location
+    location: openAiLocation
     appPrincipalId: umiApps.outputs.principalId
   }
 }
@@ -228,6 +250,7 @@ module applications 'modules/app/petclinic.bicep' = {
     chatAgentImage: !empty(chatAgentImage) ? chatAgentImage : placeholderImage
     targetPort: 8080
     applicationInsightsConnString: applicationInsights.outputs.connectionString
+    enableOpenAi: enableOpenAi
     azureOpenAiEndpoint: openai.outputs.endpoint
     openAiClientId: umiApps.outputs.id
   }
