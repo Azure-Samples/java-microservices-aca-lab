@@ -56,6 +56,7 @@ param customersServiceImage string = ''
 param vetsServiceImage string = ''
 param visitsServiceImage string = ''
 param adminServerImage string = ''
+param chatAgentImage string = ''
 
 @description('Name of the virtual network. Default vnet-{environmentName}')
 param vnetName string = ''
@@ -159,18 +160,6 @@ module acrRoleAssignments 'modules/shared/containerRegistryRoleAssignment.bicep'
   }
 }
 
-module mysql 'modules/database/mysql.bicep' = {
-  name: 'mysql'
-  scope: rg
-  params: {
-    administratorLogin: sqlAdmin
-    administratorLoginPassword: sqlAdminPassword
-    serverName: !empty(sqlServerName) ? sqlServerName : '${abbrs.sqlServers}${environmentName}'
-    databaseName: 'petclinic'
-    newOrExisting: 'existing'
-  }
-}
-
 module managedEnvironment 'modules/containerapps/aca-environment.bicep' = {
   name: 'managedEnvironment'
   scope: rg
@@ -199,6 +188,27 @@ module javaComponents 'modules/containerapps/containerapp-java-components.bicep'
   }
 }
 
+module mysql 'modules/database/mysql.bicep' = {
+  name: 'mysql'
+  scope: rg
+  params: {
+    administratorLogin: sqlAdmin
+    administratorLoginPassword: sqlAdminPassword
+    serverName: !empty(sqlServerName) ? sqlServerName : '${abbrs.sqlServers}${environmentName}'
+    databaseName: 'petclinic'
+  }
+}
+
+module openai 'modules/ai/openai.bicep' = {
+  name: 'openai'
+  scope: rg
+  params: {
+    accountName: 'openai-${environmentName}'
+    location: location
+    appPrincipalId: umiApps.outputs.principalId
+  }
+}
+
 module applications 'modules/app/petclinic.bicep' = {
   name: 'petclinic-microservices'
   scope: rg
@@ -208,15 +218,18 @@ module applications 'modules/app/petclinic.bicep' = {
     configServerId: javaComponents.outputs.configServerId
     mysqlDBId: mysql.outputs.databaseId
     mysqlUserAssignedIdentityClientId: umiApps.outputs.clientId
-    acrRegistry: '${acrRoleAssignments.outputs.registryName}.azurecr.io'  // add dependency to make sure roles are assigned
+    acrRegistry: '${acrRoleAssignments.outputs.registryName}.azurecr.io' // add dependency to make sure roles are assigned
     acrIdentityId: umiAcrPull.outputs.id
     apiGatewayImage: !empty(apiGatewayImage) ? apiGatewayImage : placeholderImage
     customersServiceImage: !empty(customersServiceImage) ? customersServiceImage : placeholderImage
     vetsServiceImage: !empty(vetsServiceImage) ? vetsServiceImage : placeholderImage
     visitsServiceImage: !empty(visitsServiceImage) ? visitsServiceImage : placeholderImage
     adminServerImage: !empty(adminServerImage) ? adminServerImage : placeholderImage
+    chatAgentImage: !empty(chatAgentImage) ? chatAgentImage : placeholderImage
     targetPort: 8080
     applicationInsightsConnString: applicationInsights.outputs.connectionString
+    azureOpenAiEndpoint: openai.outputs.endpoint
+    openAiClientId: umiApps.outputs.id
   }
 }
 
