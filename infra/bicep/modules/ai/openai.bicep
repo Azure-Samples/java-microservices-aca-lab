@@ -1,10 +1,24 @@
+@description('Required. Name of your Azure OpenAI service account. ')
 param accountName string
+
+@description('Required. Location for all resources.')
 param location string
+
+@description('Optional. model name for the TextEmbeddingAda002 language model. ')
 param modelTextEmbeddingAda002 string = 'text-embedding-ada-002'
+
+@description('Optional. model name for the gpt-4 language model. ')
 param modelGpt4 string = 'gpt-4'
+
+@description('Optional. model format for the language models. ')
 param modelFormat string = 'OpenAI'
+
+@description('Required. The principal ID of the MI for the chate agent application. ')
 param appPrincipalId string
-param roleDefinitionId string = '5e0bd9bd-7b93-4f28-af87-19fc36ad61bd' // Cognitive Services OpenAI User role
+
+@description('Optional. The role definition ID for the Cognitive Services OpenAI User role. ')
+// https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles/ai-machine-learning#cognitive-services-openai-user
+param roleDefinitionId string = '5e0bd9bd-7b93-4f28-af87-19fc36ad61bd' 
 
 resource account 'Microsoft.CognitiveServices/accounts@2023-05-01' = {
   name: accountName
