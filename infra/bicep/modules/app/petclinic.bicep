@@ -18,6 +18,9 @@ param adminServerImage string
 param chatAgentImage string
 
 param applicationInsightsConnString string = ''
+
+param enableOpenAi bool
+
 param azureOpenAiEndpoint string
 param openAiClientId string
 
@@ -145,7 +148,7 @@ module visitsService '../containerapps/containerapp.bicep' = {
   }
 }
 
-module chatAgent '../containerapps/containerapp.bicep' = {
+module chatAgent '../containerapps/containerapp.bicep' = if (enableOpenAi) {
   name: 'chat-agent'
   params: {
     location: environment.location
@@ -159,7 +162,18 @@ module chatAgent '../containerapps/containerapp.bicep' = {
     external: true
     targetPort: targetPort
     createSqlConnection: false
-    env: concat(env, empty(applicationInsightsConnString) ? [] : [
+    env: concat(env,
+      empty(applicationInsightsConnString) ? [] : [
+      {
+        name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
+        value: applicationInsightsConnString
+      }
+      {
+        name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
+        value: '{"role": {"name": "chat-agent"}}'
+      }
+    ],
+      !enableOpenAi ? [] : [
       {
         name: 'SPRING_AI_AZURE_OPENAI_ENDPOINT'
         value: azureOpenAiEndpoint
