@@ -41,7 +41,7 @@ spring:
         client-id: <your-managed-identity-client-id>
         chat:
           options:
-            deployment-name: gpt-4
+            deployment-name: gpt-4o
             temperature: 0.8
         embedding:
           options:
