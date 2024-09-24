@@ -37,8 +37,8 @@ spring:
   ai:
     azure:
       openai:
-        endpoint: ${AZURE_OPENAI_ENDPOINT}
-        client-id: ${CLIENT_ID}
+        endpoint: <your-azure-open-ai-endpoint>
+        client-id: <your-managed-identity-client-id>
         chat:
           options:
             deployment-name: gpt-4
