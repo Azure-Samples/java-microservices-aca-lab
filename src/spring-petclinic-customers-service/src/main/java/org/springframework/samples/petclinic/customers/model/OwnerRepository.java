@@ -33,6 +33,6 @@ import java.util.List;
  */
 public interface OwnerRepository extends JpaRepository<Owner, Integer> {
 
-    @Query("SELECT o FROM Owner o WHERE LOWER(o.lastName) = LOWER(:lastName)")
-    List<Owner> findByLastName(@Param("lastName") String lastName);
+    @Query("SELECT o FROM Owner o WHERE LOWER(o.firstName) = LOWER(:firstName)")
+    List<Owner> findByFirstName(@Param("firstName") String firstName);
 }

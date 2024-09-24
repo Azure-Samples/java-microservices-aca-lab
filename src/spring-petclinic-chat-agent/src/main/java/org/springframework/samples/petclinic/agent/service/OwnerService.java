@@ -5,6 +5,7 @@ import org.springframework.samples.petclinic.agent.dto.OwnerDto;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,10 +18,13 @@ public class OwnerService {
         this.restTemplate = restTemplate;
     }
 
-    public List<OwnerDto> findByLastName(String lastName) {
-        var owners = restTemplate.getForObject("http://customers-service/owners/lastname/{lastName}", OwnerDto[].class, lastName);
-        assert owners != null;
-        return List.of(owners);
+    public List<OwnerDto> findByFirstName(String firstName) {
+        var owners = restTemplate.getForObject("http://customers-service/owners/firstname/{firstName}", OwnerDto[].class, firstName);
+        if (owners != null) {
+            return List.of(owners);
+        } else {
+            return new ArrayList<>();
+        }
     }
 
     public OwnerDto findById(int ownerId) {

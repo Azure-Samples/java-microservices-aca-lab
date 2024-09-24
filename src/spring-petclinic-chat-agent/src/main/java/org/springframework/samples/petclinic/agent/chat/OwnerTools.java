@@ -23,12 +23,12 @@ public class OwnerTools {
 	}
 
 	@Bean
-	@Description("Query the owners by last name, the owner information include owner id, address, telephone, city, first name and last name"
+	@Description("Query the owners by first name, the owner information include owner id, address, telephone, city, first name and last name"
 			+ "\n The owner also include the pets information, include the pet name, pet type and birth"
-			+ "\n The pet include serveral visit record, include the visit name and visit date")
+			+ "\n The pet include several visit records, include the visit name and visit date")
 	public Function<OwnerQueryRequest, List<OwnerDto>> queryOwners() {
 		return name -> {
-			return ownerService.findByLastName(name.lastName);
+			return ownerService.findByFirstName(name.firstName);
 		};
 	}
 
@@ -75,7 +75,7 @@ public class OwnerTools {
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	@JsonClassDescription("Owner Query Request")
 	public record OwnerQueryRequest(@JsonProperty(required = false,
-			value = "lastName") @JsonPropertyDescription("The Owner last name") String lastName) {
+			value = "firstName") @JsonPropertyDescription("The Owner first name") String firstName) {
 	}
 
 	@JsonInclude(JsonInclude.Include.NON_NULL)
