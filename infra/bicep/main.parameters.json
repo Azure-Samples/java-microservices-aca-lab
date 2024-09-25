@@ -3,52 +3,16 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "environmentName": {
-            "value": "petclinic"
-        },
-        "resourceGroupName": {
-            "value": "rg-petclinic"
+            "value": "{AZURE_ENV_NAME}"
         },
         "location": {
-            "value": "westus2"
-        },
-        "vnetEndpointInternal": {
-            "value": false
+            "value": "{AZURE_LOCATION}"
         },
         "sqlAdmin": {
             "value": "sqladmin"
         },
         "sqlAdminPassword": {
             "value": "Password#123"
-        },
-        "configGitRepo": {
-            "value": "https://github.com/Azure-Samples/java-microservices-aca-lab"
-        },
-        "configGitPath": {
-            "value": "config"
-        },
-        "acrName": {
-            "value": "<your-acr>"
-        },
-        "acrGroupName": {
-            "value": "<your-acr-group>"
-        },
-        "acrSubscription": {
-            "value": "<your-acr-subscription>"
-        },
-        "enableOpenAi": {
-            "value": true
-        },
-        "openAiName": {
-            "value": "openai-petclinic"
-        },
-        "openAiResourceGroup": {
-            "value": "rg-openai"
-        },
-        "openAiLocation": {
-            "value": "westus"
-        },
-        "openAiSubscription": {
-            "value": "<your-openai-subscription>"
         }
     }
 }

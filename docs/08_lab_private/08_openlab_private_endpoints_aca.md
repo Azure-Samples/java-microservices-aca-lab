@@ -1,11 +1,11 @@
 ---
-title: 'Lab 7: Secure MySQL database and Key Vault using a Private Endpoint'
+title: 'Lab 8: Secure MySQL database and Key Vault using a Private Endpoint'
 layout: default
 nav_order: 10
 has_children: true
 ---
 
-# Lab 06: Secure MySQL database and Key Vault using a Private Endpoint
+# Lab 8: Secure MySQL database and Key Vault using a Private Endpoint
 
 # Student manual
 

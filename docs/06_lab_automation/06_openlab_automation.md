@@ -1,11 +1,11 @@
 ---
-title: 'Lab 6: Automatically deploy lab solution to Azure Container Apps'
+title: 'Lab 6: Deploy to Azure automatically'
 layout: default
 nav_order: 8
 has_children: true
 ---
 
-# Lab 6: Automatically deploy lab solution to Azure Container Apps
+# Lab 6: Deploy to Azure automatically
 
 # Student manual
 
@@ -14,14 +14,14 @@ has_children: true
 In the Lab 2, Lab 3, Lab 4 and Lab 5 we deploy the petclinic microservice solution to Azure Container Apps step by step.
 These steps are full of details but time costing.
 
-In this lab, we import a new tool [azd](https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/) to help deploy the solution to Azure with single command.
+In this lab, we introduce a new tool [azd](https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/) to help deploy the solution to Azure with single command.
 
 ## Objectives
 
 After you complete this lab, you will be able to:
 
 - Get familiar with the azd tool.
-- Deploy the petclinic solution to new ACA environment.
+- Deploy the petclinic solution (with AI) to new ACA environment.
 - Test your setup.
 
 ## Lab Duration
@@ -35,7 +35,7 @@ During this lab, you will:
 - Prepare your azd tools environment.
 - Get your Azure Registry ready and fill the configuration files.
 - Run `azd up` command to deploy the sample soluton to Azure Container Apps.
-- Test your setup.
+- Learn how to triage some problems with the one-click solution.
 
 ## Limits
 
