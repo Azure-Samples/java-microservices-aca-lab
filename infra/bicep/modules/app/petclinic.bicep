@@ -4,11 +4,13 @@ param managedEnvironmentsName string
 param eurekaId string
 param configServerId string
 
-param mysqlDBId string
-param mysqlUserAssignedIdentityClientId string
+param mysqlDatabaseId string
 
 param acrRegistry string
 param acrIdentityId string
+
+param umiAppsClientId string
+param umiAppsIdentityId string
 
 param apiGatewayImage string
 param customersServiceImage string
@@ -21,7 +23,7 @@ param applicationInsightsConnString string = ''
 
 param enableOpenAi bool
 
-param azureOpenAiEndpoint string
+param openAiEndpoint string
 param openAiClientId string
 
 param targetPort int = 8080
@@ -42,7 +44,8 @@ module apiGateway '../containerapps/containerapp.bicep' = {
     configServerId: configServerId
     registry: acrRegistry
     image: apiGatewayImage
-    containerRegistryUserAssignedIdentityId: acrIdentityId
+    acrIdentityId: acrIdentityId
+    umiAppsIdentityId: umiAppsIdentityId
     external: true
     targetPort: targetPort
     createSqlConnection: false
@@ -69,12 +72,13 @@ module customersService '../containerapps/containerapp.bicep' = {
     configServerId: configServerId
     registry: acrRegistry
     image: customersServiceImage
-    containerRegistryUserAssignedIdentityId: acrIdentityId
+    acrIdentityId: acrIdentityId
     external: false
     targetPort: targetPort
     createSqlConnection: true
-    mysqlDBId: mysqlDBId
-    mysqlUserAssignedIdentityClientId: mysqlUserAssignedIdentityClientId
+    mysqlDatabaseId: mysqlDatabaseId
+    umiAppsClientId: umiAppsClientId
+    umiAppsIdentityId: umiAppsIdentityId
     readinessProbeInitialDelaySeconds: 20
     livenessProbeInitialDelaySeconds: 40
     env: concat(env, empty(applicationInsightsConnString) ? [] : [
@@ -100,12 +104,13 @@ module vetsService '../containerapps/containerapp.bicep' = {
     configServerId: configServerId
     registry: acrRegistry
     image: vetsServiceImage
-    containerRegistryUserAssignedIdentityId: acrIdentityId
+    acrIdentityId: acrIdentityId
     external: false
     targetPort: targetPort
     createSqlConnection: true
-    mysqlDBId: mysqlDBId
-    mysqlUserAssignedIdentityClientId: mysqlUserAssignedIdentityClientId
+    mysqlDatabaseId: mysqlDatabaseId
+    umiAppsClientId: umiAppsClientId
+    umiAppsIdentityId: umiAppsIdentityId
     env: concat(env, empty(applicationInsightsConnString) ? [] : [
       {
         name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
@@ -129,12 +134,13 @@ module visitsService '../containerapps/containerapp.bicep' = {
     configServerId: configServerId
     registry: acrRegistry
     image: visitsServiceImage
-    containerRegistryUserAssignedIdentityId: acrIdentityId
+    acrIdentityId: acrIdentityId
     external: false
     targetPort: targetPort
     createSqlConnection: true
-    mysqlDBId: mysqlDBId
-    mysqlUserAssignedIdentityClientId: mysqlUserAssignedIdentityClientId
+    mysqlDatabaseId: mysqlDatabaseId
+    umiAppsClientId: umiAppsClientId
+    umiAppsIdentityId: umiAppsIdentityId
     env: concat(env, empty(applicationInsightsConnString) ? [] : [
       {
         name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
@@ -158,7 +164,8 @@ module chatAgent '../containerapps/containerapp.bicep' = if (enableOpenAi) {
     configServerId: configServerId
     registry: acrRegistry
     image: chatAgentImage
-    containerRegistryUserAssignedIdentityId: acrIdentityId
+    acrIdentityId: acrIdentityId
+    umiAppsIdentityId: umiAppsIdentityId
     external: true
     targetPort: targetPort
     createSqlConnection: false
@@ -176,7 +183,7 @@ module chatAgent '../containerapps/containerapp.bicep' = if (enableOpenAi) {
       !enableOpenAi ? [] : [
       {
         name: 'SPRING_AI_AZURE_OPENAI_ENDPOINT'
-        value: azureOpenAiEndpoint
+        value: openAiEndpoint
       }
       {
         name: 'SPRING_AI_AZURE_OPENAI_CLIENT_ID'
@@ -196,7 +203,8 @@ module adminServer '../containerapps/containerapp.bicep' = {
     configServerId: configServerId
     registry: acrRegistry
     image: adminServerImage
-    containerRegistryUserAssignedIdentityId: acrIdentityId
+    acrIdentityId: acrIdentityId
+    umiAppsIdentityId: umiAppsIdentityId
     external: true
     targetPort: targetPort
     createSqlConnection: false

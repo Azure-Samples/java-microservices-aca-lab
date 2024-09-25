@@ -46,12 +46,14 @@ param acrSubscription string = ''
 
 @description('Enable OpenAI components')
 param enableOpenAi bool = false
+@description('Name of the Open AI name')
+param openAiName string = ''
 @description('Resource group of the Open AI')
-param openAiResourceGroup string
+param openAiResourceGroup string = ''
 @description('Location of the Open AI')
-param openAiLocation string
+param openAiLocation string = ''
 @description('Subscription of the Open AI')
-param openAiSubscription string
+param openAiSubscription string = ''
 
 @description('Name of the log analytics server. Default la-{environmentName}')
 param logAnalyticsName string = ''
@@ -225,9 +227,11 @@ module openai 'modules/ai/openai.bicep' = if (enableOpenAi) {
   ]
   scope: resourceGroup(openAiSubscription, openAiResourceGroup)
   params: {
-    accountName: 'openai-${environmentName}'
+    accountName: !empty(openAiName) ? openAiName : 'openai-${environmentName}'
     location: openAiLocation
     appPrincipalId: umiApps.outputs.principalId
+    tags: tags
+    newOrExisting: 'existing'
   }
 }
 
@@ -238,8 +242,9 @@ module applications 'modules/app/petclinic.bicep' = {
     managedEnvironmentsName: managedEnvironment.outputs.containerAppsEnvironmentName
     eurekaId: javaComponents.outputs.eurekaId
     configServerId: javaComponents.outputs.configServerId
-    mysqlDBId: mysql.outputs.databaseId
-    mysqlUserAssignedIdentityClientId: umiApps.outputs.clientId
+    mysqlDatabaseId: mysql.outputs.databaseId
+    umiAppsClientId: umiApps.outputs.clientId
+    umiAppsIdentityId: umiApps.outputs.id
     acrRegistry: '${acrRoleAssignments.outputs.registryName}.azurecr.io' // add dependency to make sure roles are assigned
     acrIdentityId: umiAcrPull.outputs.id
     apiGatewayImage: !empty(apiGatewayImage) ? apiGatewayImage : placeholderImage
@@ -251,8 +256,8 @@ module applications 'modules/app/petclinic.bicep' = {
     targetPort: 8080
     applicationInsightsConnString: applicationInsights.outputs.connectionString
     enableOpenAi: enableOpenAi
-    azureOpenAiEndpoint: openai.outputs.endpoint
-    openAiClientId: umiApps.outputs.id
+    openAiEndpoint: openai.outputs.endpoint
+    openAiClientId: umiApps.outputs.clientId
   }
 }
 

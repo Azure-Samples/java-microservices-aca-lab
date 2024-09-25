@@ -6,12 +6,13 @@ param appName string
 param eurekaId string
 param configServerId string
 param external bool = false
-param containerRegistryUserAssignedIdentityId string
+param acrIdentityId string
+param umiAppsIdentityId string
+param umiAppsClientId string = ''
 param env array = []
 param targetPort int
 param createSqlConnection bool = false
-param mysqlDBId string = ''
-param mysqlUserAssignedIdentityClientId string = ''
+param mysqlDatabaseId string = ''
 param readinessProbeInitialDelaySeconds int = 10
 param livenessProbeInitialDelaySeconds int = 30
 
@@ -21,7 +22,8 @@ resource app 'Microsoft.App/containerApps@2024-02-02-preview' = {
   identity: {
     type: 'UserAssigned'
     userAssignedIdentities: {
-      '${containerRegistryUserAssignedIdentityId}': {}
+      '${acrIdentityId}': {}
+      '${umiAppsIdentityId}': {}
     }
   }
   properties: {
@@ -31,10 +33,10 @@ resource app 'Microsoft.App/containerApps@2024-02-02-preview' = {
         external: external
         targetPort: targetPort
       }
-      registries: containerRegistryUserAssignedIdentityId == null ? null : [
+      registries: empty(acrIdentityId) ? null : [
         {
           server: registry
-          identity: containerRegistryUserAssignedIdentityId
+          identity: acrIdentityId
         }
       ]
       runtime: {
@@ -108,7 +110,7 @@ resource app 'Microsoft.App/containerApps@2024-02-02-preview' = {
   }
 }
 
-var mysqlToken = !empty(mysqlDBId) ? split(mysqlDBId, '/') : array('')
+var mysqlToken = !empty(mysqlDatabaseId) ? split(mysqlDatabaseId, '/') : array('')
 var mysqlSubscriptionId = length(mysqlToken) > 2 ? mysqlToken[2] : ''
 
 var connectionName = 'mysql_conn'
@@ -121,13 +123,13 @@ resource connectDB 'Microsoft.ServiceLinker/linkers@2023-04-01-preview' = if (cr
     clientType: 'springBoot'
     authInfo: {
       authType: 'userAssignedIdentity'
-      clientId: mysqlUserAssignedIdentityClientId
+      clientId: umiAppsClientId
       subscriptionId: mysqlSubscriptionId
       userName: 'aad_${connectionName}'
     }
     targetService: {
       type: 'AzureResource'
-      id: mysqlDBId
+      id: mysqlDatabaseId
     }
   }
 }

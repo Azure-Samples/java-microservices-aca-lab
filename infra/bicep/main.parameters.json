@@ -38,6 +38,9 @@
         "enableOpenAi": {
             "value": true
         },
+        "openAiName": {
+            "value": "openai-petclinic"
+        },
         "openAiResourceGroup": {
             "value": "rg-openai"
         },
