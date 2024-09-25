@@ -5,7 +5,7 @@ nav_order: 7
 has_children: true
 ---
 
-# Lab 05: Integrate with Azure OpenAI.
+# Lab 5: Integrate with Azure OpenAI
 
 # Student manual
 

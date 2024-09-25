@@ -1,11 +1,11 @@
 ---
-title: 'Lab 7: Secure MySQL database and Key Vault using a Private Endpoint'
+title: 'Lab 8: Secure MySQL database and Key Vault using a Private Endpoint'
 layout: default
-nav_order: 9
+nav_order: 10
 has_children: true
 ---
 
-# Lab 06: Secure MySQL database and Key Vault using a Private Endpoint
+# Lab 8: Secure MySQL database and Key Vault using a Private Endpoint
 
 # Student manual
 
@@ -39,4 +39,3 @@ During this lab, you will:
 
 {: .note }
 > The instructions provided in this exercise assume that you successfully completed the previous exercise and are using the same lab environment, including your Git Bash session with the relevant environment variables already set.
-
