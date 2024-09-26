@@ -76,7 +76,7 @@ var vnetPrefix = '10.1.0.0/16'
 var infraSubnetPrefix = '10.1.0.0/24'
 var infraSubnetName = '${abbrs.networkVirtualNetworksSubnets}infra'
 
-var placeholderImage = 'azurespringapps/default-banner:distroless-2024022107-66ea1a62-87936983'
+var placeholderImage = 'azurespringapps/default-banner:latest'
 
 var abbrs = loadJsonContent('./abbreviations.json')
 var tags = { 'azd-env-name': environmentName }
@@ -139,6 +139,7 @@ module mysql 'modules/database/mysql.bicep' = {
     administratorLoginPassword: sqlAdminPassword
     serverName: !empty(sqlServerName) ? sqlServerName : '${abbrs.sqlServers}${environmentName}'
     databaseName: 'petclinic'
+    tags: tags
   }
 }
 
@@ -266,6 +267,7 @@ module applications 'modules/app/petclinic.bicep' = {
 
 output resourceGroupName string = rg.name
 
+output springbootAdminFqdn string = javaComponents.outputs.springbootAdminFqdn
 output gatewayFqdn string = applications.outputs.gatewayFqdn
 output adminFqdn string = applications.outputs.adminFqdn
 
