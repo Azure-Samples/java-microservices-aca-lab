@@ -42,7 +42,7 @@ param acrName string
 @description('Resource group of the azure container registry.')
 param acrGroupName string
 @description('Subscription of the azure container registry.')
-param acrSubscription string = ''
+param acrSubscription string
 
 @description('Enable OpenAI components')
 param enableOpenAi bool = true
@@ -264,7 +264,6 @@ module applications 'modules/app/petclinic.bicep' = {
   }
 }
 
-output subscriptionId string = subscription().subscriptionId
 output resourceGroupName string = rg.name
 
 output gatewayFqdn string = applications.outputs.gatewayFqdn
