@@ -6,6 +6,9 @@ spring:
   # Web
   thymeleaf:
     mode: HTML
+  # Internationalization
+  messages:
+    basename: messages/messages
   # Maximum time static resources should be cached
   web:
     resources:
@@ -33,3 +36,8 @@ spring:
 petclinic:
   agent:
     name: petclinic agent
+
+eureka:
+  instance:
+    # enable to register multiple app instances with a random server port
+    instance-id: ${spring.application.name}:${random.uuid}
