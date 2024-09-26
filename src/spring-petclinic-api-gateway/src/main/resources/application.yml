@@ -24,6 +24,12 @@ spring:
             - Path=/api/customer/**
           filters:
             - StripPrefix=2
+        - id: chat-agent
+          uri: lb://chat-agent
+          predicates:
+            - Path=/api/agent/**
+          filters:
+            - StripPrefix=2
 
 
 
