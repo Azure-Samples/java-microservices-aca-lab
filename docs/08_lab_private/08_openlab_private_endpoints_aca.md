@@ -23,7 +23,7 @@ After you complete this lab, you will be able to:
 
 The below image illustrates the end state you will be building in this lab.
 
-![lab 8 overview](../../images/acalab6.png)
+![lab 8 overview](../../images/acalab8.png)
 
 ## Lab Duration
 
