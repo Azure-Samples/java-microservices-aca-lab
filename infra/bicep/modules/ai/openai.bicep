@@ -47,8 +47,19 @@ resource account 'Microsoft.CognitiveServices/accounts@2023-05-01' = if (newOrEx
   }
 }
 
+
+resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (newOrExisting == 'new') {
+  name: guid(resourceGroup().id, appPrincipalId, roleDefinitionId)
+  scope: account
+  properties: {
+    roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', roleDefinitionId)
+    principalId: appPrincipalId
+  }
+}
+
 resource modelDeploymentTextEmbeddingAda002 'Microsoft.CognitiveServices/accounts/deployments@2023-05-01' = if (newOrExisting == 'new') {
   name: modelTextEmbeddingAda002
+  dependsOn: [ roleAssignment ]
   parent: account
   properties: {
     model: {
@@ -77,19 +88,6 @@ resource modelDeploymentGpt4 'Microsoft.CognitiveServices/accounts/deployments@2
   sku: {
     name: 'GlobalStandard'
     capacity: 1
-  }
-}
-
-resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (newOrExisting == 'new') {
-  name: guid(resourceGroup().id, appPrincipalId, roleDefinitionId)
-  scope: account
-  dependsOn: [
-    modelDeploymentGpt4
-    modelDeploymentTextEmbeddingAda002
-  ]
-  properties: {
-    roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', roleDefinitionId)
-    principalId: appPrincipalId
   }
 }
 

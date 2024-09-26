@@ -10,7 +10,7 @@ param environmentName string
 param location string
 
 @description('Name of the the resource group. Default: rg-{environmentName}')
-param resourceGroupName string
+param resourceGroupName string = ''
 
 @description('Name of the the new containerapp environment. Default: aca-env-{environmentName}')
 param managedEnvironmentsName string = ''
@@ -29,36 +29,36 @@ param sqlAdmin string = 'sqladmin'
 param sqlAdminPassword string
 
 @description('Repo url of the configure server.')
-param configGitRepo string
+param configGitRepo string = 'https://github.com/Azure-Samples/java-microservices-aca-lab'
 
 @description('Repo branch of the configure server.')
 param configGitBranch string = 'main'
 
 @description('Repo path of the configure server.')
-param configGitPath string
+param configGitPath string = 'config'
 
 @description('Name of the azure container registry.')
 param acrName string
 @description('Resource group of the azure container registry.')
-param acrGroupName string = ''
+param acrGroupName string
 @description('Subscription of the azure container registry.')
-param acrSubscription string = ''
+param acrSubscription string
 
 @description('Enable OpenAI components')
-param enableOpenAi bool = false
-@description('Name of the Open AI name')
+param enableOpenAi bool = true
+@description('Name of the Open AI name, Default: openai-{environmentName}')
 param openAiName string = ''
-@description('Resource group of the Open AI')
+@description('Resource group of the Open AI, Default: the resourceGroup above')
 param openAiResourceGroup string = ''
-@description('Location of the Open AI')
+@description('Location of the Open AI, Default: the location above')
 param openAiLocation string = ''
-@description('Subscription of the Open AI')
+@description('Subscription of the Open AI, Default: your current subscription')
 param openAiSubscription string = ''
 
 @description('Name of the log analytics server. Default la-{environmentName}')
 param logAnalyticsName string = ''
 
-@description('Name of the log analytics server. Default ai-{environmentName}')
+@description('Name of the log analytics server. Default app-insights-{environmentName}')
 param applicationInsightsName string = ''
 
 @description('Images for petclinic services, will replaced by new images on step `azd deploy`')
@@ -156,7 +156,7 @@ module applicationInsights 'modules/shared/applicationInsights.bicep' = {
   name: 'application-insights'
   scope: rg
   params: {
-    name: !empty(applicationInsightsName) ? applicationInsightsName : 'ai-${environmentName}'
+    name: !empty(applicationInsightsName) ? applicationInsightsName : 'app-insights-${environmentName}'
     location: location
     workspaceResourceId: logAnalytics.outputs.logAnalyticsWsId
     tags: tags
@@ -165,12 +165,11 @@ module applicationInsights 'modules/shared/applicationInsights.bicep' = {
 
 // group id: /subscriptions/<subscriptionId>/resourceGroups/<groupName>
 var acrSub = !empty(acrSubscription) ? acrSubscription : split(rg.id, '/')[2]
-var acrGroup = !empty(acrGroupName) ? acrGroupName : rg.name
 
 @description('roles for Azure Container Registry')
 module acrRoleAssignments 'modules/shared/containerRegistryRoleAssignment.bicep' = {
   name: 'acr-roles-assignments'
-  scope: resourceGroup(acrSub, acrGroup)
+  scope: resourceGroup(acrSub, acrGroupName)
   params: {
     name: acrName
     roleAssignments: [
@@ -210,13 +209,18 @@ module javaComponents 'modules/containerapps/containerapp-java-components.bicep'
   }
 }
 
+var aiSub = !empty(openAiSubscription) ? openAiSubscription : subscription().subscriptionId
+var aiGroup = !empty(openAiResourceGroup) ? openAiResourceGroup : rg.name
+var aiLoc = !empty(openAiLocation) ? openAiLocation : location
+
 // You must use modules to deploy resources to a different scope.
 module rgOpenAi 'modules/shared/resourceGroup.bicep' = if (enableOpenAi) {
   name: 'rg-openai'
-  scope: subscription(openAiSubscription)
+  scope: subscription(aiSub)
   params: {
-    resourceGroupName: openAiResourceGroup
-    resourceGroupLocation: location
+    resourceGroupName: aiGroup
+    resourceGroupLocation: aiLoc
+    tags: tags
   }
 }
 
@@ -225,13 +229,12 @@ module openai 'modules/ai/openai.bicep' = if (enableOpenAi) {
   dependsOn: [
     rgOpenAi
   ]
-  scope: resourceGroup(openAiSubscription, openAiResourceGroup)
+  scope: resourceGroup(aiSub, aiGroup)
   params: {
     accountName: !empty(openAiName) ? openAiName : 'openai-${environmentName}'
-    location: openAiLocation
+    location: aiLoc
     appPrincipalId: umiApps.outputs.principalId
     tags: tags
-    newOrExisting: 'existing'
   }
 }
 
@@ -261,7 +264,6 @@ module applications 'modules/app/petclinic.bicep' = {
   }
 }
 
-output subscriptionId string = subscription().subscriptionId
 output resourceGroupName string = rg.name
 
 output gatewayFqdn string = applications.outputs.gatewayFqdn
