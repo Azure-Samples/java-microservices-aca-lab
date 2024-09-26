@@ -1,7 +1,7 @@
 ---
 title: 'Lab Tips and troubleshooting'
 layout: default
-nav_order: 11
+nav_order: 13
 ---
 
 # A couple of tips when you run this lab
