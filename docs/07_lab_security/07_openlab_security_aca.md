@@ -1,11 +1,11 @@
 ---
-title: 'Lab 6: Protect endpoints using Web Application Firewalls'
+title: 'Lab 7: Protect endpoints using Web Application Firewalls'
 layout: default
-nav_order: 8
+nav_order: 9
 has_children: true
 ---
 
-# Lab 05: Protect endpoints using Web Application Firewall
+# Lab 7: Protect endpoints using Web Application Firewall
 
 # Student manual
 
@@ -27,7 +27,7 @@ After you complete this lab, you will be able to:
 
 The below image illustrates the end state you will be building in this lab.
 
-![lab 7 overview](../../images/acalab5.png)
+![lab 7 overview](../../images/acalab7.png)
 
 ## Lab Duration
 

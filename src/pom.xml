@@ -39,7 +39,7 @@
         <docker.image.dockerize.version>v0.6.1</docker.image.dockerize.version>
         <docker.plugin.version>1.2.0</docker.plugin.version>
         <version.spring.cloud.azure>5.15.0</version.spring.cloud.azure>
-        <spring-ai.version>1.0.0-SNAPSHOT</spring-ai.version>
+        <spring-ai.version>1.0.0-M2</spring-ai.version>
     </properties>
 
     <dependencyManagement>

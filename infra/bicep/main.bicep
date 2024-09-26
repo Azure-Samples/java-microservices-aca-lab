@@ -10,7 +10,7 @@ param environmentName string
 param location string
 
 @description('Name of the the resource group. Default: rg-{environmentName}')
-param resourceGroupName string
+param resourceGroupName string = ''
 
 @description('Name of the the new containerapp environment. Default: aca-env-{environmentName}')
 param managedEnvironmentsName string = ''
@@ -29,34 +29,36 @@ param sqlAdmin string = 'sqladmin'
 param sqlAdminPassword string
 
 @description('Repo url of the configure server.')
-param configGitRepo string
+param configGitRepo string = 'https://github.com/Azure-Samples/java-microservices-aca-lab'
 
 @description('Repo branch of the configure server.')
 param configGitBranch string = 'main'
 
 @description('Repo path of the configure server.')
-param configGitPath string
+param configGitPath string = 'config'
 
 @description('Name of the azure container registry.')
 param acrName string
 @description('Resource group of the azure container registry.')
-param acrGroupName string = ''
+param acrGroupName string
 @description('Subscription of the azure container registry.')
-param acrSubscription string = ''
+param acrSubscription string
 
 @description('Enable OpenAI components')
-param enableOpenAi bool = false
-@description('Resource group of the Open AI')
-param openAiResourceGroup string
-@description('Location of the Open AI')
-param openAiLocation string
-@description('Subscription of the Open AI')
-param openAiSubscription string
+param enableOpenAi bool = true
+@description('Name of the Open AI name, Default: openai-{environmentName}')
+param openAiName string = ''
+@description('Resource group of the Open AI, Default: the resourceGroup above')
+param openAiResourceGroup string = ''
+@description('Location of the Open AI, Default: the location above')
+param openAiLocation string = ''
+@description('Subscription of the Open AI, Default: your current subscription')
+param openAiSubscription string = ''
 
 @description('Name of the log analytics server. Default la-{environmentName}')
 param logAnalyticsName string = ''
 
-@description('Name of the log analytics server. Default ai-{environmentName}')
+@description('Name of the log analytics server. Default app-insights-{environmentName}')
 param applicationInsightsName string = ''
 
 @description('Images for petclinic services, will replaced by new images on step `azd deploy`')
@@ -74,7 +76,7 @@ var vnetPrefix = '10.1.0.0/16'
 var infraSubnetPrefix = '10.1.0.0/24'
 var infraSubnetName = '${abbrs.networkVirtualNetworksSubnets}infra'
 
-var placeholderImage = 'azurespringapps/default-banner:distroless-2024022107-66ea1a62-87936983'
+var placeholderImage = 'azurespringapps/default-banner:latest'
 
 var abbrs = loadJsonContent('./abbreviations.json')
 var tags = { 'azd-env-name': environmentName }
@@ -137,6 +139,7 @@ module mysql 'modules/database/mysql.bicep' = {
     administratorLoginPassword: sqlAdminPassword
     serverName: !empty(sqlServerName) ? sqlServerName : '${abbrs.sqlServers}${environmentName}'
     databaseName: 'petclinic'
+    tags: tags
   }
 }
 
@@ -154,7 +157,7 @@ module applicationInsights 'modules/shared/applicationInsights.bicep' = {
   name: 'application-insights'
   scope: rg
   params: {
-    name: !empty(applicationInsightsName) ? applicationInsightsName : 'ai-${environmentName}'
+    name: !empty(applicationInsightsName) ? applicationInsightsName : 'app-insights-${environmentName}'
     location: location
     workspaceResourceId: logAnalytics.outputs.logAnalyticsWsId
     tags: tags
@@ -163,12 +166,11 @@ module applicationInsights 'modules/shared/applicationInsights.bicep' = {
 
 // group id: /subscriptions/<subscriptionId>/resourceGroups/<groupName>
 var acrSub = !empty(acrSubscription) ? acrSubscription : split(rg.id, '/')[2]
-var acrGroup = !empty(acrGroupName) ? acrGroupName : rg.name
 
 @description('roles for Azure Container Registry')
 module acrRoleAssignments 'modules/shared/containerRegistryRoleAssignment.bicep' = {
   name: 'acr-roles-assignments'
-  scope: resourceGroup(acrSub, acrGroup)
+  scope: resourceGroup(acrSub, acrGroupName)
   params: {
     name: acrName
     roleAssignments: [
@@ -208,13 +210,18 @@ module javaComponents 'modules/containerapps/containerapp-java-components.bicep'
   }
 }
 
+var aiSub = !empty(openAiSubscription) ? openAiSubscription : subscription().subscriptionId
+var aiGroup = !empty(openAiResourceGroup) ? openAiResourceGroup : rg.name
+var aiLoc = !empty(openAiLocation) ? openAiLocation : location
+
 // You must use modules to deploy resources to a different scope.
 module rgOpenAi 'modules/shared/resourceGroup.bicep' = if (enableOpenAi) {
   name: 'rg-openai'
-  scope: subscription(openAiSubscription)
+  scope: subscription(aiSub)
   params: {
-    resourceGroupName: openAiResourceGroup
-    resourceGroupLocation: location
+    resourceGroupName: aiGroup
+    resourceGroupLocation: aiLoc
+    tags: tags
   }
 }
 
@@ -223,11 +230,12 @@ module openai 'modules/ai/openai.bicep' = if (enableOpenAi) {
   dependsOn: [
     rgOpenAi
   ]
-  scope: resourceGroup(openAiSubscription, openAiResourceGroup)
+  scope: resourceGroup(aiSub, aiGroup)
   params: {
-    accountName: 'openai-${environmentName}'
-    location: openAiLocation
+    accountName: !empty(openAiName) ? openAiName : 'openai-${environmentName}'
+    location: aiLoc
     appPrincipalId: umiApps.outputs.principalId
+    tags: tags
   }
 }
 
@@ -238,8 +246,9 @@ module applications 'modules/app/petclinic.bicep' = {
     managedEnvironmentsName: managedEnvironment.outputs.containerAppsEnvironmentName
     eurekaId: javaComponents.outputs.eurekaId
     configServerId: javaComponents.outputs.configServerId
-    mysqlDBId: mysql.outputs.databaseId
-    mysqlUserAssignedIdentityClientId: umiApps.outputs.clientId
+    mysqlDatabaseId: mysql.outputs.databaseId
+    umiAppsClientId: umiApps.outputs.clientId
+    umiAppsIdentityId: umiApps.outputs.id
     acrRegistry: '${acrRoleAssignments.outputs.registryName}.azurecr.io' // add dependency to make sure roles are assigned
     acrIdentityId: umiAcrPull.outputs.id
     apiGatewayImage: !empty(apiGatewayImage) ? apiGatewayImage : placeholderImage
@@ -251,14 +260,14 @@ module applications 'modules/app/petclinic.bicep' = {
     targetPort: 8080
     applicationInsightsConnString: applicationInsights.outputs.connectionString
     enableOpenAi: enableOpenAi
-    azureOpenAiEndpoint: openai.outputs.endpoint
-    openAiClientId: umiApps.outputs.id
+    openAiEndpoint: openai.outputs.endpoint
+    openAiClientId: umiApps.outputs.clientId
   }
 }
 
-output subscriptionId string = subscription().subscriptionId
 output resourceGroupName string = rg.name
 
+output springbootAdminFqdn string = javaComponents.outputs.springbootAdminFqdn
 output gatewayFqdn string = applications.outputs.gatewayFqdn
 output adminFqdn string = applications.outputs.adminFqdn
 

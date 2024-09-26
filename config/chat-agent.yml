@@ -1,0 +1,38 @@
+spring:
+  sql:
+    init:
+      schema-locations: classpath*:db/h2/schema.sql
+      data-locations: classpath*:db/h2/data.sql
+  # Web
+  thymeleaf:
+    mode: HTML
+  # Internationalization
+  messages:
+    basename: messages/messages
+  # Maximum time static resources should be cached
+  web:
+    resources:
+      cache:
+        cachecontrol:
+          max-age: 12h
+  # Spring AI
+  ai:
+    azure:
+      openai:
+        endpoint: <your-azure-open-ai-endpoint>
+        client-id: <your-managed-identity-client-id>
+        chat:
+          options:
+            deployment-name: gpt-4o
+            temperature: 0.8
+        embedding:
+          options:
+            deployment-name: text-embedding-ada-002
+    chat:
+      client:
+        enabled: true
+
+# PetClinic Agent
+petclinic:
+  agent:
+    name: petclinic agent

@@ -5,7 +5,6 @@ import com.azure.ai.openai.OpenAIClientBuilder;
 import com.azure.identity.DefaultAzureCredentialBuilder;
 import org.springframework.ai.azure.openai.AzureOpenAiChatModel;
 import org.springframework.ai.azure.openai.AzureOpenAiChatOptions;
-import org.springframework.ai.azure.openai.AzureOpenAiResponseFormat;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.ChatClientCustomizer;
 import org.springframework.ai.chat.client.advisor.PromptChatMemoryAdvisor;
@@ -50,7 +49,6 @@ public class AgentConfig {
 		var openAIChatOptions = AzureOpenAiChatOptions.builder()
 			.withDeploymentName(properties.getDeploymentName())
 			.withTemperature(properties.getTemperature())
-            .withResponseFormat(AzureOpenAiResponseFormat.TEXT)
 			.build();
 
 		// provide Context to load function callbacks
