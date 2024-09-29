@@ -49,6 +49,7 @@ module acrNew './containerRegistry.bicep' = if (newOrExisting == 'new') {
   params: {
     name: name
     location: resourceGroup().location
+    acrAdminUserEnabled: true
     roleAssignments: roleAssignments
     tags: tags
   }
