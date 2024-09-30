@@ -252,8 +252,7 @@ module applications 'modules/app/petclinic.bicep' = {
     targetPort: 8080
     applicationInsightsConnString: applicationInsights.outputs.connectionString
     enableOpenAi: enableOpenAi
-    openAiEndpoint: openai.outputs.endpoint
-    openAiClientId: umiApps.outputs.clientId
+    openAiEndpoint: enableOpenAi ? openai.outputs.endpoint : ''
   }
 }
 
