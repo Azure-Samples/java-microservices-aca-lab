@@ -33,6 +33,6 @@ import java.util.List;
  */
 public interface OwnerRepository extends JpaRepository<Owner, Integer> {
 
-    @Query("SELECT o FROM Owner o WHERE LOWER(o.firstName) = LOWER(:firstName)")
+    @Query("SELECT DISTINCT owner FROM Owner owner left join  owner.pets WHERE owner.firstName LIKE :firstName% ")
     List<Owner> findByFirstName(@Param("firstName") String firstName);
 }
