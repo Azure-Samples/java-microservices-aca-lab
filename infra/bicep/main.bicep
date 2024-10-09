@@ -22,7 +22,7 @@ param vnetEndpointInternal bool = false
 param sqlServerName string = ''
 
 @description('Name of the the sql admin.')
-param sqlAdmin string = 'sqladmin'
+param sqlAdmin string
 
 @description('The the sql admin password.')
 @secure()
@@ -38,11 +38,11 @@ param configGitBranch string = 'main'
 param configGitPath string = 'config'
 
 @description('Name of the azure container registry.')
-param acrName string
+param acrName string = ''
 @description('Resource group of the azure container registry.')
-param acrGroupName string
+param acrGroupName string = ''
 @description('Subscription of the azure container registry.')
-param acrSubscription string
+param acrSubscription string = ''
 
 @description('Enable OpenAI components')
 param enableOpenAi bool = true
@@ -88,14 +88,6 @@ resource rg 'Microsoft.Resources/resourceGroups@2024-03-01' = {
   tags: tags
 }
 
-module umiAcrPull 'modules/shared/userAssignedIdentity.bicep' = {
-  name: 'umi-acr-pull'
-  scope: rg
-  params: {
-    name: 'umi-${acrName}-acrpull'
-  }
-}
-
 module umiApps 'modules/shared/userAssignedIdentity.bicep' = {
   name: 'umi-apps'
   scope: rg
@@ -105,7 +97,7 @@ module umiApps 'modules/shared/userAssignedIdentity.bicep' = {
 }
 
 module vnet './modules/network/vnet.bicep' = {
-  name: 'vnet'
+  name: 'vnet-${environmentName}'
   scope: rg
   params: {
     name: !empty(vnetName) ? vnetName : '${abbrs.networkVirtualNetworks}${environmentName}'
@@ -131,8 +123,26 @@ module vnet './modules/network/vnet.bicep' = {
   }
 }
 
+var acrExisting = !empty(acrName) && !empty(acrGroupName) && !empty(acrSubscription)
+var acrGroup = !empty(acrGroupName) ? acrGroupName : rg.name
+var acrSub = !empty(acrSubscription) ? acrSubscription : subscription().subscriptionId
+
+module acr 'modules/acr/acr.bicep' = {
+  name: 'acr-${environmentName}'
+  scope: resourceGroup(acrSub, acrGroup)
+  params: {
+    name: !empty(acrGroupName) ? acrName : '${abbrs.containerRegistryRegistries}${uniqueString(rg.id)}'
+    groupName: acrGroup
+    subscriptionId : acrSub
+    tags: tags
+    newOrExisting: acrExisting ? 'existing' : 'new'
+  }
+}
+
+var acrLoginServer = acr.outputs.loginServer
+
 module mysql 'modules/database/mysql.bicep' = {
-  name: 'mysql'
+  name: 'mysql-${environmentName}'
   scope: rg
   params: {
     administratorLogin: sqlAdmin
@@ -144,7 +154,7 @@ module mysql 'modules/database/mysql.bicep' = {
 }
 
 module logAnalytics 'modules/shared/logAnalyticsWorkspace.bicep' = {
-  name: 'log-analytics'
+  name: 'log-analytics-${environmentName}'
   scope: rg
   params: {
     name: !empty(logAnalyticsName) ? logAnalyticsName : 'la-${environmentName}'
@@ -154,7 +164,7 @@ module logAnalytics 'modules/shared/logAnalyticsWorkspace.bicep' = {
 
 @description('Azure Application Insights, the workload\' log & metric sink and APM tool')
 module applicationInsights 'modules/shared/applicationInsights.bicep' = {
-  name: 'application-insights'
+  name: 'application-insights-${environmentName}'
   scope: rg
   params: {
     name: !empty(applicationInsightsName) ? applicationInsightsName : 'app-insights-${environmentName}'
@@ -164,33 +174,15 @@ module applicationInsights 'modules/shared/applicationInsights.bicep' = {
   }
 }
 
-// group id: /subscriptions/<subscriptionId>/resourceGroups/<groupName>
-var acrSub = !empty(acrSubscription) ? acrSubscription : split(rg.id, '/')[2]
-
-@description('roles for Azure Container Registry')
-module acrRoleAssignments 'modules/shared/containerRegistryRoleAssignment.bicep' = {
-  name: 'acr-roles-assignments'
-  scope: resourceGroup(acrSub, acrGroupName)
-  params: {
-    name: acrName
-    roleAssignments: [
-      {
-        principalId: umiAcrPull.outputs.principalId
-        roleDefinitionIdOrName: 'AcrPull'
-      }
-    ]
-  }
-}
-
 module managedEnvironment 'modules/containerapps/aca-environment.bicep' = {
-  name: 'managedEnvironment'
+  name: 'managedEnvironment-${environmentName}'
   scope: rg
   params: {
     name: !empty(managedEnvironmentsName) ? managedEnvironmentsName : 'aca-env-${environmentName}'
     location: location
     vnetEndpointInternal: vnetEndpointInternal
     userAssignedIdentities: {
-      '${umiAcrPull.outputs.id}': {}
+      '${acr.outputs.umiAcrPullId}': {}
       '${umiApps.outputs.id}': {}
     }
     diagnosticWorkspaceId: logAnalytics.outputs.logAnalyticsWsId
@@ -200,7 +192,7 @@ module managedEnvironment 'modules/containerapps/aca-environment.bicep' = {
 }
 
 module javaComponents 'modules/containerapps/containerapp-java-components.bicep' = {
-  name: 'javaComponents'
+  name: 'javaComponents-${environmentName}'
   scope: rg
   params: {
     managedEnvironmentsName: managedEnvironment.outputs.containerAppsEnvironmentName
@@ -216,7 +208,7 @@ var aiLoc = !empty(openAiLocation) ? openAiLocation : location
 
 // You must use modules to deploy resources to a different scope.
 module rgOpenAi 'modules/shared/resourceGroup.bicep' = if (enableOpenAi) {
-  name: 'rg-openai'
+  name: 'rg-openai-${environmentName}'
   scope: subscription(aiSub)
   params: {
     resourceGroupName: aiGroup
@@ -226,7 +218,7 @@ module rgOpenAi 'modules/shared/resourceGroup.bicep' = if (enableOpenAi) {
 }
 
 module openai 'modules/ai/openai.bicep' = if (enableOpenAi) {
-  name: 'openai'
+  name: 'openai-${environmentName}'
   dependsOn: [
     rgOpenAi
   ]
@@ -240,7 +232,7 @@ module openai 'modules/ai/openai.bicep' = if (enableOpenAi) {
 }
 
 module applications 'modules/app/petclinic.bicep' = {
-  name: 'petclinic-microservices'
+  name: 'petclinic-${environmentName}'
   scope: rg
   params: {
     managedEnvironmentsName: managedEnvironment.outputs.containerAppsEnvironmentName
@@ -249,8 +241,8 @@ module applications 'modules/app/petclinic.bicep' = {
     mysqlDatabaseId: mysql.outputs.databaseId
     umiAppsClientId: umiApps.outputs.clientId
     umiAppsIdentityId: umiApps.outputs.id
-    acrRegistry: '${acrRoleAssignments.outputs.registryName}.azurecr.io' // add dependency to make sure roles are assigned
-    acrIdentityId: umiAcrPull.outputs.id
+    acrRegistry: acrLoginServer
+    acrIdentityId: acr.outputs.umiAcrPullId
     apiGatewayImage: !empty(apiGatewayImage) ? apiGatewayImage : placeholderImage
     customersServiceImage: !empty(customersServiceImage) ? customersServiceImage : placeholderImage
     vetsServiceImage: !empty(vetsServiceImage) ? vetsServiceImage : placeholderImage
@@ -265,7 +257,10 @@ module applications 'modules/app/petclinic.bicep' = {
   }
 }
 
+output subscriptionId string = subscription().subscriptionId
 output resourceGroupName string = rg.name
+
+output acrLoginServer string = acrLoginServer
 
 output springbootAdminFqdn string = javaComponents.outputs.springbootAdminFqdn
 output gatewayFqdn string = applications.outputs.gatewayFqdn

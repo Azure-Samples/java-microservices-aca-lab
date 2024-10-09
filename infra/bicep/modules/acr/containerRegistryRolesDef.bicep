@@ -24,6 +24,9 @@ type roleAssignmentType = {
 
 @export()
 var builtInRoleNames = {
+  // https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#general
+  Contributor: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c')
+
   // https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#containers
   AcrDelete: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'c2f4ef07-c644-48eb-af81-4b1b4947fb11')
   AcrImageSigner: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '6cef56e8-d556-48e5-a04f-b8e64114680f')
