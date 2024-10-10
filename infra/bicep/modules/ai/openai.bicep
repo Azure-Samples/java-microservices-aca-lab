@@ -3,6 +3,9 @@ targetScope = 'resourceGroup'
 @description('Required. Name of your Azure OpenAI service account. ')
 param accountName string
 
+@description('')
+param location string = resourceGroup().location
+
 @description('Optional. model name for the TextEmbeddingAda002 language model. ')
 param modelTextEmbeddingAda002 string = 'text-embedding-ada-002'
 
@@ -31,7 +34,7 @@ param newOrExisting string = 'new'
 
 resource account 'Microsoft.CognitiveServices/accounts@2023-05-01' = if (newOrExisting == 'new') {
   name: accountName
-  location: resourceGroup().location
+  location: location
   sku: {
     name: 'S0'
   }
@@ -47,7 +50,7 @@ resource account 'Microsoft.CognitiveServices/accounts@2023-05-01' = if (newOrEx
 module roleAssignment 'openaiRoleAssignment.bicep' = {
   name: 'openai-role-assignment-${accountName}'
   params: {
-    accountName: accountName
+    accountName: account.name // add dependency
     appPrincipalId: appPrincipalId
     roleDefinitionId: roleDefinitionId
   }

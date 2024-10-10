@@ -172,7 +172,7 @@ module mysql 'modules/database/mysql.bicep' = {
   }
 }
 
-var laWorkspaceSub = laWorkspaceExisting ? laWorkspaceSubscription : subscription().id
+var laWorkspaceSub = laWorkspaceExisting ? laWorkspaceSubscription : subscription().subscriptionId
 var laWorkspaceGroup = laWorkspaceExisting ? laWorkspaceResourceGroup : rg.name
 
 @description('Prepare the Log Analytics Workspace')
@@ -187,7 +187,7 @@ module logAnalytics 'modules/shared/logAnalyticsWorkspace.bicep' = {
 }
 
 // Azure Application Isnights
-var appInsightsSub = appInsightsExisting ? appInsightsSubscription : subscription().id
+var appInsightsSub = appInsightsExisting ? appInsightsSubscription : subscription().subscriptionId
 var appInsightsGroup = appInsightsExisting ? appInsightsResourceGroup : rg.name
 
 @description('Azure Application Insights, the workload log & metric sink and APM tool')
@@ -203,7 +203,7 @@ module applicationInsights 'modules/shared/applicationInsights.bicep' = {
   }
 }
 
-var openAiSub = openAiExisting ? openAiSubscription : subscription().id
+var openAiSub = openAiExisting ? openAiSubscription : subscription().subscriptionId
 var openAiGroup = openAiExisting ? openAiResourceGroup : rg.name
 
 @description('Prepare Open AI instance')

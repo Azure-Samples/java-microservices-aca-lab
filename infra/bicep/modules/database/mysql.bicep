@@ -39,7 +39,7 @@ resource mysqlUserAssignedIdentityAdmin 'Microsoft.ManagedIdentity/userAssignedI
 }
 
 // new
-resource serverNew 'Microsoft.DBforMySQL/flexibleServers@2023-06-30' = if (newOrExisting == 'new') {
+resource dbServer 'Microsoft.DBforMySQL/flexibleServers@2023-06-30' = if (newOrExisting == 'new') {
   name: serverName
   location: location
   tags: tags
@@ -78,21 +78,22 @@ resource serverNew 'Microsoft.DBforMySQL/flexibleServers@2023-06-30' = if (newOr
 
 resource SQLAllConnectionsAllowed 'Microsoft.DBforMySQL/flexibleServers/firewallRules@2023-06-30' = if (newOrExisting == 'new') {
   name: 'AllConnectionsAllowed'
-  parent: serverNew
+  parent: dbServer
   properties: {
     startIpAddress: '0.0.0.0'
     endIpAddress: '255.255.255.255'
   }
 }
 
-var subId = (newOrExisting == 'new') ? subscription().id : subscriptionId
+var subId = (newOrExisting == 'new') ? subscription().subscriptionId : subscriptionId
 var groupName = (newOrExisting == 'new') ? resourceGroup().name : resourceGroupName
+var name = (newOrExisting == 'new') ? dbServer.name : serverName // add depends on new server
 
 module database 'database.bicep' = {
   name: 'database-${databaseName}'
   scope: resourceGroup(subId, groupName)
   params: {
-    serverName: serverName
+    serverName: name
     databaseName: databaseName
   }
 }
