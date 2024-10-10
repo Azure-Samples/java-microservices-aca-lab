@@ -2,9 +2,12 @@ import { roleAssignmentType, builtInRoleNames } from 'containerRegistryRolesDef.
 
 param name string
 
-param groupName string
+param resourceGroupName string
 
 param subscriptionId string
+
+@description('The location where the resources will be created.')
+param location string = resourceGroup().location
 
 @description('Optional. Tags of the resource.')
 param tags object = {}
@@ -45,10 +48,10 @@ var roleAssignments = [
   ]
 
 module acrNew './containerRegistry.bicep' = if (newOrExisting == 'new') {
-  name: 'acr-new'
+  name: 'acr-new-${name}'
   params: {
     name: name
-    location: resourceGroup().location
+    location: location
     acrAdminUserEnabled: true
     roleAssignments: roleAssignments
     tags: tags
@@ -56,8 +59,8 @@ module acrNew './containerRegistry.bicep' = if (newOrExisting == 'new') {
 }
 
 module acrExisting 'acrExisting.bicep' = if (newOrExisting == 'existing') {
-  name: 'acr-existing'
-  scope: resourceGroup(subscriptionId, groupName)   // on existing, use the sub + group from the source acr
+  name: 'acr-existing-${name}'
+  scope: resourceGroup(subscriptionId, resourceGroupName)
   params: {
     name: name
     roleAssignments: roleAssignments
