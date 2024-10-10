@@ -37,11 +37,11 @@ param sqlServerResourceGroup string = ''
 @description('Name of the the sql server, required if sqlServerExisting = true')
 param sqlServerSubscription string = ''
 
-@description('Name of the the sql admin.')
-param sqlAdmin string
-@description('The the sql admin password.')
+@description('Name of the the sql admin. Default: sqladmin')
+param sqlAdmin string = 'sqladmin'
+@description('The the sql admin password. Default random')
 @secure()
-param sqlAdminPassword string
+param sqlAdminPassword string = newGuid()
 
 @description('Repo url of the configure server.')
 param configGitRepo string = 'https://github.com/Azure-Samples/java-microservices-aca-lab'

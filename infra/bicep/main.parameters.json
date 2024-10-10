@@ -7,12 +7,6 @@
         },
         "location": {
             "value": "${AZURE_LOCATION}"
-        },
-        "sqlAdmin": {
-            "value": "sqladmin"
-        },
-        "sqlAdminPassword": {
-            "value": "Password#123"
         }
     }
 }

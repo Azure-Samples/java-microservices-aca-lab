@@ -5,7 +5,7 @@ nav_order: 6
 has_children: true
 ---
 
-# Lab 04: Connect to Database securely using identity.
+# Lab 04: Connect to Database securely using identity
 
 # Student manual
 
