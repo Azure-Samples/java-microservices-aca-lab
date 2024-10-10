@@ -3,6 +3,10 @@ targetScope = 'resourceGroup'
 @description('Required. Name of your MySQL server.')
 param serverName string
 
+param resourceGroupName string
+
+param subscriptionId string
+
 @description('The location where the resources will be created.')
 param location string = resourceGroup().location
 
@@ -35,7 +39,7 @@ resource mysqlUserAssignedIdentityAdmin 'Microsoft.ManagedIdentity/userAssignedI
 }
 
 // new
-resource serverNew 'Microsoft.DBforMySQL/flexibleServers@2023-06-30' = if (newOrExisting == 'new') {
+resource dbServer 'Microsoft.DBforMySQL/flexibleServers@2023-06-30' = if (newOrExisting == 'new') {
   name: serverName
   location: location
   tags: tags
@@ -74,39 +78,28 @@ resource serverNew 'Microsoft.DBforMySQL/flexibleServers@2023-06-30' = if (newOr
 
 resource SQLAllConnectionsAllowed 'Microsoft.DBforMySQL/flexibleServers/firewallRules@2023-06-30' = if (newOrExisting == 'new') {
   name: 'AllConnectionsAllowed'
-  parent: serverNew
+  parent: dbServer
   properties: {
     startIpAddress: '0.0.0.0'
     endIpAddress: '255.255.255.255'
   }
 }
 
-resource databaseNew 'Microsoft.DBforMySQL/flexibleServers/databases@2023-06-30' = if (newOrExisting == 'new') {
-  parent: serverNew
-  name: databaseName
-  properties: {
-    charset: 'utf8'
-    collation: 'utf8_general_ci'
-  }
-}
+var subId = (newOrExisting == 'new') ? subscription().subscriptionId : subscriptionId
+var groupName = (newOrExisting == 'new') ? resourceGroup().name : resourceGroupName
+var name = (newOrExisting == 'new') ? dbServer.name : serverName // add depends on new server
 
-// existing
-resource serverExisting 'Microsoft.DBforMySQL/flexibleServers@2023-06-30' existing = if (newOrExisting == 'existing') {
-  name: serverName
-}
-
-// the 'parent' property only permit direct references to resources
-resource databaseExisting 'Microsoft.DBforMySQL/flexibleServers/databases@2023-06-30' = if (newOrExisting == 'existing') {
-  parent: serverExisting
-  name: databaseName
-  properties: {
-    charset: 'utf8'
-    collation: 'utf8_general_ci'
+module database 'database.bicep' = {
+  name: 'database-${databaseName}'
+  scope: resourceGroup(subId, groupName)
+  params: {
+    serverName: name
+    databaseName: databaseName
   }
 }
 
 @description('The resource id of the database.')
-output databaseId string = ((newOrExisting == 'new') ? databaseNew.id : databaseExisting.id)
+output databaseId string = database.outputs.id
 
 @description('The client id of the user assigned identity with admin permission.')
 output adminIdentityClientId string = mysqlUserAssignedIdentityAdmin.properties.clientId

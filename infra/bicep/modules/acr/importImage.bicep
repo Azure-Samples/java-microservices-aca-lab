@@ -35,7 +35,7 @@ resource importImage 'Microsoft.Resources/deploymentScripts@2023-08-01' = {
         value: image
       }
     ]
-    scriptContent: 'az acr import --name "$acrName" --source "$source" --image "$image"'
+    scriptContent: 'az acr import --name "$acrName" --source "$source" --image "$image" --force'
     cleanupPreference: 'OnSuccess'
     retentionInterval: 'P1D'
   }

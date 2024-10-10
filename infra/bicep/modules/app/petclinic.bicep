@@ -24,7 +24,6 @@ param applicationInsightsConnString string = ''
 param enableOpenAi bool
 
 param openAiEndpoint string
-param openAiClientId string
 
 param targetPort int = 8080
 
@@ -154,7 +153,9 @@ module visitsService '../containerapps/containerapp.bicep' = {
   }
 }
 
-module chatAgent '../containerapps/containerapp.bicep' = if (enableOpenAi) {
+// always create this app, conditional azd deploy is not supported yet
+// see https://github.com/Azure/azure-dev/issues/3397
+module chatAgent '../containerapps/containerapp.bicep' = {
   name: 'chat-agent'
   params: {
     location: environment.location
@@ -187,7 +188,7 @@ module chatAgent '../containerapps/containerapp.bicep' = if (enableOpenAi) {
       }
       {
         name: 'SPRING_AI_AZURE_OPENAI_CLIENT_ID'
-        value: openAiClientId
+        value: umiAppsClientId
       }
     ])
   }
