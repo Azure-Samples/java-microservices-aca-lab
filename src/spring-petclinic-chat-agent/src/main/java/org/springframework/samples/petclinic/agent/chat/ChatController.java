@@ -8,6 +8,8 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Controller class for handling chat-related functionality.
@@ -57,4 +59,13 @@ public class ChatController {
 		return "chat/chat";
 	}
 
+
+    @GetMapping("/chat/{sender}/{message}")
+    @ResponseBody
+    public String sendMessage(@PathVariable("sender") String sender, @PathVariable("message") String message) {
+        System.out.println("received: " + sender + " - " + message);
+        String response = agent.chat(message, sender);
+        System.out.println("response: " + response);
+        return response;
+    }
 }

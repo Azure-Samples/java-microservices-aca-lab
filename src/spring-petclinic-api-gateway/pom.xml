@@ -68,6 +68,12 @@
             <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+
+
         <!-- Third parties -->
         <dependency>
             <groupId>org.jolokia</groupId>
