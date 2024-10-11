@@ -18,7 +18,4 @@ clearenv() {
     echo "" > "$DEV_ENV_FILE"
 }
 
-# auto save
-trap saveenv EXIT
-
 EOT
