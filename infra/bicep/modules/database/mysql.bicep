@@ -81,7 +81,7 @@ resource SQLAllConnectionsAllowed 'Microsoft.DBforMySQL/flexibleServers/firewall
   parent: dbServer
   properties: {
     startIpAddress: '0.0.0.0'
-    endIpAddress: '255.255.255.255'
+    endIpAddress: '0.0.0.0'
   }
 }
 

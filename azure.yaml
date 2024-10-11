@@ -22,6 +22,7 @@ services:
       registry: ${ACR_LOGIN_SERVER}
       image: java-microservices-aca-lab/spring-petclinic-api-gateway
       tag: passwordless
+      remoteBuild: true
 
   customers-service:
     resourceName: customers-service
@@ -32,6 +33,7 @@ services:
       registry: ${ACR_LOGIN_SERVER}
       image: java-microservices-aca-lab/spring-petclinic-customers-service
       tag: passwordless
+      remoteBuild: true
 
   vets-service:
     resourceName: vets-service
@@ -42,6 +44,7 @@ services:
       registry: ${ACR_LOGIN_SERVER}
       image: java-microservices-aca-lab/spring-petclinic-vets-service
       tag: passwordless
+      remoteBuild: true
 
   visits-service:
     resourceName: visits-service
@@ -52,6 +55,7 @@ services:
       registry: ${ACR_LOGIN_SERVER}
       image: java-microservices-aca-lab/spring-petclinic-visits-service
       tag: passwordless
+      remoteBuild: true
 
   chat-agent:
     resourceName: chat-agent
@@ -62,6 +66,7 @@ services:
       registry: ${ACR_LOGIN_SERVER}
       image: java-microservices-aca-lab/spring-petclinic-chat-agent
       tag: passwordless
+      remoteBuild: true
 
   admin-server:
     resourceName: admin-server
@@ -72,6 +77,7 @@ services:
       registry: ${ACR_LOGIN_SERVER}
       image: java-microservices-aca-lab/spring-petclinic-admin-server
       tag: passwordless
+      remoteBuild: true
 
 hooks:
   postprovision:
