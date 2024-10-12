@@ -13,17 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.agent.system;
+package org.springframework.samples.petclinic.agent.model;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import lombok.Data;
 
-@Controller
-class WelcomeController {
+import java.io.Serializable;
+import java.util.Set;
 
-	@GetMapping("/")
-	public String welcome() {
-		return "welcome";
-	}
+@Data
+public class Owner implements Serializable {
 
+    private Integer id;
+
+    private String firstName;
+
+    private String lastName;
+
+    private String address;
+
+    private String city;
+
+    private String telephone;
+
+    private Set<Pet> pets;
 }

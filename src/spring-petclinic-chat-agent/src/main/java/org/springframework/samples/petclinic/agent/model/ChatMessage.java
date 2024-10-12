@@ -13,17 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.agent.system;
+package org.springframework.samples.petclinic.agent.model;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import lombok.*;
 
-@Controller
-class WelcomeController {
+import java.io.Serializable;
 
-	@GetMapping("/")
-	public String welcome() {
-		return "welcome";
+/**
+ * Represents a chat message in the chat application.
+ */
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class ChatMessage implements Serializable {
+
+	private String content;
+
+	private String sender;
+
+	private MessageType type;
+
+	/**
+	 * Enum representing the type of the chat message.
+	 */
+	public enum MessageType {
+
+		CHAT, LEAVE, JOIN
+
 	}
 
 }
