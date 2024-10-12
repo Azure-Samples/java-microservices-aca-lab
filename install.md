@@ -121,10 +121,21 @@ To get started follow the below step by step instructions:
 > To install JDK on Windows, follow the instructions provided in [JDK Installation Guide](https://learn.microsoft.com/java/openjdk/install#install-on-windows). Make sure to use the `FeatureJavaHome` feature during the install to update the `JAVA_HOME` environment variable.
 
 - In case you prefer to use IntelliJ IDEA as an IDE instead of Visual Studio Code: Azure Toolkit for IntelliJ IDEA 3.51.0 from the IntelliJ Plugins UI from [IntelliJ IDEA](https://www.jetbrains.com/idea/download/#section=windows)
+
 - Azure CLI version 2.49.0 or higher
+
+   Install az extensions
+
+   ```bash
+   az extension add -n containerapp -y
+   az extension add -n serviceconnector-passwordless -y
+   ```
 
 {: .note }
 > If needed, upgrade the Azure CLI version by launching Command Prompt as administrator and running `az upgrade`.
+
+- Azd version
+   Guide [Install Azd](https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/install-azd)
 
 - jq command line tool available from [JQ Downloads](https://stedolan.github.io/jq/)
 
