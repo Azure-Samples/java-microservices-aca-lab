@@ -33,20 +33,20 @@ var colors = [
 function connect(event) {
   username = document.querySelector("#name").value.trim();
   if (username) {
-      usernamePage.classList.add("hidden");
-      chatPage.classList.remove("hidden");
+    usernamePage.classList.add("hidden");
+    chatPage.classList.remove("hidden");
 
-      // Create a register WebSocket connection
-      var protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-      var socketUrl = protocol + '//' + window.location.host + '/websocket';
-      console.log("WebSocket server URL: ", socketUrl);
-      socket = new WebSocket(socketUrl);
+    // Create a register WebSocket connection
+    var protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    var socketUrl = protocol + '//' + window.location.host + '/websocket';
+    console.log("WebSocket server URL: ", socketUrl);
+    socket = new WebSocket(socketUrl);
 
-      // Set up event listeners
-      socket.onopen = onConnected;
-      socket.onmessage = onMessageReceived;
-      socket.onerror = onError;
-      socket.onclose = onClosed;
+    // Set up event listeners
+    socket.onopen = onConnected;
+    socket.onmessage = onMessageReceived;
+    socket.onerror = onError;
+    socket.onclose = onClosed;
   }
   event.preventDefault();
 }
