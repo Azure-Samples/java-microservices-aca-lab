@@ -167,7 +167,7 @@ module chatAgent '../containerapps/containerapp.bicep' = {
     image: chatAgentImage
     acrIdentityId: acrIdentityId
     umiAppsIdentityId: umiAppsIdentityId
-    external: true
+    external: false
     targetPort: targetPort
     createSqlConnection: false
     env: concat(env,
