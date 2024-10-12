@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.agent.chat;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -8,12 +10,16 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Controller class for handling chat-related functionality.
  */
 @Controller
 public class ChatController {
+
+    private final Logger logger = LoggerFactory.getLogger(ChatController.class);
 
 	@Autowired
 	private Agent agent;
@@ -57,4 +63,13 @@ public class ChatController {
 		return "chat/chat";
 	}
 
+
+    @GetMapping("/chat/{sender}/{message}")
+    @ResponseBody
+    public String sendMessage(@PathVariable("sender") String sender, @PathVariable("message") String message) {
+        logger.info("received from {}: {}", sender, message);
+        String response = agent.chat(message, sender);
+        logger.info("response to {}: {}", sender, response);
+        return response;
+    }
 }

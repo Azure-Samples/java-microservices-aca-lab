@@ -84,6 +84,74 @@
   }
 }
 
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  appearance: none;
+  background-clip: padding-box;
+}
+
+.no-marker {
+    list-style-type: none;
+}
+
+#chat-page {
+    .event-message {
+        width: 100%;
+        text-align: center;
+        clear: both;
+
+        p {
+            font-size: 14px;
+            word-wrap: break-word;
+        }
+    }
+
+    .own-message {
+        text-align: right;
+
+        i {
+            visibility: hidden !important;
+        }
+    }
+}
+
+.input-group {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  width: 100%;
+
+  > .form-control,
+  > .form-select,
+  > .form-floating {
+    position: relative;
+    flex: 1 1 auto;
+    width: 1%;
+    min-width: 0;
+  }
+
+  > .form-control:focus,
+  > .form-select:focus,
+  > .form-floating:focus-within {
+    z-index: 5;
+  }
+
+  .btn {
+    position: relative;
+    z-index: 2;
+
+    &:focus {
+      z-index: 5;
+    }
+  }
+}
+
 
 .container .text-muted {
   margin: 20px 0;

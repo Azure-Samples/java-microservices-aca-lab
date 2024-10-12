@@ -47,6 +47,9 @@
     <script src="/scripts/vet-list/vet-list.controller.js"></script>
     <script src="/scripts/vet-list/vet-list.component.js"></script>
 
+    <script src="/scripts/agent/agent.js"></script>
+    <script src="/scripts/agent/agent.component.js"></script>
+
     <script src="/scripts/infrastructure/infrastructure.js"></script>
     <script src="/scripts/infrastructure/httpErrorHandlingInterceptor.js"></script>
 </head>
@@ -54,9 +57,8 @@
 <body class="container">
 <layout-nav></layout-nav>
 <div class="container-fluid">
-    <div class="container xd-container">
-        <div ui-view=""></div>
-    </div>
+    <div class="row" style="height: 30px;"></div>
+    <div ui-view=""></div>
 </div>
 <layout-footer></layout-footer>
 </body>
