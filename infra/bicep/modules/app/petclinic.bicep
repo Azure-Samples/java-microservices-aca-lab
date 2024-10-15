@@ -5,7 +5,7 @@ param eurekaId string
 param configServerId string
 
 param mysqlDatabaseId string
-param mysqlConnectionName string = 'sql_conn'
+param mysqlConnectionName string = 'conn_${uniqueString(resourceGroup().id)}'
 
 param acrRegistry string
 param acrIdentityId string
@@ -48,7 +48,6 @@ module apiGateway '../containerapps/containerapp.bicep' = {
     umiAppsIdentityId: umiAppsIdentityId
     external: true
     targetPort: targetPort
-    sqlConnectionName: mysqlConnectionName
     env: concat(env, empty(applicationInsightsConnString) ? [] : [
       {
         name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
@@ -170,7 +169,6 @@ module chatAgent '../containerapps/containerapp.bicep' = {
     umiAppsIdentityId: umiAppsIdentityId
     external: false
     targetPort: targetPort
-    sqlConnectionName: mysqlConnectionName
     env: concat(env,
       empty(applicationInsightsConnString) ? [] : [
       {
@@ -209,7 +207,6 @@ module adminServer '../containerapps/containerapp.bicep' = {
     umiAppsIdentityId: umiAppsIdentityId
     external: true
     targetPort: targetPort
-    sqlConnectionName: mysqlConnectionName
     env: concat(env, empty(applicationInsightsConnString) ? [] : [
       {
         name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'

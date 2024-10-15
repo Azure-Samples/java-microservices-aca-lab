@@ -1,8 +1,9 @@
 param location string
 param managedEnvironmentId string
 param registry string
-param image string
 param appName string
+param image string
+param activeProfile string = 'passwordless'
 param eurekaId string
 param configServerId string
 param external bool = false
@@ -55,7 +56,7 @@ resource app 'Microsoft.App/containerApps@2024-02-02-preview' = {
           env: concat(env, [
             {
               name: 'SPRING_PROFILES_ACTIVE'
-              value: 'passwordless'
+              value: activeProfile
             }
           ])
           resources: {
@@ -114,7 +115,7 @@ var mysqlToken = !empty(mysqlDatabaseId) ? split(mysqlDatabaseId, '/') : array('
 var mysqlSubscriptionId = length(mysqlToken) > 2 ? mysqlToken[2] : ''
 
 resource connectDB 'Microsoft.ServiceLinker/linkers@2023-04-01-preview' = if (!empty(sqlConnectionName)) {
-  name: sqlConnectionName
+  name: 'conn_${sqlConnectionName}'
   scope: app
   properties: {
     scope: appName

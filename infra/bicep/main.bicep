@@ -185,7 +185,7 @@ module mysql 'modules/database/mysql.bicep' = {
     serverName: !empty(sqlServerName) ? sqlServerName : '${abbrs.sqlServers}${environmentName}'
     resourceGroupName: sqlServerResourceGroup
     subscriptionId: sqlServerSubscription
-    databaseName: 'petclinic-${environmentName}'
+    databaseName: 'petclinic' // match the name in sql schema
     tags: tags
     newOrExisting: sqlServerExisting? 'existing' : 'new'
   }
