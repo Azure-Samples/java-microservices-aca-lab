@@ -1,7 +1,7 @@
 ---
 title: 'Lab 11: Set up autoscaling for microservices on ACA'
 layout: default
-nav_order: 11
+nav_order: 13
 has_children: true
 ---
 
