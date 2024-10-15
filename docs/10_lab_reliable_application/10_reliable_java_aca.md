@@ -11,7 +11,7 @@ has_children: true
 
 ## Lab scenario
 
-Azure Container Apps has a richful set of features available to help you build reliable Java applications. In this Lab, you will learn how to design and maintain your app for long-term health and stability. You can find more infomation on 
+Azure Container Apps has a richful set of features available to help you build reliable Java applications. In this Lab, you will learn how to design and maintain your app for long-term health and stability. You can find more infomation on
 - [Management and operations for the Azure Container Apps - Landing Zone Accelerator](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/scenarios/app-platform/container-apps/management)
 
 
@@ -24,7 +24,7 @@ After you complete this lab, you will be able to:
 
 The below image illustrates the end state you will be building in this lab.
 
-![lab 10 overview](../../images/acalab9.png)
+![lab 10 overview](../../images/acalab10.png)
 
 ## Lab Duration
 
