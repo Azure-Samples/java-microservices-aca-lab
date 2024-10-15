@@ -2,7 +2,7 @@
 
 azd env set AZURE_RESOURCE_GROUP $resourceGroupName
 
-azd env set ACR_LOGIN_SERVER $acrLoginServer
+azd env set AZURE_CONTAINER_REGISTRY_ENDPOINT $acrLoginServer
 
 azd env set AZD_PROVISION_TIMESTAMP $azdProvisionTimestamp
 

@@ -19,7 +19,7 @@ services:
     host: containerapp
     language: java
     docker:
-      registry: ${ACR_LOGIN_SERVER}
+      registry: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}
       image: java-microservices-aca-lab/spring-petclinic-api-gateway
       tag: ${AZD_PROVISION_TIMESTAMP}
       remoteBuild: true
@@ -30,7 +30,7 @@ services:
     host: containerapp
     language: java
     docker:
-      registry: ${ACR_LOGIN_SERVER}
+      registry: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}
       image: java-microservices-aca-lab/spring-petclinic-customers-service
       tag: ${AZD_PROVISION_TIMESTAMP}
       remoteBuild: true
@@ -41,7 +41,7 @@ services:
     host: containerapp
     language: java
     docker:
-      registry: ${ACR_LOGIN_SERVER}
+      registry: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}
       image: java-microservices-aca-lab/spring-petclinic-vets-service
       tag: ${AZD_PROVISION_TIMESTAMP}
       remoteBuild: true
@@ -52,7 +52,7 @@ services:
     host: containerapp
     language: java
     docker:
-      registry: ${ACR_LOGIN_SERVER}
+      registry: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}
       image: java-microservices-aca-lab/spring-petclinic-visits-service
       tag: ${AZD_PROVISION_TIMESTAMP}
       remoteBuild: true
@@ -63,7 +63,7 @@ services:
     host: containerapp
     language: java
     docker:
-      registry: ${ACR_LOGIN_SERVER}
+      registry: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}
       image: java-microservices-aca-lab/spring-petclinic-chat-agent
       tag: ${AZD_PROVISION_TIMESTAMP}
       remoteBuild: true
@@ -74,7 +74,7 @@ services:
     host: containerapp
     language: java
     docker:
-      registry: ${ACR_LOGIN_SERVER}
+      registry: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}
       image: java-microservices-aca-lab/spring-petclinic-admin-server
       tag: ${AZD_PROVISION_TIMESTAMP}
       remoteBuild: true
