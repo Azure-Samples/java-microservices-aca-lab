@@ -80,7 +80,7 @@ resource modelDeploymentGpt4 'Microsoft.CognitiveServices/accounts/deployments@2
   properties: {
     model: {
       name: modelGpt4
-      version: '2024-05-13'
+      version: '2024-08-06'
       format: modelFormat
     }
   }
