@@ -76,6 +76,7 @@ resource dbServer 'Microsoft.DBforMySQL/flexibleServers@2023-06-30' = if (newOrE
   }
 }
 
+@description('Create firewall rule to allow inbound traffic from all Azure Services')
 resource SQLAllConnectionsAllowed 'Microsoft.DBforMySQL/flexibleServers/firewallRules@2023-06-30' = if (newOrExisting == 'new') {
   name: 'AllConnectionsAllowed'
   parent: dbServer

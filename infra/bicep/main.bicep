@@ -88,6 +88,8 @@ param appInsightsResourceGroup string = ''
 @description('Subscription of the Log Analytics workspace, required if appInsightsExisting = true')
 param appInsightsSubscription string = ''
 
+param utcValue string = utcNow()
+
 var vnetPrefix = '10.1.0.0/16'
 var infraSubnetPrefix = '10.1.0.0/24'
 var infraSubnetName = '${abbrs.networkVirtualNetworksSubnets}infra'
@@ -105,6 +107,7 @@ resource rg 'Microsoft.Resources/resourceGroups@2024-03-01' = {
 }
 
 @description('Create user assigned managed identity for petclinic apps')
+// apps will use this managed identity to connect MySQL, openAI etc
 module umiApps 'modules/shared/userAssignedIdentity.bicep' = {
   name: 'umi-apps'
   scope: rg
@@ -141,7 +144,7 @@ module vnet './modules/network/vnet.bicep' = {
   }
 }
 
-@description('Prepare Azure Container Registry for the images')
+@description('Prepare Azure Container Registry for the images with UMI for AcrPull & AcrPush')
 module acr 'modules/acr/acr.bicep' = {
   name: 'acr-${environmentName}'
   scope: rg
@@ -151,6 +154,18 @@ module acr 'modules/acr/acr.bicep' = {
     subscriptionId: acrSubscription
     tags: tags
     newOrExisting: acrExisting ? 'existing' : 'new'
+  }
+}
+
+@description('Import place holder image to new container registry')
+module importImage 'modules/acr/importImage.bicep' = {
+  name: 'import-image'
+  scope: rg
+  params: {
+    acrName: acr.outputs.name
+    source: 'mcr.microsoft.com/azurespringapps/default-banner:distroless-2024022107-66ea1a62-87936983'
+    image: 'azurespringapps/default-banner:latest'
+    umiAcrContributorId : acr.outputs.umiAcrContributorId
   }
 }
 
@@ -297,3 +312,5 @@ output vetsServiceName string = applications.outputs.vetsServiceName
 output vetsServiceId string = applications.outputs.vetsServiceId
 output visitsServiceName string = applications.outputs.visitsServiceName
 output visitsServiceId string = applications.outputs.visitsServiceId
+
+output azdProvisionTimestamp string = 'azd-${environmentName}-${utcValue}'

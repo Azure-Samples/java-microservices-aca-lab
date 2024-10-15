@@ -70,16 +70,6 @@ module acrExisting 'acrExisting.bicep' = if (newOrExisting == 'existing') {
 var acrName = (newOrExisting == 'new') ? acrNew.outputs.name : acrExisting.outputs.name
 var loginServer = (newOrExisting == 'new') ? acrNew.outputs.loginServer : acrExisting.outputs.loginServer
 
-module improtImage 'importImage.bicep' = {
-  name: 'import-image'
-  params: {
-    acrName: acrName
-    source: 'mcr.microsoft.com/azurespringapps/default-banner:distroless-2024022107-66ea1a62-87936983'
-    image: 'azurespringapps/default-banner:latest'
-    umiAcrContributorId : umiAcrContributor.outputs.id
-  }
-}
-
 output name string = acrName
 output loginServer string = loginServer
 

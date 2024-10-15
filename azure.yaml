@@ -21,7 +21,7 @@ services:
     docker:
       registry: ${ACR_LOGIN_SERVER}
       image: java-microservices-aca-lab/spring-petclinic-api-gateway
-      tag: passwordless
+      tag: ${AZD_PROVISION_TIMESTAMP}
       remoteBuild: true
 
   customers-service:
@@ -32,7 +32,7 @@ services:
     docker:
       registry: ${ACR_LOGIN_SERVER}
       image: java-microservices-aca-lab/spring-petclinic-customers-service
-      tag: passwordless
+      tag: ${AZD_PROVISION_TIMESTAMP}
       remoteBuild: true
 
   vets-service:
@@ -43,7 +43,7 @@ services:
     docker:
       registry: ${ACR_LOGIN_SERVER}
       image: java-microservices-aca-lab/spring-petclinic-vets-service
-      tag: passwordless
+      tag: ${AZD_PROVISION_TIMESTAMP}
       remoteBuild: true
 
   visits-service:
@@ -54,7 +54,7 @@ services:
     docker:
       registry: ${ACR_LOGIN_SERVER}
       image: java-microservices-aca-lab/spring-petclinic-visits-service
-      tag: passwordless
+      tag: ${AZD_PROVISION_TIMESTAMP}
       remoteBuild: true
 
   chat-agent:
@@ -65,7 +65,7 @@ services:
     docker:
       registry: ${ACR_LOGIN_SERVER}
       image: java-microservices-aca-lab/spring-petclinic-chat-agent
-      tag: passwordless
+      tag: ${AZD_PROVISION_TIMESTAMP}
       remoteBuild: true
 
   admin-server:
@@ -76,7 +76,7 @@ services:
     docker:
       registry: ${ACR_LOGIN_SERVER}
       image: java-microservices-aca-lab/spring-petclinic-admin-server
-      tag: passwordless
+      tag: ${AZD_PROVISION_TIMESTAMP}
       remoteBuild: true
 
 hooks:
