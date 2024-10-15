@@ -1,9 +1,12 @@
 import { roleAssignmentType, builtInRoleNames } from 'containerRegistryRolesDef.bicep'
 
+@description('Required. Name of the Azure Container Registry')
 param name string
 
+@description('Optional. Resource Group of the Azure Container Registry')
 param resourceGroupName string
 
+@description('Optional. Subscription of the Azure Container Registry')
 param subscriptionId string
 
 @description('The location where the resources will be created.')

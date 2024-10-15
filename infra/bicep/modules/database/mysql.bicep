@@ -3,8 +3,10 @@ targetScope = 'resourceGroup'
 @description('Required. Name of your MySQL server.')
 param serverName string
 
+@description('Optional. Resource Group of existing MySQL server.')
 param resourceGroupName string
 
+@description('Optional. Subscription of existing MySQL server.')
 param subscriptionId string
 
 @description('The location where the resources will be created.')

@@ -11,7 +11,7 @@ param umiAppsIdentityId string
 param umiAppsClientId string = ''
 param env array = []
 param targetPort int
-param createSqlConnection bool = false
+param sqlConnectionName string = ''
 param mysqlDatabaseId string = ''
 param readinessProbeInitialDelaySeconds int = 10
 param livenessProbeInitialDelaySeconds int = 30
@@ -113,10 +113,8 @@ resource app 'Microsoft.App/containerApps@2024-02-02-preview' = {
 var mysqlToken = !empty(mysqlDatabaseId) ? split(mysqlDatabaseId, '/') : array('')
 var mysqlSubscriptionId = length(mysqlToken) > 2 ? mysqlToken[2] : ''
 
-var connectionName = 'mysql_conn'
-
-resource connectDB 'Microsoft.ServiceLinker/linkers@2023-04-01-preview' = if (createSqlConnection) {
-  name: connectionName
+resource connectDB 'Microsoft.ServiceLinker/linkers@2023-04-01-preview' = if (!empty(sqlConnectionName)) {
+  name: sqlConnectionName
   scope: app
   properties: {
     scope: appName
@@ -125,7 +123,7 @@ resource connectDB 'Microsoft.ServiceLinker/linkers@2023-04-01-preview' = if (cr
       authType: 'userAssignedIdentity'
       clientId: umiAppsClientId
       subscriptionId: mysqlSubscriptionId
-      userName: 'aad_${connectionName}'
+      userName: 'aad_${sqlConnectionName}'
     }
     targetService: {
       type: 'AzureResource'
@@ -137,5 +135,3 @@ resource connectDB 'Microsoft.ServiceLinker/linkers@2023-04-01-preview' = if (cr
 output appName string = app.name
 output appId string = app.id
 output appFqdn string = app.properties.configuration.ingress != null ? app.properties.configuration.ingress.fqdn : ''
-
-output connectionName string = createSqlConnection ? connectionName : ''

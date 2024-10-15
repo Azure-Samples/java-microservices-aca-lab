@@ -17,6 +17,7 @@ param managedEnvironmentsName string = ''
 
 @description('Name of the virtual network. Default vnet-{environmentName}')
 param vnetName string = ''
+
 @description('Boolean indicating the aca environment only has an internal load balancer. ')
 param vnetEndpointInternal bool = false
 
@@ -97,7 +98,10 @@ var infraSubnetName = '${abbrs.networkVirtualNetworksSubnets}infra'
 var placeholderImage = 'azurespringapps/default-banner:latest'
 
 var abbrs = loadJsonContent('./abbreviations.json')
-var tags = { 'azd-env-name': environmentName }
+var tags = {
+  'azd-env-name': environmentName
+  'utc-time': utcValue
+}
 
 @description('Organize resources in a resource group')
 resource rg 'Microsoft.Resources/resourceGroups@2024-03-01' = {
@@ -181,7 +185,7 @@ module mysql 'modules/database/mysql.bicep' = {
     serverName: !empty(sqlServerName) ? sqlServerName : '${abbrs.sqlServers}${environmentName}'
     resourceGroupName: sqlServerResourceGroup
     subscriptionId: sqlServerSubscription
-    databaseName: 'petclinic'
+    databaseName: 'petclinic-${environmentName}'
     tags: tags
     newOrExisting: sqlServerExisting? 'existing' : 'new'
   }
