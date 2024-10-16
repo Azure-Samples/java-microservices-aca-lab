@@ -5,7 +5,7 @@ nav_order: 11
 has_children: true
 ---
 
-# Lab 08: Create and configure Azure Service Bus for sending messages between microservices
+# Lab 9: Create and configure Azure Service Bus for sending messages between microservices
 
 # Student manual
 
