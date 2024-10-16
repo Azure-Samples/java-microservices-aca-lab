@@ -17,6 +17,7 @@ param managedEnvironmentsName string = ''
 
 @description('Name of the virtual network. Default vnet-{environmentName}')
 param vnetName string = ''
+
 @description('Boolean indicating the aca environment only has an internal load balancer. ')
 param vnetEndpointInternal bool = false
 
@@ -88,6 +89,8 @@ param appInsightsResourceGroup string = ''
 @description('Subscription of the Log Analytics workspace, required if appInsightsExisting = true')
 param appInsightsSubscription string = ''
 
+param utcValue string = utcNow()
+
 var vnetPrefix = '10.1.0.0/16'
 var infraSubnetPrefix = '10.1.0.0/24'
 var infraSubnetName = '${abbrs.networkVirtualNetworksSubnets}infra'
@@ -95,7 +98,10 @@ var infraSubnetName = '${abbrs.networkVirtualNetworksSubnets}infra'
 var placeholderImage = 'azurespringapps/default-banner:latest'
 
 var abbrs = loadJsonContent('./abbreviations.json')
-var tags = { 'azd-env-name': environmentName }
+var tags = {
+  'azd-env-name': environmentName
+  'utc-time': utcValue
+}
 
 @description('Organize resources in a resource group')
 resource rg 'Microsoft.Resources/resourceGroups@2024-03-01' = {
@@ -105,6 +111,7 @@ resource rg 'Microsoft.Resources/resourceGroups@2024-03-01' = {
 }
 
 @description('Create user assigned managed identity for petclinic apps')
+// apps will use this managed identity to connect MySQL, openAI etc
 module umiApps 'modules/shared/userAssignedIdentity.bicep' = {
   name: 'umi-apps'
   scope: rg
@@ -141,7 +148,7 @@ module vnet './modules/network/vnet.bicep' = {
   }
 }
 
-@description('Prepare Azure Container Registry for the images')
+@description('Prepare Azure Container Registry for the images with UMI for AcrPull & AcrPush')
 module acr 'modules/acr/acr.bicep' = {
   name: 'acr-${environmentName}'
   scope: rg
@@ -151,6 +158,18 @@ module acr 'modules/acr/acr.bicep' = {
     subscriptionId: acrSubscription
     tags: tags
     newOrExisting: acrExisting ? 'existing' : 'new'
+  }
+}
+
+@description('Import place holder image to new container registry')
+module importImage 'modules/acr/importImage.bicep' = {
+  name: 'import-image'
+  scope: rg
+  params: {
+    acrName: acr.outputs.name
+    source: 'mcr.microsoft.com/azurespringapps/default-banner:distroless-2024022107-66ea1a62-87936983'
+    image: 'azurespringapps/default-banner:latest'
+    umiAcrContributorId : acr.outputs.umiAcrContributorId
   }
 }
 
@@ -166,7 +185,7 @@ module mysql 'modules/database/mysql.bicep' = {
     serverName: !empty(sqlServerName) ? sqlServerName : '${abbrs.sqlServers}${environmentName}'
     resourceGroupName: sqlServerResourceGroup
     subscriptionId: sqlServerSubscription
-    databaseName: 'petclinic'
+    databaseName: 'petclinic' // match the name in sql schema
     tags: tags
     newOrExisting: sqlServerExisting? 'existing' : 'new'
   }
@@ -297,3 +316,5 @@ output vetsServiceName string = applications.outputs.vetsServiceName
 output vetsServiceId string = applications.outputs.vetsServiceId
 output visitsServiceName string = applications.outputs.visitsServiceName
 output visitsServiceId string = applications.outputs.visitsServiceId
+
+output azdProvisionTimestamp string = 'azd-${environmentName}-${utcValue}'

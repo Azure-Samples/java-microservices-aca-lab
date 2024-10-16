@@ -3,8 +3,10 @@ targetScope = 'resourceGroup'
 @description('Required. Name of your MySQL server.')
 param serverName string
 
+@description('Optional. Resource Group of existing MySQL server.')
 param resourceGroupName string
 
+@description('Optional. Subscription of existing MySQL server.')
 param subscriptionId string
 
 @description('The location where the resources will be created.')
@@ -76,6 +78,7 @@ resource dbServer 'Microsoft.DBforMySQL/flexibleServers@2023-06-30' = if (newOrE
   }
 }
 
+@description('Create firewall rule to allow inbound traffic from all Azure Services')
 resource SQLAllConnectionsAllowed 'Microsoft.DBforMySQL/flexibleServers/firewallRules@2023-06-30' = if (newOrExisting == 'new') {
   name: 'AllConnectionsAllowed'
   parent: dbServer

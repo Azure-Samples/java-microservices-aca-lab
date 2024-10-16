@@ -1,9 +1,12 @@
 import { roleAssignmentType, builtInRoleNames } from 'containerRegistryRolesDef.bicep'
 
+@description('Required. Name of the Azure Container Registry')
 param name string
 
+@description('Optional. Resource Group of the Azure Container Registry')
 param resourceGroupName string
 
+@description('Optional. Subscription of the Azure Container Registry')
 param subscriptionId string
 
 @description('The location where the resources will be created.')
@@ -69,16 +72,6 @@ module acrExisting 'acrExisting.bicep' = if (newOrExisting == 'existing') {
 
 var acrName = (newOrExisting == 'new') ? acrNew.outputs.name : acrExisting.outputs.name
 var loginServer = (newOrExisting == 'new') ? acrNew.outputs.loginServer : acrExisting.outputs.loginServer
-
-module improtImage 'importImage.bicep' = {
-  name: 'import-image'
-  params: {
-    acrName: acrName
-    source: 'mcr.microsoft.com/azurespringapps/default-banner:distroless-2024022107-66ea1a62-87936983'
-    image: 'azurespringapps/default-banner:latest'
-    umiAcrContributorId : umiAcrContributor.outputs.id
-  }
-}
 
 output name string = acrName
 output loginServer string = loginServer

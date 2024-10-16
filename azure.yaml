@@ -19,9 +19,9 @@ services:
     host: containerapp
     language: java
     docker:
-      registry: ${ACR_LOGIN_SERVER}
+      registry: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}
       image: java-microservices-aca-lab/spring-petclinic-api-gateway
-      tag: passwordless
+      tag: ${AZD_PROVISION_TIMESTAMP}
       remoteBuild: true
 
   customers-service:
@@ -30,9 +30,9 @@ services:
     host: containerapp
     language: java
     docker:
-      registry: ${ACR_LOGIN_SERVER}
+      registry: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}
       image: java-microservices-aca-lab/spring-petclinic-customers-service
-      tag: passwordless
+      tag: ${AZD_PROVISION_TIMESTAMP}
       remoteBuild: true
 
   vets-service:
@@ -41,9 +41,9 @@ services:
     host: containerapp
     language: java
     docker:
-      registry: ${ACR_LOGIN_SERVER}
+      registry: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}
       image: java-microservices-aca-lab/spring-petclinic-vets-service
-      tag: passwordless
+      tag: ${AZD_PROVISION_TIMESTAMP}
       remoteBuild: true
 
   visits-service:
@@ -52,9 +52,9 @@ services:
     host: containerapp
     language: java
     docker:
-      registry: ${ACR_LOGIN_SERVER}
+      registry: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}
       image: java-microservices-aca-lab/spring-petclinic-visits-service
-      tag: passwordless
+      tag: ${AZD_PROVISION_TIMESTAMP}
       remoteBuild: true
 
   chat-agent:
@@ -63,9 +63,9 @@ services:
     host: containerapp
     language: java
     docker:
-      registry: ${ACR_LOGIN_SERVER}
+      registry: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}
       image: java-microservices-aca-lab/spring-petclinic-chat-agent
-      tag: passwordless
+      tag: ${AZD_PROVISION_TIMESTAMP}
       remoteBuild: true
 
   admin-server:
@@ -74,9 +74,9 @@ services:
     host: containerapp
     language: java
     docker:
-      registry: ${ACR_LOGIN_SERVER}
+      registry: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}
       image: java-microservices-aca-lab/spring-petclinic-admin-server
-      tag: passwordless
+      tag: ${AZD_PROVISION_TIMESTAMP}
       remoteBuild: true
 
 hooks:

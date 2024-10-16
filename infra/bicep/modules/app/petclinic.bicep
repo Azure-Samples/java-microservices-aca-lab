@@ -5,6 +5,7 @@ param eurekaId string
 param configServerId string
 
 param mysqlDatabaseId string
+param mysqlConnectionName string = 'conn_${uniqueString(resourceGroup().id)}'
 
 param acrRegistry string
 param acrIdentityId string
@@ -47,7 +48,6 @@ module apiGateway '../containerapps/containerapp.bicep' = {
     umiAppsIdentityId: umiAppsIdentityId
     external: true
     targetPort: targetPort
-    createSqlConnection: false
     env: concat(env, empty(applicationInsightsConnString) ? [] : [
       {
         name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
@@ -74,7 +74,7 @@ module customersService '../containerapps/containerapp.bicep' = {
     acrIdentityId: acrIdentityId
     external: false
     targetPort: targetPort
-    createSqlConnection: true
+    sqlConnectionName: mysqlConnectionName
     mysqlDatabaseId: mysqlDatabaseId
     umiAppsClientId: umiAppsClientId
     umiAppsIdentityId: umiAppsIdentityId
@@ -106,7 +106,7 @@ module vetsService '../containerapps/containerapp.bicep' = {
     acrIdentityId: acrIdentityId
     external: false
     targetPort: targetPort
-    createSqlConnection: true
+    sqlConnectionName: mysqlConnectionName
     mysqlDatabaseId: mysqlDatabaseId
     umiAppsClientId: umiAppsClientId
     umiAppsIdentityId: umiAppsIdentityId
@@ -136,7 +136,7 @@ module visitsService '../containerapps/containerapp.bicep' = {
     acrIdentityId: acrIdentityId
     external: false
     targetPort: targetPort
-    createSqlConnection: true
+    sqlConnectionName: mysqlConnectionName
     mysqlDatabaseId: mysqlDatabaseId
     umiAppsClientId: umiAppsClientId
     umiAppsIdentityId: umiAppsIdentityId
@@ -169,7 +169,6 @@ module chatAgent '../containerapps/containerapp.bicep' = {
     umiAppsIdentityId: umiAppsIdentityId
     external: false
     targetPort: targetPort
-    createSqlConnection: false
     env: concat(env,
       empty(applicationInsightsConnString) ? [] : [
       {
@@ -208,7 +207,6 @@ module adminServer '../containerapps/containerapp.bicep' = {
     umiAppsIdentityId: umiAppsIdentityId
     external: true
     targetPort: targetPort
-    createSqlConnection: false
     env: concat(env, empty(applicationInsightsConnString) ? [] : [
       {
         name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
@@ -232,4 +230,4 @@ output vetsServiceId string = vetsService.outputs.appId
 output visitsServiceName string = visitsService.outputs.appName
 output visitsServiceId string = visitsService.outputs.appId
 
-output connectionName string = customersService.outputs.connectionName
+output connectionName string = mysqlConnectionName
