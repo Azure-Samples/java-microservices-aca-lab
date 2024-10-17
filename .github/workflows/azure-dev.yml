@@ -1,4 +1,4 @@
-# Run when commits are pushed to main
+name: Provision & Package & Deploy
 on:
   workflow_dispatch:
 
