@@ -1,4 +1,4 @@
-name: Deploy Solution
+name: Provision & Package & Deploy
 on:
   workflow_dispatch:
 
