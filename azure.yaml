@@ -79,11 +79,11 @@ services:
       tag: ${AZD_PROVISION_TIMESTAMP}
       remoteBuild: true
 
-hooks:
-  postprovision:
-    posix:
-      shell: sh
-      run: ./infra/bicep/hooks/postprovision.sh
+# hooks:
+#   postprovision:
+#     posix:
+#       shell: sh
+#       run: ./infra/bicep/hooks/postprovision.sh
 
   prepackage:
     posix:

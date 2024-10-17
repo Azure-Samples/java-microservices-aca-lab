@@ -58,3 +58,8 @@ jobs:
 
       - name: Provision Infrastructure
         run: azd up --no-prompt
+
+      - name: Show azd environments
+        run: |
+          azd env list \
+          azd env get-values
