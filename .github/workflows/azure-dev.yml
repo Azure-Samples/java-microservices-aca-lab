@@ -47,9 +47,9 @@ jobs:
 
       - name: Log in with Azure (Federated Credentials)
         run: |
-          azd auth login `
-            --client-id ${{env.AZURE_CLIENT_ID}} `
-            --federated-credential-provider "github" `
+          azd auth login \
+            --client-id ${{env.AZURE_CLIENT_ID}} \
+            --federated-credential-provider "github" \
             --tenant-id ${{env.AZURE_TENANT_ID}}
 
       - name: Show azd environments
