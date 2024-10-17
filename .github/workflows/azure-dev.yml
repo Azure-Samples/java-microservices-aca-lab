@@ -31,15 +31,26 @@ jobs:
           distribution: 'adopt'
           cache: maven
 
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          client-id: $AZURE_CLIENT_ID
+          tenant-id: $AZURE_TENANT_ID
+          subscription-id: $AZURE_SUBSCRIPTION_ID
+
+      - name: Azure CLI script
+        uses: azure/cli@v2
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az account show
+
       - name: Log in with Azure (Federated Credentials)
         run: |
           azd auth login `
-            --client-id "$Env:AZURE_CLIENT_ID" `
+            --client-id "$AZURE_CLIENT_ID" `
             --federated-credential-provider "github" `
-            --tenant-id "$Env:AZURE_TENANT_ID"
-        shell: pwsh
+            --tenant-id "$AZURE_TENANT_ID"
 
       - name: Provision Infrastructure
         run: azd up --no-prompt
-        env:
-          AZD_INITIAL_ENVIRONMENT_CONFIG: ${{ secrets.AZD_INITIAL_ENVIRONMENT_CONFIG }}
