@@ -6,7 +6,7 @@ workflows:
   up:
     - azd: provision
     - azd: package --all
-    - azd: deploy --all
+    # - azd: deploy --all
 
 infra:
   provider: bicep
