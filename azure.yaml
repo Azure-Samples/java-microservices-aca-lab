@@ -6,7 +6,7 @@ workflows:
   up:
     - azd: provision
     - azd: package --all
-    # - azd: deploy --all
+    - azd: deploy --all
 
 infra:
   provider: bicep
@@ -80,10 +80,10 @@ services:
       remoteBuild: true
 
 hooks:
-#   postprovision:
-#     posix:
-#       shell: sh
-#       run: ./infra/bicep/hooks/postprovision.sh
+  postprovision:
+    posix:
+      shell: sh
+      run: ./infra/bicep/hooks/postprovision.sh
 
   prepackage:
     posix:
