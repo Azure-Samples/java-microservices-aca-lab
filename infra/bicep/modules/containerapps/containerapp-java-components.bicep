@@ -1,11 +1,16 @@
-param managedEnvironmentsName string
-param configServerGitRepo string
-param configServerGitBranch string
-param configServerGitPath string
+metadata description = 'Creates java components in an Azure Container App environment.'
 
-resource managedEnvironmentsResource 'Microsoft.App/managedEnvironments@2024-03-01' existing = {
-  name: managedEnvironmentsName
-}
+@description('Name of the environment for container apps')
+param containerAppsEnvironmentName string
+
+@description('The config server git uri')
+param configServerGitRepo string
+
+@description('The config server git label')
+param configServerGitLabel string
+
+@description('The config server git search-path')
+param configServerGitSearchPath string
 
 resource configServer 'Microsoft.App/managedEnvironments/javaComponents@2024-02-02-preview' = {
   parent: managedEnvironmentsResource
@@ -19,11 +24,11 @@ resource configServer 'Microsoft.App/managedEnvironments/javaComponents@2024-02-
       }
       {
         propertyName: 'spring.cloud.config.server.git.default-label'
-        value: configServerGitBranch
+        value: configServerGitLabel
       }
       {
         propertyName: 'spring.cloud.config.server.git.search-paths'
-        value: configServerGitPath
+        value: configServerGitSearchPath
       }
       {
         propertyName: 'spring.cloud.config.server.git.refresh-rate'
@@ -62,6 +67,10 @@ resource springbootadmin 'Microsoft.App/managedEnvironments/javaComponents@2024-
       }
     ]
   }
+}
+
+resource managedEnvironmentsResource 'Microsoft.App/managedEnvironments@2024-03-01' existing = {
+  name: containerAppsEnvironmentName
 }
 
 output eurekaId string = eureka.id

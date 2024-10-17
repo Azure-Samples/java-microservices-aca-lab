@@ -244,13 +244,14 @@ module managedEnvironment 'modules/containerapps/aca-environment.bicep' = {
   params: {
     name: !empty(managedEnvironmentsName) ? managedEnvironmentsName : 'aca-env-${environmentName}'
     location: location
+    isVnet: true
     vnetEndpointInternal: vnetEndpointInternal
+    vnetSubnetId: first(filter(vnet.outputs.vnetSubnets, x => x.name == infraSubnetName)).id
     userAssignedIdentities: {
       '${acr.outputs.umiAcrPullId}': {}
       '${umiApps.outputs.id}': {}
     }
     diagnosticWorkspaceId: logAnalytics.outputs.logAnalyticsWsId
-    subnetId: first(filter(vnet.outputs.vnetSubnets, x => x.name == infraSubnetName)).id
     tags: tags
   }
 }
@@ -260,10 +261,10 @@ module javaComponents 'modules/containerapps/containerapp-java-components.bicep'
   name: 'javaComponents-${environmentName}'
   scope: rg
   params: {
-    managedEnvironmentsName: managedEnvironment.outputs.containerAppsEnvironmentName
+    containerAppsEnvironmentName: managedEnvironment.outputs.containerAppsEnvironmentName
     configServerGitRepo: configGitRepo
-    configServerGitBranch: configGitBranch
-    configServerGitPath: configGitPath
+    configServerGitLabel: configGitBranch
+    configServerGitSearchPath: configGitPath
   }
 }
 
@@ -290,6 +291,7 @@ module applications 'modules/app/petclinic.bicep' = {
     applicationInsightsConnString: applicationInsights.outputs.connectionString
     enableOpenAi: enableOpenAi
     openAiEndpoint: enableOpenAi ? openai.outputs.endpoint : ''
+    tags: tags
   }
 }
 
