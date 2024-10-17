@@ -44,8 +44,9 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az extension add --upgrade -n containerapp
-            az extension add --upgrade -n serviceconnector-passwordless
+            az extension add --upgrade -n containerapp --allow-preview true
+            az extension add --upgrade -n serviceconnector-passwordless --allow-preview true
+            az extension list -o table
 
       - name: Log in with Azure (Federated Credentials)
         run: |
