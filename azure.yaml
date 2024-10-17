@@ -79,7 +79,7 @@ services:
       tag: ${AZD_PROVISION_TIMESTAMP}
       remoteBuild: true
 
-# hooks:
+hooks:
 #   postprovision:
 #     posix:
 #       shell: sh
