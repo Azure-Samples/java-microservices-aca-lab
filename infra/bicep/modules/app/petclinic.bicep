@@ -20,39 +20,52 @@ param visitsServiceImage string
 param adminServerImage string
 param chatAgentImage string
 
-param applicationInsightsConnString string = ''
-
-param enableOpenAi bool
-
-param openAiEndpoint string
-
 param targetPort int = 8080
 
-var env = []
+param enableOpenAi bool
+param openAiEndpoint string
 
-resource environment 'Microsoft.App/managedEnvironments@2024-02-02-preview' existing = {
-  name: managedEnvironmentsName
-}
+param applicationInsightsConnString string = ''
+
+param tags object = {}
+
+var env = concat([
+    {
+      name: 'SPRING_PROFILES_ACTIVE'
+      value: 'passwordless'
+    }],
+    empty(applicationInsightsConnString) ? [] : [
+    {
+      name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
+      value: applicationInsightsConnString
+    }
+  ])
+
+var serviceBindings = [
+    {
+      serviceId: eurekaId
+      name: 'eureka'
+    }
+    {
+      serviceId: configServerId
+      name: 'configserver'
+    }
+  ]
 
 module apiGateway '../containerapps/containerapp.bicep' = {
   name: 'api-gateway'
   params: {
-    location: environment.location
-    managedEnvironmentId: environment.id
-    appName: 'api-gateway'
-    eurekaId: eurekaId
-    configServerId: configServerId
-    registry: acrRegistry
-    image: apiGatewayImage
+    containerAppsEnvironmentName: managedEnvironmentsName
+    name: 'api-gateway'
+    acrName: acrRegistry
     acrIdentityId: acrIdentityId
-    umiAppsIdentityId: umiAppsIdentityId
+    imageName: apiGatewayImage
     external: true
     targetPort: targetPort
+    isJava: true
+    serviceBinds: serviceBindings
+    tags: tags
     env: concat(env, empty(applicationInsightsConnString) ? [] : [
-      {
-        name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
-        value: applicationInsightsConnString
-      }
       {
         name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
         value: '{"role": {"name": "api-gateway"}}'
@@ -64,27 +77,20 @@ module apiGateway '../containerapps/containerapp.bicep' = {
 module customersService '../containerapps/containerapp.bicep' = {
   name: 'customers-service'
   params: {
-    location: environment.location
-    managedEnvironmentId: environment.id
-    appName: 'customers-service'
-    eurekaId: eurekaId
-    configServerId: configServerId
-    registry: acrRegistry
-    image: customersServiceImage
+    containerAppsEnvironmentName: managedEnvironmentsName
+    name: 'customers-service'
+    acrName: acrRegistry
     acrIdentityId: acrIdentityId
+    imageName: customersServiceImage
     external: false
     targetPort: targetPort
-    sqlConnectionName: mysqlConnectionName
-    mysqlDatabaseId: mysqlDatabaseId
-    umiAppsClientId: umiAppsClientId
+    isJava: true
     umiAppsIdentityId: umiAppsIdentityId
     readinessProbeInitialDelaySeconds: 20
     livenessProbeInitialDelaySeconds: 40
+    serviceBinds: serviceBindings
+    tags: tags
     env: concat(env, empty(applicationInsightsConnString) ? [] : [
-      {
-        name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
-        value: applicationInsightsConnString
-      }
       {
         name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
         value: '{"role": {"name": "customers-service"}}'
@@ -93,28 +99,32 @@ module customersService '../containerapps/containerapp.bicep' = {
   }
 }
 
+module customersServiceConnection '../containerapps/serviceLiner.bicep' = {
+  name: 'customers-service-sql-connection'
+  params: {
+    appName: customersService.outputs.appName
+    containerName: customersService.outputs.appContainerName
+    appClientId: umiAppsClientId
+    connectionName: mysqlConnectionName
+    resourceId: mysqlDatabaseId
+  }
+}
+
 module vetsService '../containerapps/containerapp.bicep' = {
   name: 'vets-service'
   params: {
-    location: environment.location
-    managedEnvironmentId: environment.id
-    appName: 'vets-service'
-    eurekaId: eurekaId
-    configServerId: configServerId
-    registry: acrRegistry
-    image: vetsServiceImage
+    containerAppsEnvironmentName: managedEnvironmentsName
+    name: 'vets-service'
+    acrName: acrRegistry
     acrIdentityId: acrIdentityId
+    imageName: vetsServiceImage
     external: false
     targetPort: targetPort
-    sqlConnectionName: mysqlConnectionName
-    mysqlDatabaseId: mysqlDatabaseId
-    umiAppsClientId: umiAppsClientId
+    isJava: true
     umiAppsIdentityId: umiAppsIdentityId
+    serviceBinds: serviceBindings
+    tags: tags
     env: concat(env, empty(applicationInsightsConnString) ? [] : [
-      {
-        name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
-        value: applicationInsightsConnString
-      }
       {
         name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
         value: '{"role": {"name": "vets-service"}}'
@@ -123,28 +133,32 @@ module vetsService '../containerapps/containerapp.bicep' = {
   }
 }
 
+module vetsServiceConnection '../containerapps/serviceLiner.bicep' = {
+  name: 'vets-service-sql-connection'
+  params: {
+    appName: vetsService.outputs.appName
+    containerName: vetsService.outputs.appContainerName
+    appClientId: umiAppsClientId
+    connectionName: mysqlConnectionName
+    resourceId: mysqlDatabaseId
+  }
+}
+
 module visitsService '../containerapps/containerapp.bicep' = {
   name: 'visits-service'
   params: {
-    location: environment.location
-    managedEnvironmentId: environment.id
-    appName: 'visits-service'
-    eurekaId: eurekaId
-    configServerId: configServerId
-    registry: acrRegistry
-    image: visitsServiceImage
+    containerAppsEnvironmentName: managedEnvironmentsName
+    name: 'visits-service'
+    acrName: acrRegistry
     acrIdentityId: acrIdentityId
+    imageName: visitsServiceImage
     external: false
     targetPort: targetPort
-    sqlConnectionName: mysqlConnectionName
-    mysqlDatabaseId: mysqlDatabaseId
-    umiAppsClientId: umiAppsClientId
+    isJava: true
     umiAppsIdentityId: umiAppsIdentityId
+    serviceBinds: serviceBindings
+    tags: tags
     env: concat(env, empty(applicationInsightsConnString) ? [] : [
-      {
-        name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
-        value: applicationInsightsConnString
-      }
       {
         name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
         value: '{"role": {"name": "visits-service"}}'
@@ -153,34 +167,40 @@ module visitsService '../containerapps/containerapp.bicep' = {
   }
 }
 
+module visitsServiceConnection '../containerapps/serviceLiner.bicep' = {
+  name: 'visits-service-sql-connection'
+  params: {
+    appName: visitsService.outputs.appName
+    containerName: visitsService.outputs.appContainerName
+    appClientId: umiAppsClientId
+    connectionName: mysqlConnectionName
+    resourceId: mysqlDatabaseId
+  }
+}
+
 // always create this app, conditional azd deploy is not supported yet
 // see https://github.com/Azure/azure-dev/issues/3397
 module chatAgent '../containerapps/containerapp.bicep' = {
   name: 'chat-agent'
   params: {
-    location: environment.location
-    managedEnvironmentId: environment.id
-    appName: 'chat-agent'
-    eurekaId: eurekaId
-    configServerId: configServerId
-    registry: acrRegistry
-    image: chatAgentImage
+    containerAppsEnvironmentName: managedEnvironmentsName
+    name: 'chat-agent'
+    acrName: acrRegistry
     acrIdentityId: acrIdentityId
+    imageName: chatAgentImage
     umiAppsIdentityId: umiAppsIdentityId
     external: false
     targetPort: targetPort
+    isJava: true
+    serviceBinds: serviceBindings
+    tags: tags
     env: concat(env,
       empty(applicationInsightsConnString) ? [] : [
-      {
-        name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
-        value: applicationInsightsConnString
-      }
       {
         name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
         value: '{"role": {"name": "chat-agent"}}'
       }
-    ],
-      !enableOpenAi ? [] : [
+    ], !enableOpenAi ? [] : [
       {
         name: 'SPRING_AI_AZURE_OPENAI_ENDPOINT'
         value: openAiEndpoint
@@ -196,22 +216,17 @@ module chatAgent '../containerapps/containerapp.bicep' = {
 module adminServer '../containerapps/containerapp.bicep' = {
   name: 'admin-server'
   params: {
-    location: environment.location
-    managedEnvironmentId: environment.id
-    appName: 'admin-server'
-    eurekaId: eurekaId
-    configServerId: configServerId
-    registry: acrRegistry
-    image: adminServerImage
+    containerAppsEnvironmentName: managedEnvironmentsName
+    name: 'admin-server'
+    acrName: acrRegistry
     acrIdentityId: acrIdentityId
-    umiAppsIdentityId: umiAppsIdentityId
+    imageName: adminServerImage
     external: true
     targetPort: targetPort
+    isJava: true
+    serviceBinds: serviceBindings
+    tags: tags
     env: concat(env, empty(applicationInsightsConnString) ? [] : [
-      {
-        name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
-        value: applicationInsightsConnString
-      }
       {
         name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
         value: '{"role": {"name": "admin-server"}}'
