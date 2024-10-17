@@ -41,8 +41,8 @@ jobs:
 
       - name: Install az extensions
         run: |
-            az extension add -n containerapp \
-            az extension add -n serviceconnector-passwordless
+            az extension add --upgrade -n containerapp \
+            az extension add --upgrade -n serviceconnector-passwordless
 
       - name: Log in with Azure (Federated Credentials)
         run: |
