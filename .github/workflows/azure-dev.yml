@@ -1,4 +1,4 @@
-# Run when commits are pushed to main
+name: Deploy Solution
 on:
   workflow_dispatch:
 
