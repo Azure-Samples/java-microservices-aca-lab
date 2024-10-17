@@ -48,4 +48,6 @@ jobs:
         run: azd package --all
 
       - name: Deploy Application
-        run: azd deploy --no-prompt
+        run: azd deploy --all --no-prompt
+        env:
+          AZD_INITIAL_ENVIRONMENT_CONFIG: ${{ secrets.AZD_INITIAL_ENVIRONMENT_CONFIG }}
