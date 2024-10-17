@@ -40,12 +40,12 @@ jobs:
         shell: pwsh
 
       - name: Provision Infrastructure
-        run: azd provision --no-prompt
+        run: azd provision -e $AZURE_ENV_NAME --no-prompt
         env:
           AZD_INITIAL_ENVIRONMENT_CONFIG: ${{ secrets.AZD_INITIAL_ENVIRONMENT_CONFIG }}
 
       - name: Package Application
-        run: azd package --all -e "$Env:AZURE_ENV_NAME"
+        run: azd package --all
 
       - name: Deploy Application
-        run: azd deploy --all -e "$Env:AZURE_ENV_NAME" --no-prompt
+        run: azd deploy --all -e $AZURE_ENV_NAME --no-prompt
