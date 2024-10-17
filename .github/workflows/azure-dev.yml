@@ -48,4 +48,4 @@ jobs:
         run: azd package --all -e "$Env:AZURE_ENV_NAME"
 
       - name: Deploy Application
-        run: azd deploy --all "$Env:AZURE_ENV_NAME" --no-prompt
+        run: azd deploy --all -e "$Env:AZURE_ENV_NAME" --no-prompt
