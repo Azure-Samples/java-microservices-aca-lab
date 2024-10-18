@@ -252,7 +252,6 @@ module managedEnvironment 'modules/containerapps/aca-environment.bicep' = {
       '${umiApps.outputs.id}': {}
     }
     diagnosticWorkspaceId: logAnalytics.outputs.logAnalyticsWsId
-    infrastructureResourceGroupName: rg.name  // put the infrasructure resource into same group
     tags: tags
   }
 }
