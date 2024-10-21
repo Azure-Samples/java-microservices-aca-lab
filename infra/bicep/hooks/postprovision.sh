@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -x
-
 azd env set AZURE_RESOURCE_GROUP $resourceGroupName
 
 azd env set AZURE_CONTAINER_REGISTRY_ENDPOINT $acrLoginServer

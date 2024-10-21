@@ -46,10 +46,6 @@ jobs:
             --federated-credential-provider "github" \
             --tenant-id ${{env.AZURE_TENANT_ID}}
 
-      - name: Show azd environments
-        run: |
-          azd env list
-
       - name: Provision Infrastructure
         run: |
           az extension add --upgrade -n containerapp --allow-preview true
