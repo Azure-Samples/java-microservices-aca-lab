@@ -12,4 +12,4 @@ azd env set AZD_PROVISION_TIMESTAMP $azdProvisionTimestamp
 az containerapp connection create mysql-flexible --subscription $subscriptionId -g $resourceGroupName \
   --connection $sqlConnectName --source-id $customersServiceId --target-id $sqlDatabaseId --client-type springBoot \
   --user-identity client-id=$appUserIdentityClientId subs-id=$subscriptionId mysql-identity-id=$sqlAdminIdentityId \
-  -c $customersServiceName
+  -c $customersServiceName -y
