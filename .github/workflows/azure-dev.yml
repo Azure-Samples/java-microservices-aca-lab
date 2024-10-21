@@ -1,4 +1,4 @@
-name: Provision & Package & Deploy
+name: Azd Automation
 on:
   workflow_dispatch:
 
@@ -17,6 +17,7 @@ jobs:
       AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
       AZURE_ENV_NAME: ${{ vars.AZURE_ENV_NAME }}
       AZURE_LOCATION: ${{ vars.AZURE_LOCATION }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -31,23 +32,28 @@ jobs:
           distribution: 'adopt'
           cache: maven
 
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          client-id: ${{env.AZURE_CLIENT_ID}}
+          tenant-id: ${{env.AZURE_TENANT_ID}}
+          subscription-id: ${{env.AZURE_SUBSCRIPTION_ID}}
+
       - name: Log in with Azure (Federated Credentials)
         run: |
-          azd auth login `
-            --client-id "$Env:AZURE_CLIENT_ID" `
-            --federated-credential-provider "github" `
-            --tenant-id "$Env:AZURE_TENANT_ID"
-        shell: pwsh
+          azd auth login \
+            --client-id ${{env.AZURE_CLIENT_ID}} \
+            --federated-credential-provider "github" \
+            --tenant-id ${{env.AZURE_TENANT_ID}}
 
       - name: Provision Infrastructure
-        run: azd provision --no-prompt
-        env:
-          AZD_INITIAL_ENVIRONMENT_CONFIG: ${{ secrets.AZD_INITIAL_ENVIRONMENT_CONFIG }}
+        run: |
+          az extension add --upgrade -n containerapp --allow-preview true
+          az extension add --upgrade -n serviceconnector-passwordless --allow-preview true
+          az extension list -o table
+          azd up --no-prompt
 
-      - name: Package Application
-        run: azd package --all
-
-      - name: Deploy Application
-        run: azd deploy --all --no-prompt
-        env:
-          AZD_INITIAL_ENVIRONMENT_CONFIG: ${{ secrets.AZD_INITIAL_ENVIRONMENT_CONFIG }}
+      - name: Show azd environments
+        run: |
+          azd env list
+          azd env get-values
