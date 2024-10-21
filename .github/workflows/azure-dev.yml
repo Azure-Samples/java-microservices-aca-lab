@@ -48,9 +48,6 @@ jobs:
 
       - name: Provision Infrastructure
         run: |
-          az extension add --upgrade -n containerapp --allow-preview true
-          az extension add --upgrade -n serviceconnector-passwordless --allow-preview true
-          az extension list -o table
           azd up --no-prompt
 
       - name: Show azd environments
