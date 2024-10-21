@@ -16,6 +16,9 @@ jobs:
 
       # https://github.com/microsoft/template-validation-action
       - uses: microsoft/template-validation-action@v0.2.2
+        with:
+          validateAzd: true
+          useDevContainer: true
         env:
           AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
           AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
