@@ -35,9 +35,9 @@ For running this lab you will need:
 
 For running this lab with all the needed tooling, there are 3 options available:
 
-* Using a GitHub codespace  
-* Using Visual Studio Code with remote containers option
-* Install all the tools on your local machine
+* [Using a GitHub codespace]({% link install.md %}#using-a-github-codespace)
+* [Using Visual Studio Code with remote containers option]({% link install.md %}#using-visual-studio-code-with-remote-containers)
+* [Install all the tools on your local machine]({% link install.md %}#install-all-the-tools-on-your-local-machine)
 
 All the steps of this lab have been tested in the GitHub CodeSpace. This is the preferred option for running this lab!
 
