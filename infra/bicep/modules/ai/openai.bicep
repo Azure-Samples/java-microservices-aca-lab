@@ -69,7 +69,7 @@ resource modelDeploymentTextEmbeddingAda002 'Microsoft.CognitiveServices/account
   }
   sku: {
     name: 'Standard'
-    capacity: 50
+    capacity: 100
   }
 }
 
@@ -86,7 +86,7 @@ resource modelDeploymentGpt4 'Microsoft.CognitiveServices/accounts/deployments@2
   }
   sku: {
     name: 'GlobalStandard'
-    capacity: 50
+    capacity: 100
   }
 }
 
