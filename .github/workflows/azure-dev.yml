@@ -1,4 +1,4 @@
-name: Provision & Package & Deploy
+name: Azd Automation
 on:
   workflow_dispatch:
 
