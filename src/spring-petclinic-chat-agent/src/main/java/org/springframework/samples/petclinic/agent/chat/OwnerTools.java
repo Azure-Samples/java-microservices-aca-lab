@@ -38,7 +38,7 @@ public class OwnerTools {
 	}
 
 	@Bean
-	@Description("Query the owners by first name, the owner information include owner id, address, telephone, city, first name and last name"
+	@Description("Query the owners by first name, the owner information starts with the owner id, and includes address, telephone, city, first name and last name"
 			+ "\n The owner also include the pets information, include the pet name, pet type and birth"
 			+ "\n The pet include several visit records, include the visit name and visit date")
 	public Function<OwnerQueryRequest, List<Owner>> queryOwners() {
@@ -63,10 +63,14 @@ public class OwnerTools {
 	}
 
 	@Bean
-	@Description("update a owner's firstName, lastName, address, telephone and city by providing the owner id\"")
+	@Description("update a owner's firstName, lastName, address, telephone and city by providing the owner first name")
 	public Function<OwnerCURequest, Owner> updateOwner() {
 		return request -> {
-			Owner owner = ownerService.findById(Integer.parseInt(request.ownerId));
+			var ownerOptional = ownerService.findByFirstName(request.firstName).stream().findFirst();
+            if (ownerOptional.isEmpty()) {
+                return null;
+            }
+            Owner owner = ownerOptional.get();
 			if (request.address != null) {
 				owner.setAddress(request.address);
 			}
@@ -82,7 +86,7 @@ public class OwnerTools {
 			if (request.firstName != null) {
 				owner.setFirstName(request.firstName);
 			}
-			ownerService.save(owner);
+			ownerService.updateOwner(owner);
 			return owner;
 		};
 	}

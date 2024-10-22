@@ -64,8 +64,8 @@ class OwnerResource {
     /**
      * Find owners by first name
      */
-    @GetMapping(value = "/firstname/{firstName}")
-    public List<Owner> findOwnersByFirstName(@PathVariable("firstName") String firstName) {
+    @GetMapping(value = "/firstname")
+    public List<Owner> findOwnersByFirstName(@RequestParam("firstName") String firstName) {
         return ownerRepository.findByFirstName(firstName);
     }
 
