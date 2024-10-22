@@ -21,6 +21,10 @@ public class PetService {
         restTemplate.postForEntity("http://customers-service/owners/" + ownerId + "/pets", pet, Pet.class);
     }
 
+    public Pet findPetByName(String petName) {
+        return restTemplate.getForObject("http://customers-service/owners/*/pets?petName=" + petName, Pet.class);
+    }
+
     public PetType findPetTypeByName(String typeName) {
         return restTemplate.getForObject("http://customers-service/petType?typeName=" + typeName, PetType.class);
     }

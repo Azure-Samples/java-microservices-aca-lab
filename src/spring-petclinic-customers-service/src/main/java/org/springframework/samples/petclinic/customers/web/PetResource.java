@@ -102,4 +102,10 @@ class PetResource {
         return pet.get();
     }
 
+    @GetMapping("owners/*/pets")
+    public Pet findPetByName(@RequestParam("petName") String petName) {
+        Optional<Pet> pet = petRepository.findPetByName(petName);
+        return pet.orElse(null);
+    }
+
 }

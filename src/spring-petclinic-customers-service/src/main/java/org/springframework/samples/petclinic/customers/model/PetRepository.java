@@ -46,5 +46,8 @@ public interface PetRepository extends JpaRepository<Pet, Integer> {
 
     @Query("FROM PetType ptype WHERE LOWER(ptype.name) = LOWER(:typeName)")
     Optional<PetType> findPetTypeByName(@Param("typeName") String typeName);
+
+    @Query("FROM Pet pet WHERE LOWER(pet.name) = LOWER(:petName)")
+    Optional<Pet> findPetByName(@Param("petName") String petName);
 }
 

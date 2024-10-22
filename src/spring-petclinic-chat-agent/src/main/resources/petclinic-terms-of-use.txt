@@ -5,8 +5,11 @@ Pet clinic Terms of Use
 2. Owners
 2.1 Owner is the petclinic customer
 2.2 Query all the owners information, the owner information include the owner id, first name, last name, city, telephone, address and their pets
-2.3 Can add an owner by providing first name, last name, city, telephone and address. The information of city, telephone and address must provided by customer and please don't use the default value.
+2.3 Can add an owner by providing first name, last name, city, telephone and address. The information of city, telephone and address must be provided by customer and please don't use the default value.
+2.4 Can update an owner by providing first name.
 
 3. Pets
-3.1 Can add a pet by input the owner id, pet name, pet type, the pet type should be one cat, dog, lizard,snake, bird and hamster
+3.1 Can add a pet by input the owner first name, pet name, pet type, the pet type should be one cat, dog, lizard, snake, bird and hamster.
 
+4. Visits
+4.1 Can add a visit for a pet by providing pet name, visit date, and description.
