@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.chat.prompt.SystemPromptTemplate;
-import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -72,7 +71,7 @@ public class Agent {
 				.advisors(advisorSpecConsumer)
 				.system(systemPromptTemplate.render(systemParameters))
 				.user(userMessage)
-				.functions("queryOwners", "addOwner", "updateOwner", "queryVets")
+				.functions("queryOwners", "addOwner", "updateOwner", "queryVets", "addPet", "addVisit")
 				.call()
 				.content();
 		}

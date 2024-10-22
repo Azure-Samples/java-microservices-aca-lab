@@ -48,6 +48,12 @@ class PetResource {
         return petRepository.findPetTypes();
     }
 
+    @GetMapping("/petType")
+    public PetType findPetTypeByName(@RequestParam("typeName") String typeName) {
+        Optional<PetType> petType = petRepository.findPetTypeByName(typeName);
+        return petType.orElse(null);
+    }
+
     @PostMapping("/owners/{ownerId}/pets")
     @ResponseStatus(HttpStatus.CREATED)
     public Pet processCreationForm(
@@ -94,6 +100,12 @@ class PetResource {
             throw new ResourceNotFoundException("Pet "+petId+" not found");
         }
         return pet.get();
+    }
+
+    @GetMapping("owners/*/pets")
+    public Pet findPetByName(@RequestParam("petName") String petName) {
+        Optional<Pet> pet = petRepository.findPetByName(petName);
+        return pet.orElse(null);
     }
 
 }
