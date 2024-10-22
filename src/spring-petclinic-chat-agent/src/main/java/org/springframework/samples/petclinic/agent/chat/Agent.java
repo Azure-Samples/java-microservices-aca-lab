@@ -35,7 +35,7 @@ import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvis
 @Component
 public class Agent {
 
-	private Logger logger = LoggerFactory.getLogger(Agent.class);
+	private final Logger logger = LoggerFactory.getLogger(Agent.class);
 
 	private static final String TRANSLATE = "Generate 1 different versions of a provided user query. "
 			+ "but they should all retain the original meaning. "
@@ -44,9 +44,6 @@ public class Agent {
 
 	@Autowired
 	private ChatClient chatClient;
-
-	@Autowired
-	private VectorStore vectorStore;
 
 	@Value("classpath:/prompts/system-message.st")
 	private Resource systemResource;

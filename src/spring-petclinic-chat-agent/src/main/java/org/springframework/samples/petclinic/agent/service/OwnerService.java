@@ -34,7 +34,7 @@ public class OwnerService {
     }
 
     public List<Owner> findByFirstName(String firstName) {
-        var owners = restTemplate.getForObject("http://customers-service/owners/firstname/{firstName}", Owner[].class, firstName);
+        var owners = restTemplate.getForObject("http://customers-service/owners/firstname?firstName=" + firstName, Owner[].class);
         if (owners != null) {
             return List.of(owners);
         } else {
@@ -48,5 +48,9 @@ public class OwnerService {
 
     public void save(Owner owner) {
         restTemplate.postForEntity("http://customers-service/owners", owner, Owner.class);
+    }
+
+    public void updateOwner(Owner owner) {
+        restTemplate.put("http://customers-service/owners/" + owner.getId(), owner);
     }
 }
