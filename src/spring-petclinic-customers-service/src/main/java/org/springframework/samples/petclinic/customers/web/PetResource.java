@@ -48,6 +48,12 @@ class PetResource {
         return petRepository.findPetTypes();
     }
 
+    @GetMapping("/petType")
+    public PetType findPetTypeByName(@RequestParam("typeName") String typeName) {
+        Optional<PetType> petType = petRepository.findPetTypeByName(typeName);
+        return petType.orElse(null);
+    }
+
     @PostMapping("/owners/{ownerId}/pets")
     @ResponseStatus(HttpStatus.CREATED)
     public Pet processCreationForm(

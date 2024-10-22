@@ -72,7 +72,7 @@ public class Agent {
 				.advisors(advisorSpecConsumer)
 				.system(systemPromptTemplate.render(systemParameters))
 				.user(userMessage)
-				.functions("queryOwners", "addOwner", "updateOwner", "queryVets")
+				.functions("queryOwners", "addOwner", "updateOwner", "queryVets", "addPet")
 				.call()
 				.content();
 		}
