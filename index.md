@@ -36,7 +36,7 @@ For running this lab you will need:
 
 ### Workthrough guide
 
-Based on your current knowledge background and your plan, there are some ways suggested to use this lab:
+Based on your current knowledge background and your plan, there are some typical usage scenarios for your reference:
 
 * If you are not familiar with Azure Spring Apps and want to learn how to deploy new project in Azure Container Apps, you may start from these labs:
   * [Lab 2: Migrate a Spring Apps microservices application to Azure Container Apps]({% link docs/02_lab_migrate/02_openlab_setup_aca.md %})
@@ -45,13 +45,13 @@ Based on your current knowledge background and your plan, there are some ways su
 
   It will take about 2 days to learn from these labs
 
-* If you want to learn how AI components are integrated in to microservices, you may check the details in
-  * [Lab 5: Integrate with Azure OpenAI]({% link docs/05_lab_openai/05_openlab_openai_aca.md %})
-
 * If you already have some experiences on Azure Container Apps, and you want to try some azd automation to get a AI enabled microservice environment, you may jump directly to
   * [lab 6: Deploy to Azure automatically]({% link docs/06_lab_automation/06_openlab_automation.md %})
 
   You may get a new environment in 2 hours.
+
+* If you want to learn how AI components are integrated in to microservices, you may check the details in
+  * [Lab 5: Integrate with Azure OpenAI]({% link docs/05_lab_openai/05_openlab_openai_aca.md %})
 
 * If you need a more secure app environment, refer to
   * [Lab 7: Protect endpoints using Web Application Firewall]({% link docs/07_lab_security/07_openlab_security_aca.md %})
