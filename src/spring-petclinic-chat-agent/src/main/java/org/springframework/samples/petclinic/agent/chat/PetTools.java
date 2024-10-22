@@ -8,13 +8,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Description;
 import org.springframework.samples.petclinic.agent.model.Owner;
-import org.springframework.samples.petclinic.agent.model.Pet;
 import org.springframework.samples.petclinic.agent.model.PetRequest;
 import org.springframework.samples.petclinic.agent.service.OwnerService;
 import org.springframework.samples.petclinic.agent.service.PetService;
 
 import java.util.Date;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
 @Configuration
