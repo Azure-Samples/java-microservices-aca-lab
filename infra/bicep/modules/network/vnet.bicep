@@ -68,5 +68,5 @@ output vnetName string = vnet.name
 output vnetSubnets array = [ for (item, i) in subnets: {
   subnetIndex: i
   id: vnet.properties.subnets[i].id
-  name: vnet.properties.subnets[i].name  
+  name: vnet.properties.subnets[i].name
 }]

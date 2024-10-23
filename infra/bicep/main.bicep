@@ -22,12 +22,14 @@ param vnetName string = ''
 param vnetEndpointInternal bool = false
 
 @description('Images for petclinic services, will replaced by new images on step `azd deploy`')
-param apiGatewayImage string = ''
-param customersServiceImage string = ''
-param vetsServiceImage string = ''
-param visitsServiceImage string = ''
-param adminServerImage string = ''
-param chatAgentImage string = ''
+param placeholderImage string = 'azurespringapps/default-banner:latest'
+param useMcrImage bool = false
+param apiGatewayImage string = placeholderImage
+param customersServiceImage string = placeholderImage
+param vetsServiceImage string = placeholderImage
+param visitsServiceImage string = placeholderImage
+param adminServerImage string = placeholderImage
+param chatAgentImage string = placeholderImage
 
 @description('Bool value to indicate reuse existing sql server. Default: false')
 param sqlServerExisting bool = false
@@ -95,8 +97,6 @@ var vnetPrefix = '10.1.0.0/16'
 var infraSubnetPrefix = '10.1.0.0/24'
 var infraSubnetName = '${abbrs.networkVirtualNetworksSubnets}infra'
 
-var placeholderImage = 'azurespringapps/default-banner:latest'
-
 var abbrs = loadJsonContent('./abbreviations.json')
 var tags = {
   'azd-env-name': environmentName
@@ -161,14 +161,24 @@ module acr 'modules/acr/acr.bicep' = {
   }
 }
 
-@description('Import place holder image to new container registry')
+// import images from public mcr registry to private registry
+var images = useMcrImage ? [
+  { name: apiGatewayImage, source: apiGatewayImage }
+  { name: chatAgentImage, source: chatAgentImage }
+  { name: adminServerImage, source: adminServerImage }
+  { name: customersServiceImage, source: customersServiceImage }
+  { name: visitsServiceImage, source: visitsServiceImage }
+  { name: vetsServiceImage, source: vetsServiceImage }
+] : [
+  { name: placeholderImage, source: 'mcr.microsoft.com/azurespringapps/default-banner:distroless-2024022107-66ea1a62-87936983' }
+]
+
 module importImage 'modules/acr/importImage.bicep' = {
   name: 'import-image'
   scope: rg
   params: {
     acrName: acr.outputs.name
-    source: 'mcr.microsoft.com/azurespringapps/default-banner:distroless-2024022107-66ea1a62-87936983'
-    image: 'azurespringapps/default-banner:latest'
+    images: images
     umiAcrContributorId : acr.outputs.umiAcrContributorId
   }
 }
@@ -281,12 +291,12 @@ module applications 'modules/app/petclinic.bicep' = {
     umiAppsIdentityId: umiApps.outputs.id
     acrRegistry: acrLoginServer
     acrIdentityId: acr.outputs.umiAcrPullId
-    apiGatewayImage: !empty(apiGatewayImage) ? apiGatewayImage : placeholderImage
-    customersServiceImage: !empty(customersServiceImage) ? customersServiceImage : placeholderImage
-    vetsServiceImage: !empty(vetsServiceImage) ? vetsServiceImage : placeholderImage
-    visitsServiceImage: !empty(visitsServiceImage) ? visitsServiceImage : placeholderImage
-    adminServerImage: !empty(adminServerImage) ? adminServerImage : placeholderImage
-    chatAgentImage: !empty(chatAgentImage) ? chatAgentImage : placeholderImage
+    apiGatewayImage: apiGatewayImage
+    customersServiceImage: customersServiceImage
+    vetsServiceImage: vetsServiceImage
+    visitsServiceImage: visitsServiceImage
+    adminServerImage: adminServerImage
+    chatAgentImage: chatAgentImage
     targetPort: 8080
     applicationInsightsConnString: applicationInsights.outputs.connectionString
     enableOpenAi: enableOpenAi
