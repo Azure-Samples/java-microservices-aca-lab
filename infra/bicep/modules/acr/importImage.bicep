@@ -6,7 +6,7 @@ param images array
 
 param umiAcrContributorId string
 
-resource importImage 'Microsoft.Resources/deploymentScripts@2023-08-01' = [ for image in images: {
+resource importImage 'Microsoft.Resources/deploymentScripts@2023-08-01' = [ for img in images: {
   name: 'acr-import-image'
   location: resourceGroup().location
   kind: 'AzureCLI'
@@ -26,11 +26,11 @@ resource importImage 'Microsoft.Resources/deploymentScripts@2023-08-01' = [ for 
       }
       {
         name: 'source'
-        value: image.source
+        value: img.source
       }
       {
         name: 'image'
-        value: image.name
+        value: img.name
       }
     ]
     scriptContent: 'az acr import --name "$acrName" --source "$source" --image "$image" --force'
