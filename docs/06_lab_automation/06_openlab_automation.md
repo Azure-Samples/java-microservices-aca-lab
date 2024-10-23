@@ -24,16 +24,16 @@ After you complete this lab, you will be able to:
 - Deploy the petclinic solution (with AI) to new ACA environment.
 - Test your setup.
 
+![lab 6 overview](../../images/acalab6.png)
+
 ## Lab Duration
 
-- **Estimated Time**: 40 minutes
+- **Estimated Time**: 30 minutes
 
 ## Instructions
 
 During this lab, you will:
 
-- Prepare your azd tools environment.
-- Get your Azure Registry ready and fill the configuration files.
 - Run `azd up` command to deploy the sample soluton to Azure Container Apps.
 - Learn how to triage some problems with the one-click solution.
 
