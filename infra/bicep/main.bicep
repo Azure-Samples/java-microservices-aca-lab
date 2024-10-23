@@ -306,12 +306,12 @@ module applications 'modules/app/petclinic.bicep' = {
     umiAppsIdentityId: umiApps.outputs.id
     acrRegistry: acrLoginServer
     acrIdentityId: acr.outputs.umiAcrPullId
-    apiGatewayImage: apiGatewayImage
-    chatAgentImage: chatAgentImage
-    adminServerImage: adminServerImage
-    customersServiceImage: customersServiceImage
-    vetsServiceImage: vetsServiceImage
-    visitsServiceImage: visitsServiceImage
+    apiGatewayImage: useMcrImage ? chatAgentImage : placeholderImage
+    chatAgentImage: useMcrImage ? chatAgentImage : placeholderImage
+    adminServerImage: useMcrImage ? adminServerImage : placeholderImage
+    customersServiceImage: useMcrImage ? customersServiceImage : placeholderImage
+    vetsServiceImage: useMcrImage ? vetsServiceImage : placeholderImage
+    visitsServiceImage: useMcrImage ? visitsServiceImage : placeholderImage
     targetPort: 8080
     applicationInsightsConnString: applicationInsights.outputs.connectionString
     enableOpenAi: enableOpenAi
