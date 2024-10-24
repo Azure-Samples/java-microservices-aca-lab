@@ -87,6 +87,11 @@ hooks:
       interactive: true
       continueOnError: true
 
+  predown:
+    posix:
+      shell: sh
+      run: ./infra/bicep/hooks/predown.sh
+
   prepackage:
     posix:
       shell: sh

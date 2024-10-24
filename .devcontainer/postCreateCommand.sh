@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+azd config set alpha.deployment.stacks on
+
 DEV_ENV_FILE="\$HOME/.dev-environment"
 
 cat <<EOT >> "$HOME/.bashrc"
