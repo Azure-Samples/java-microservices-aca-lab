@@ -5,8 +5,8 @@ name: java-microservices-aca-lab
 workflows:
   up:
     - azd: provision
-    - azd: package --all
-    - azd: deploy --all
+    # - azd: package --all
+    # - azd: deploy --all
 
 infra:
   provider: bicep

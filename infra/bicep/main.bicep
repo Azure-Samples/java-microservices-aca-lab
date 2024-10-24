@@ -22,12 +22,13 @@ param vnetName string = ''
 param vnetEndpointInternal bool = false
 
 @description('Images for petclinic services, will replaced by new images on step `azd deploy`')
-param apiGatewayImage string = ''
-param customersServiceImage string = ''
-param vetsServiceImage string = ''
-param visitsServiceImage string = ''
-param adminServerImage string = ''
-param chatAgentImage string = ''
+param useMcrImage bool = false
+param apiGatewayImageSource string = ''
+param customersServiceImageSource string = ''
+param vetsServiceImageSource string = ''
+param visitsServiceImageSource string = ''
+param adminServerImageSource string = ''
+param chatAgentImageSource string = ''
 
 @description('Bool value to indicate reuse existing sql server. Default: false')
 param sqlServerExisting bool = false
@@ -95,8 +96,6 @@ var vnetPrefix = '10.1.0.0/16'
 var infraSubnetPrefix = '10.1.0.0/24'
 var infraSubnetName = '${abbrs.networkVirtualNetworksSubnets}infra'
 
-var placeholderImage = 'azurespringapps/default-banner:latest'
-
 var abbrs = loadJsonContent('./abbreviations.json')
 var tags = {
   'azd-env-name': environmentName
@@ -109,6 +108,56 @@ resource rg 'Microsoft.Resources/resourceGroups@2024-03-01' = {
   location: location
   tags: tags
 }
+
+@description('Prepare Azure Container Registry for the images with UMI for AcrPull & AcrPush')
+module acr 'modules/acr/acr.bicep' = {
+  name: 'acr-${environmentName}'
+  scope: rg
+  params: {
+    name: !empty(acrName) ? acrName : '${abbrs.containerRegistryRegistries}${uniqueString(rg.id)}'
+    resourceGroupName: acrResourceGroup
+    subscriptionId: acrSubscription
+    tags: tags
+    newOrExisting: acrExisting ? 'existing' : 'new'
+  }
+}
+
+// import images from public mcr registry to private registry
+var placeholderImage = 'java-microservices-aca-lab/place-holder:default'
+
+var apiGatewayImage = 'java-microservices-aca-lab/api-gateway:default'
+var chatAgentImage = 'java-microservices-aca-lab/chat-agent:default'
+var adminServerImage = 'java-microservices-aca-lab/admin-server:default'
+var customersServiceImage = 'java-microservices-aca-lab/customers-service:default'
+var visitsServiceImage = 'java-microservices-aca-lab/visits-service:default'
+var vetsServiceImage = 'java-microservices-aca-lab/vets-service:default'
+
+var images = useMcrImage ? [
+  { name: 'api-gateway', source: apiGatewayImageSource, target: apiGatewayImage }
+  { name: 'chat-agent', source: chatAgentImageSource, target: chatAgentImage }
+  { name: 'admin-server', source: adminServerImageSource, target: adminServerImage }
+  { name: 'customers-service', source: customersServiceImageSource, target: customersServiceImage }
+  { name: 'visits-service', source: visitsServiceImageSource, target: visitsServiceImage }
+  { name: 'vets-service', source: vetsServiceImageSource, target: vetsServiceImage }
+] : [
+  { 
+    name: 'place-holder'
+    source: 'mcr.microsoft.com/azurespringapps/default-banner:distroless-2024022107-66ea1a62-87936983'
+    target: placeholderImage
+  }
+]
+
+module importImage 'modules/acr/importImage.bicep' = {
+  name: 'import-image'
+  scope: rg
+  params: {
+    acrName: acr.outputs.name
+    images: images
+    umiAcrContributorId : acr.outputs.umiAcrContributorId
+  }
+}
+
+var acrLoginServer = acr.outputs.loginServer
 
 @description('Create user assigned managed identity for petclinic apps')
 // apps will use this managed identity to connect MySQL, openAI etc
@@ -147,33 +196,6 @@ module vnet './modules/network/vnet.bicep' = {
     tags: tags
   }
 }
-
-@description('Prepare Azure Container Registry for the images with UMI for AcrPull & AcrPush')
-module acr 'modules/acr/acr.bicep' = {
-  name: 'acr-${environmentName}'
-  scope: rg
-  params: {
-    name: !empty(acrName) ? acrName : '${abbrs.containerRegistryRegistries}${uniqueString(rg.id)}'
-    resourceGroupName: acrResourceGroup
-    subscriptionId: acrSubscription
-    tags: tags
-    newOrExisting: acrExisting ? 'existing' : 'new'
-  }
-}
-
-@description('Import place holder image to new container registry')
-module importImage 'modules/acr/importImage.bicep' = {
-  name: 'import-image'
-  scope: rg
-  params: {
-    acrName: acr.outputs.name
-    source: 'mcr.microsoft.com/azurespringapps/default-banner:distroless-2024022107-66ea1a62-87936983'
-    image: 'azurespringapps/default-banner:latest'
-    umiAcrContributorId : acr.outputs.umiAcrContributorId
-  }
-}
-
-var acrLoginServer = acr.outputs.loginServer
 
 @description('Prepare the MySQL flexible server')
 module mysql 'modules/database/mysql.bicep' = {
@@ -272,6 +294,9 @@ module javaComponents 'modules/containerapps/containerapp-java-components.bicep'
 module applications 'modules/app/petclinic.bicep' = {
   name: 'petclinic-${environmentName}'
   scope: rg
+  dependsOn: [
+    importImage
+  ]
   params: {
     managedEnvironmentsName: managedEnvironment.outputs.containerAppsEnvironmentName
     eurekaId: javaComponents.outputs.eurekaId
@@ -281,12 +306,12 @@ module applications 'modules/app/petclinic.bicep' = {
     umiAppsIdentityId: umiApps.outputs.id
     acrRegistry: acrLoginServer
     acrIdentityId: acr.outputs.umiAcrPullId
-    apiGatewayImage: !empty(apiGatewayImage) ? apiGatewayImage : placeholderImage
-    customersServiceImage: !empty(customersServiceImage) ? customersServiceImage : placeholderImage
-    vetsServiceImage: !empty(vetsServiceImage) ? vetsServiceImage : placeholderImage
-    visitsServiceImage: !empty(visitsServiceImage) ? visitsServiceImage : placeholderImage
-    adminServerImage: !empty(adminServerImage) ? adminServerImage : placeholderImage
-    chatAgentImage: !empty(chatAgentImage) ? chatAgentImage : placeholderImage
+    apiGatewayImage: useMcrImage ? chatAgentImage : placeholderImage
+    chatAgentImage: useMcrImage ? chatAgentImage : placeholderImage
+    adminServerImage: useMcrImage ? adminServerImage : placeholderImage
+    customersServiceImage: useMcrImage ? customersServiceImage : placeholderImage
+    vetsServiceImage: useMcrImage ? vetsServiceImage : placeholderImage
+    visitsServiceImage: useMcrImage ? visitsServiceImage : placeholderImage
     targetPort: 8080
     applicationInsightsConnString: applicationInsights.outputs.connectionString
     enableOpenAi: enableOpenAi
