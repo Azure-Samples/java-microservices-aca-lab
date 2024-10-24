@@ -81,10 +81,10 @@ To get started follow the below step by step instructions:
    {: .note }
    > However in one of the lab steps you will put a GitHub PAT token in one of the configuration files, make sure to **not** commit this PAT token, since it will immediately get invalidated by GitHub. Once invalidated your next lab steps will fail. You can use the [LabTips]({% link LabTips.md %}) to recover from this.
 
-1. Navigate into the `java-microservices-aca-lab/src` folder that got created.
+1. Navigate into the `java-microservices-aca-lab` folder that got created.
 
    ```bash
-   cd java-microservices-aca-lab/src
+   cd java-microservices-aca-lab
    ```
 
 1. Open the project with Visual Studio Code
@@ -134,7 +134,7 @@ To get started follow the below step by step instructions:
 {: .note }
 > If needed, upgrade the Azure CLI version by launching Command Prompt as administrator and running `az upgrade`.
 
-- Azd version
+- Azd
    Guide [Install Azd](https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/install-azd)
 
 - jq command line tool available from [JQ Downloads](https://stedolan.github.io/jq/)
@@ -176,10 +176,10 @@ Once all these tools are installed, to get started you need to:
 
 1. In workspaces folder double check that the spring petclinic application got cloned correctly. You can use the repository in your workspaces folder to regularly push your changes to.
 
-1. Navigate into the _java-microservices-aca-lab/src_ folder that got created.
+1. Navigate into the _java-microservices-aca-lab_ folder that got created.
 
    ```bash
-   cd java-microservices-aca-lab/src
+   cd java-microservices-aca-lab
    ```
 
 1. Open the project with Visual Studio Code

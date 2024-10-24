@@ -84,6 +84,8 @@ hooks:
     posix:
       shell: sh
       run: ./infra/bicep/hooks/postprovision.sh
+      interactive: true
+      continueOnError: true
 
   prepackage:
     posix:

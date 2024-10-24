@@ -306,7 +306,7 @@ module applications 'modules/app/petclinic.bicep' = {
     umiAppsIdentityId: umiApps.outputs.id
     acrRegistry: acrLoginServer
     acrIdentityId: acr.outputs.umiAcrPullId
-    apiGatewayImage: useMcrImage ? chatAgentImage : placeholderImage
+    apiGatewayImage: useMcrImage ? apiGatewayImage : placeholderImage
     chatAgentImage: useMcrImage ? chatAgentImage : placeholderImage
     adminServerImage: useMcrImage ? adminServerImage : placeholderImage
     customersServiceImage: useMcrImage ? customersServiceImage : placeholderImage
