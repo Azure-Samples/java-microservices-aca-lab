@@ -26,7 +26,7 @@ If you're not going to continue to use this lab environment, run the following c
 1. Tear down the azd environment
 
    - run `azd env list` to see all the environments
-   - run `azd down -e <env-name>` to clean up the target environment
+   - run `azd down -e <env-name> --force --purge` to clean up the target environment
 
 ## Delete environment created by manual steps
 
