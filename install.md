@@ -81,7 +81,7 @@ To get started follow the below step by step instructions:
    {: .note }
    > However in one of the lab steps you will put a GitHub PAT token in one of the configuration files, make sure to **not** commit this PAT token, since it will immediately get invalidated by GitHub. Once invalidated your next lab steps will fail. You can use the [LabTips]({% link LabTips.md %}) to recover from this.
 
-1. Navigate into the `java-microservices-aca-lab/src` folder that got created.
+1. Navigate into the `java-microservices-aca-lab` folder that got created.
 
    ```bash
    cd java-microservices-aca-lab

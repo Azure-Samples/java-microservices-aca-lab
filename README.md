@@ -26,10 +26,10 @@ The following technologies are part of the project:
 
 This project provides the following features:
 
-* A [Spring Petclinic Microservices](https://github.com/Azure-Samples/java-microservices-aca-lab/tree/main/src) deployment on Azure Spring Apps with AI chat agent.
+* A [Spring Petclinic Microservices](https://github.com/Azure-Samples/java-microservices-aca-lab/tree/main/src) deployment on Azure Container Apps with AI chat agent.
 * Azure Container Apps java components ([eureka server](https://learn.microsoft.com/en-us/azure/container-apps/java-eureka-server-usage) /[config server](https://learn.microsoft.com/en-us/azure/container-apps/java-config-server-usage) / [spring boot admin](https://learn.microsoft.com/en-us/azure/container-apps/java-admin-for-spring-usage)) support.
 * [Bicep files](https://docs.microsoft.com/azure/azure-resource-manager/bicep/) for provisioning Azure resources, including Azure OpenAI, Azure Container Apps, Azure Database for MySQL - Flexible Server, Azure Container Registry, Azure Log Analytics, Azure Application Insights and RBAC roles. See [Deploy to Azure automatically](https://azure-samples.github.io/java-microservices-aca-lab/docs/06_lab_automation/06_openlab_automation.html).
-* Best practices to build [more secure](https://azure-samples.github.io/java-microservices-aca-lab/docs/07_lab_security/07_openlab_security_aca.html), [more reliable](https://azure-samples.github.io/java-microservices-aca-lab/docs/10_lab_reliable_application/10_reliable_java_aca.html) and [more flexible](https://azure-samples.github.io/java-microservices-aca-lab/docs/11_lab_scale/11_openlab_scale_aca.html) java apps on Azure Spring Apps.
+* Best practices to build [more secure](https://azure-samples.github.io/java-microservices-aca-lab/docs/07_lab_security/07_openlab_security_aca.html), [more reliable](https://azure-samples.github.io/java-microservices-aca-lab/docs/10_lab_reliable_application/10_reliable_java_aca.html) and [more flexible](https://azure-samples.github.io/java-microservices-aca-lab/docs/11_lab_scale/11_openlab_scale_aca.html) java apps on Azure Container Apps.
 * AI chat agent to take advantage of large-scale, generative AI models with deep understandings of language and code to enable new reasoning and comprehension capabilities. See [Integrate with Azure OpenAI]({% link docs/05_lab_openai/05_openlab_openai_aca.md %})
 
 ![Screenshot of the chat app](./images/acalab-ai-chat.png)
@@ -50,17 +50,17 @@ All the steps of this lab have been tested in the GitHub CodeSpace. This is the 
 
 ### GitHub Codespaces
 
-* Prepare the environment follow the steps in [Using a GitHub codespace](https://azure-samples.github.io/java-microservices-aca-lab/install.html#using-a-github-codespace)
+* Prepare the environment following the steps in [Using a GitHub codespace](https://azure-samples.github.io/java-microservices-aca-lab/install.html#using-a-github-codespace)
 * Continue with [deploying steps](#deploying)
 
 ### VS Code Dev Containers
 
-* Prepare the environment follow the steps in [Using Visual Studio Code with remote containers](https://azure-samples.github.io/java-microservices-aca-lab/install.html#using-a-github-codespace)
+* Prepare the environment following the steps in [Using Visual Studio Code with remote containers](https://azure-samples.github.io/java-microservices-aca-lab/install.html#using-a-github-codespace)
 * Continue with [deploying steps](#deploying)
 
 ### Local Environment
 
-* Prepare the environment follow the steps in [Install all the tools on your local machine](https://azure-samples.github.io/java-microservices-aca-lab/install.html#install-all-the-tools-on-your-local-machine)
+* Prepare the environment following the steps in [Install all the tools on your local machine](https://azure-samples.github.io/java-microservices-aca-lab/install.html#install-all-the-tools-on-your-local-machine)
 * Continue with [deploying steps](#deploying)
 
 ### Deploying
