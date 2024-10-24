@@ -71,4 +71,5 @@ This template has [Managed Identity](https://learn.microsoft.com/entra/identity/
 
 ## Resources
 
-* [Deploying and running Java Applications with AI in Azure Container Apps](https://azure-samples.github.io/java-microservices-aca-lab/)
+* Go to the lab for more details [Deploying and running Java Applications with AI in Azure Container Apps](https://azure-samples.github.io/java-microservices-aca-lab/)
+* Full installation guidance and options for running this lab can be found in the [Installation instructions](install.md).
