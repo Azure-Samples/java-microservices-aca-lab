@@ -16,7 +16,7 @@ echo -e "${GREEN}INFO:${NC} Updating container apps connection ..."
 az containerapp connection create mysql-flexible --subscription $subscriptionId -g $resourceGroupName \
   --connection $sqlConnectName --source-id $customersServiceId --target-id $sqlDatabaseId --client-type springBoot \
   --user-identity client-id=$appUserIdentityClientId subs-id=$subscriptionId mysql-identity-id=$sqlAdminIdentityId \
-  -c $customersServiceName -y > /dev/null 2>&1
+  -c $customersServiceName -y > /dev/null
 
 echo ""
 echo -e "${GREEN}INFO:${NC} Deploy finish succeed!"
