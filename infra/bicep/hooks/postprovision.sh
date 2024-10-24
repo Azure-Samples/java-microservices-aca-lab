@@ -11,3 +11,7 @@ az containerapp connection create mysql-flexible --subscription $subscriptionId 
   --connection $sqlConnectName --source-id $customersServiceId --target-id $sqlDatabaseId --client-type springBoot \
   --user-identity client-id=$appUserIdentityClientId subs-id=$subscriptionId mysql-identity-id=$sqlAdminIdentityId \
   -c $customersServiceName -y
+
+echo "Api Gateway App url: $gatewayFqdn"
+
+echo "Spring Boot Admin url: $springbootAdminFqdn"

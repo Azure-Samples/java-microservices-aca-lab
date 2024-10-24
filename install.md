@@ -84,7 +84,7 @@ To get started follow the below step by step instructions:
 1. Navigate into the `java-microservices-aca-lab/src` folder that got created.
 
    ```bash
-   cd java-microservices-aca-lab/src
+   cd java-microservices-aca-lab
    ```
 
 1. Open the project with Visual Studio Code
@@ -134,7 +134,7 @@ To get started follow the below step by step instructions:
 {: .note }
 > If needed, upgrade the Azure CLI version by launching Command Prompt as administrator and running `az upgrade`.
 
-- Azd version
+- Azd
    Guide [Install Azd](https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/install-azd)
 
 - jq command line tool available from [JQ Downloads](https://stedolan.github.io/jq/)
