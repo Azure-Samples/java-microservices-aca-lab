@@ -3,186 +3,72 @@
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Azure-Samples/java-microservices-aca-lab)
 [![Open in Dev Containers](https://img.shields.io/static/v1?style=for-the-badge&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/azure-samples/java-microservices-aca-lab)
 
-This project shows how to deploy the [Spring Petclinic Microservices](https://github.com/Azure-Samples/java-microservices-aca-lab/tree/main/src) application with OpenAI to an Azure Container Apps environment and integrate it with additional Azure services, also some samples for Azure Container Apps features.
+This project shows how to deploy the [Spring Petclinic Microservices](https://github.com/Azure-Samples/java-microservices-aca-lab/tree/main/src) application with OpenAI to [Azure Container Apps](https://learn.microsoft.com/azure/container-apps/overview) and integrate it with additional Azure services, also some samples for Azure Container Apps features.
 
 [Features](#features) • [Gettting Started](#getting-started) • [Guidance](#guidance)
 
-![main page](./images/api-)
+![main page](./images/api-gateway-main.png)
 
-## Important Security Notice (Template Owners, do not remove!)
+## Important Security Notice
 
 This template, the application code and configuration it contains, has been built to showcase Microsoft Azure specific services and tools. We strongly advise our customers not to make this code part of their production environments without implementing or enabling additional security features.  
 
-
-<!-- Documentation page is a WIP, this link does not exist yet -->
-For a more comprehensive list of best practices and security recommendations for Intelligent Applications, [visit our official documentation](#link)” 
+For a more comprehensive list of best practices and security recommendations for Intelligent Applications, visit [Azure security best practices and patterns](https://learn.microsoft.com/en-us/azure/security/fundamentals/best-practices-and-patterns), [Azure security baseline for Intelligent Recommendations](https://learn.microsoft.com/en-us/security/benchmark/azure/baselines/intelligent-recommendations-security-baseline)
 
 ## Features
 
-This project framework provides the following features:
+This project provides the following features:
 
-* Feature 1
-* Feature 2
-* ...
+* A spring petclinic microservices deployment on Azure Spring Apps with AI chat agent.
+* Azure Container Apps java components ([eureka server](https://learn.microsoft.com/en-us/azure/container-apps/java-eureka-server-usage) /[config server](https://learn.microsoft.com/en-us/azure/container-apps/java-config-server-usage) / [spring boot admin](https://learn.microsoft.com/en-us/azure/container-apps/java-admin-for-spring-usage)) support.
+* [Bicep files](https://docs.microsoft.com/azure/azure-resource-manager/bicep/) for provisioning Azure resources, including Azure OpenAI, Azure Container Apps, Azure Database for MySQL - Flexible Server, Azure Container Registry, Azure Log Analytics, Azure Application Insights and RBAC roles.
+* Best practices to build more secure, more flexible more reliable java apps on Azure Spring Apps.
+* AI chat agent to take advantage of large-scale, generative AI models with deep understandings of language and code to enable new reasoning and comprehension capabilities.
+
+![Screenshot of the chat app](./images/acalab-ai-chat.png)
 
 ### Architecture Diagram
 
-Include a diagram describing the application. You can take [this image](https://raw.githubusercontent.com/Azure-Samples/serverless-chat-langchainjs/main/docs/images/architecture.drawio.png) as a reference.
-
-### Demo Video (optional)
-
-(Embed demo video here)
+![Architecture Diagram](./images/acalab-overview.png)
 
 ## Getting Started
 
-You have a few options for getting started with this template. The quickest way to get started is [GitHub Codespaces](#github-codespaces), since it will setup all the tools for you, but you can also [set it up locally](#local-environment). You can also use a [VS Code dev container](#vs-code-dev-containers)
+You have a few options for getting started with this template. 
 
-This template uses [MODEL 1] and [MODEL 2] which may not be available in all Azure regions. Check for [up-to-date region availability](https://learn.microsoft.com/azure/ai-services/openai/concepts/models#standard-deployment-model-availability) and select a region during deployment accordingly
+* [Using a GitHub codespace]({% link install.md %}#using-a-github-codespace)
+* [Using Visual Studio Code with remote containers option]({% link install.md %}#using-visual-studio-code-with-remote-containers)
+* [Install all the tools on your local machine]({% link install.md %}#install-all-the-tools-on-your-local-machine)
 
-  * We recommend using [SUGGESTED REGION]
-
-### GitHub Codespaces
-
-You can run this template virtually by using GitHub Codespaces. The button will open a web-based VS Code instance in your browser:
-
-1. Open the template (this may take several minutes)
-    [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](placeholder)
-2. Open a terminal window
-3. Sign into your Azure account:
-
-    ```shell
-     azd auth login --use-device-code
-    ```
-
-4. [any other steps needed for your template]
-5. Provision the Azure resources and deploy your code:
-
-    ```shell
-    azd up
-    ```
-
-6. (Add steps to start up the sample app)
-
-### VS Code Dev Containers
-
-A related option is VS Code Dev Containers, which will open the project in your local VS Code using the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers):
-
-1. Start Docker Desktop (install it if not already installed)
-2. Open the project:
-    [![Open in Dev Containers](https://img.shields.io/static/v1?style=for-the-badge&label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](placeholder)
-3. In the VS Code window that opens, once the project files show up (this may take several minutes), open a terminal window.
-4. Sign into your Azure account:
-
-    ```shell
-     azd auth login
-    ```
-
-5. [any other steps needed for your template]
-6. Provision the Azure resources and deploy your code:
-
-    ```shell
-    azd up
-    ```
-
-7. (Add steps to start up the sample app)
-
-8. Configure a CI/CD pipeline:
-
-    ```shell
-    azd pipeline config
-    ```
-
-### Local Environment
-
-#### Prerequisites
-
-(ideally very short, if any)
-
-* Install [azd](https://aka.ms/install-azd)
-  * Windows: `winget install microsoft.azd`
-  * Linux: `curl -fsSL https://aka.ms/install-azd.sh | bash`
-  * MacOS: `brew tap azure/azd && brew install azd`
-* OS
-* Library version
-* This template uses [MODEL 1] and [MODEL 2] which may not be available in all Azure regions. Check for [up-to-date region availability](https://learn.microsoft.com/azure/ai-services/openai/concepts/models#standard-deployment-model-availability) and select a region during deployment accordingly
-  * We recommend using [SUGGESTED REGION]
-* ...
-
-#### Installation
-
-(ideally very short)
-
-* list of any prerequisites
-* ...
-
-#### Quickstart
-
-(Add steps to get up and running quickly)
-
-1. Bring down the template code:
-
-    ```shell
-    azd init --template [name-of-repo]
-    ```
-
-    This will perform a git clone
-
-2. Sign into your Azure account:
-
-    ```shell
-     azd auth login
-    ```
-
-3. [Packages or anything else that needs to be installed]
-
-    ```shell
-    npm install ...
-    ```
-
-4. ...
-5. Provision and deploy the project to Azure:
-
-    ```shell
-    azd up
-    ```
-
-6. (Add steps to start up the sample app)
-
-7. Configure a CI/CD pipeline:
-
-    ```shell
-    azd pipeline config
-    ```
-
-#### Local Development
-
-Describe how to run and develop the app locally
+All the steps of this lab have been tested in the GitHub CodeSpace. This is the preferred option for running this lab!
 
 ## Guidance
 
+### Prerequisites
+
+For running this lab you will need:
+
+* A GitHub account
+* An Azure Subscription
+
 ### Region Availability
 
-This template uses [MODEL 1] and [MODEL 2] which may not be available in all Azure regions. Check for [up-to-date region availability](https://learn.microsoft.com/azure/ai-services/openai/concepts/models#standard-deployment-model-availability) and select a region during deployment accordingly
-  * We recommend using [SUGGESTED REGION]
+This template uses [Azure OpenAI Service](https://learn.microsoft.com/en-us/azure/ai-services/openai/overview) deployment mododules **gpt-4o** and **text-embedding-ada-002** which may not be available in all Azure regions. Check for [up-to-date region availability](https://learn.microsoft.com/azure/ai-services/openai/concepts/models#standard-deployment-model-availability) and select a region during deployment accordingly
+
+  * We recommend using **East US**, **East US 2**, **North Central US**, **South Central US**, **Sweden Central**, **West US** and **West US 3**.
 
 ### Costs
 
 You can estimate the cost of this project's architecture with [Azure's pricing calculator](https://azure.microsoft.com/pricing/calculator/)
 
-* [Azure Product] - [plan type] [link to pricing for product](https://azure.microsoft.com/pricing/)
+* Azure Container Apps - [Consumption](https://azure.microsoft.com/en-us/pricing/details/container-apps/)
+* Azure Database for MySQL - [Flexible Server](https://azure.microsoft.com/en-us/pricing/details/mysql/)
+* Azure OpenAI Service - [Standard](https://azure.microsoft.com/en-us/pricing/details/cognitive-services/openai-service/)
+* Azure Monitor - [Analytics Logs](https://azure.microsoft.com/en-us/pricing/details/monitor/)
 
 ### Security
 
-> [!NOTE]
-> When implementing this template please specify whether the template uses Managed Identity or Key Vault
-
-This template has either [Managed Identity](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview) or Key Vault built in to eliminate the need for developers to manage these credentials. Applications can use managed identities to obtain Microsoft Entra tokens without having to manage any credentials. Additionally, we have added a [GitHub Action tool](https://github.com/microsoft/security-devops-action) that scans the infrastructure-as-code files and generates a report containing any detected issues. To ensure best practices in your repo we recommend anyone creating solutions based on our templates ensure that the [Github secret scanning](https://docs.github.com/code-security/secret-scanning/about-secret-scanning) setting is enabled in your repos.
+This template has [Managed Identity](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview) built in to eliminate the need for developers to manage these credentials. Applications can use managed identities to obtain Microsoft Entra tokens without having to manage any credentials. Additionally, we have added a [GitHub Action tool](https://github.com/microsoft/security-devops-action) that scans the infrastructure-as-code files and generates a report containing any detected issues. To ensure best practices in your repo we recommend anyone creating solutions based on our templates ensure that the [Github secret scanning](https://docs.github.com/code-security/secret-scanning/about-secret-scanning) setting is enabled in your repos.
 
 ## Resources
 
-(Any additional resources or related projects)
-
-* Link to supporting information
-* Link to similar sample
-* [Develop Python apps that use Azure AI services](https://learn.microsoft.com/azure/developer/python/azure-ai-for-python-developers)
-* ...
+* [Deploying and running Java Applications with AI in Azure Container Apps](https://azure-samples.github.io/java-microservices-aca-lab/)

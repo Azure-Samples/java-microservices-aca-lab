@@ -176,10 +176,10 @@ Once all these tools are installed, to get started you need to:
 
 1. In workspaces folder double check that the spring petclinic application got cloned correctly. You can use the repository in your workspaces folder to regularly push your changes to.
 
-1. Navigate into the _java-microservices-aca-lab/src_ folder that got created.
+1. Navigate into the _java-microservices-aca-lab_ folder that got created.
 
    ```bash
-   cd java-microservices-aca-lab/src
+   cd java-microservices-aca-lab
    ```
 
 1. Open the project with Visual Studio Code

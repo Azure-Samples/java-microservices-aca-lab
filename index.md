@@ -6,7 +6,7 @@ nav_order: 1
 
 # Lab: Deploying and running Java Applications with AI in Azure Container Apps
 
-This lab teaches you how to deploy the [Spring Petclinic Microservices](https://github.com/Azure-Samples/java-microservices-aca-lab/tree/main/src) application with OpenAI to an Azure Container Apps environment and integrate it with additional Azure services, also some samples for Azure Container Apps features.
+This lab teaches you how to deploy the [Spring Petclinic Microservices](https://github.com/Azure-Samples/java-microservices-aca-lab/tree/main/src) application with OpenAI to [Azure Container Apps](https://learn.microsoft.com/azure/container-apps/overview) and integrate it with additional Azure services, also some samples for Azure Container Apps features.
 
 ## Modules
 
@@ -33,6 +33,12 @@ For running this lab you will need:
 
 * A GitHub account
 * An Azure Subscription
+
+### Region Availability
+
+This template uses [Azure OpenAI Service](https://learn.microsoft.com/en-us/azure/ai-services/openai/overview) deployment mododules **gpt-4o** and **text-embedding-ada-002** which may not be available in all Azure regions. Check for [up-to-date region availability](https://learn.microsoft.com/azure/ai-services/openai/concepts/models#standard-deployment-model-availability) and select a region during deployment accordingly
+
+  * We recommend using **East US**, **East US 2**, **North Central US**, **South Central US**, **Sweden Central**, **West US** and **West US 3**.
 
 ### Workthrough guide
 
