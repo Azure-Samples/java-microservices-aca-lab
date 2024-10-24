@@ -86,9 +86,19 @@ Suggested: Both **Contributor** and **User Access Administrator** roles on the s
 
 1. When azd has finished deploying, visit the api-gateway url and begin your experience on AI java apps.
 
+   ```text
+   INFO: Deploy finish succeed!
+   INFO: Api Gateway App url: https://api-gateway.<cluster>.<region>.azurecontainerapps.io
+   INFO: Spring Boot Admin url: https://springbootadmin-azure-java.ext.<cluster>.<region>.azurecontainerapps.io
+   ```
+
 1. When you've made any changes to the app code, you can just run:
 
-   `azd deploy`
+   - `azd deploy` for all services
+
+   - `azd deploy -n <service>` for single service
+
+   
 
 ## Guidance
 
