@@ -11,22 +11,22 @@
         "useMcrImage": {
             "value": true
         },
-        "apiGatewayImageSource": {
+        "apiGatewayImage": {
             "value": "mcr.microsoft.com/azure-samples/java-microservices-aca-lab-api-gateway:20241023"
         },
-        "adminServerImageSource": {
+        "adminServerImage": {
             "value": "mcr.microsoft.com/azure-samples/java-microservices-aca-lab-admin-server:20241023"
         },
-        "chatAgentImageSource": {
+        "chatAgentImage": {
             "value": "mcr.microsoft.com/azure-samples/java-microservices-aca-lab-chat-agent:20241023"
         },
-        "vetsServiceImageSource": {
+        "vetsServiceImage": {
             "value": "mcr.microsoft.com/azure-samples/java-microservices-aca-lab-vets-service:20241023"
         },
-        "visitsServiceImageSource": {
+        "visitsServiceImage": {
             "value": "mcr.microsoft.com/azure-samples/java-microservices-aca-lab-visits-service:20241023"
         },
-        "customersServiceImageSource": {
+        "customersServiceImage": {
             "value": "mcr.microsoft.com/azure-samples/java-microservices-aca-lab-customers-service:20241023"
         }
     }

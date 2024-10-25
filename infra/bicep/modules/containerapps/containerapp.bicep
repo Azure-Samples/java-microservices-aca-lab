@@ -54,8 +54,8 @@ param acrName string
 @description('The id of the user managed identity to pull image from the ACR')
 param acrIdentityId string
 
-@description('The name of the container image')
-param imageName string
+@description('The image')
+param image string
 
 @description('The environment variables for the container')
 param env array = []
@@ -74,6 +74,16 @@ var userIdentities = union({
   })
 
 var cntName = !empty(containerName) ? containerName : name
+
+var registries = union([{
+      server: 'mcr.microsoft.com'
+      username: 'anonymous'
+      passwordSecretRef: 'mcr-anonymous'
+    }], empty(acrIdentityId) ? [] : [{
+      server: acrName
+      identity: acrIdentityId
+    }]
+)
 
 resource app 'Microsoft.App/containerApps@2024-02-02-preview' = {
   name: name
@@ -95,10 +105,11 @@ resource app 'Microsoft.App/containerApps@2024-02-02-preview' = {
           allowedOrigins: union([ 'https://portal.azure.com', 'https://ms.portal.azure.com' ], allowedOrigins)
         }
       } : null
-      registries: empty(acrIdentityId) ? null : [
+      registries: registries
+      secrets: [
         {
-          server: acrName
-          identity: acrIdentityId
+          name: 'mcr-anonymous'
+          value: 'fake'
         }
       ]
       runtime: isJava ? {
@@ -112,7 +123,7 @@ resource app 'Microsoft.App/containerApps@2024-02-02-preview' = {
       terminationGracePeriodSeconds: 60
       containers: [
         {
-          image: '${acrName}/${imageName}'
+          image: image
           imageType: 'ContainerImage'
           name: cntName
           env: env
