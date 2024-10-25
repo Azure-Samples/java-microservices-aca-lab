@@ -46,15 +46,12 @@ jobs:
             --federated-credential-provider "github" \
             --tenant-id ${{env.AZURE_TENANT_ID}}
 
-      - name: Azure CLI script file
-        uses: azure/cli@v2
-        with:
-          azcliversion: latest
-          inlineScript: |
-            az extension add --upgrade -n containerapp --allow-preview true
-            az extension add --upgrade -n serviceconnector-passwordless --allow-preview true
-            az extension list -o table
-            azd up --no-prompt
+      - name: Provision Infrastructure
+        run: |
+          az extension add --upgrade -n containerapp --allow-preview true
+          az extension add --upgrade -n serviceconnector-passwordless --allow-preview true
+          az extension list -o table
+          azd up --no-prompt
 
       - name: Show azd environments
         run: |
