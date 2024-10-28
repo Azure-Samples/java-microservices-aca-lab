@@ -71,7 +71,3 @@ jobs:
         run: |
           azd env list
           azd env get-values
-
-      - name: Cleanup
-        run: |
-          azd down -e $AZURE_ENV_NAME --purge --force
