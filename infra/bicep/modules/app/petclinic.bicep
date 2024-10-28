@@ -59,7 +59,7 @@ module apiGateway '../containerapps/containerapp.bicep' = {
     name: 'api-gateway'
     acrName: acrRegistry
     acrIdentityId: acrIdentityId
-    imageName: apiGatewayImage
+    image: apiGatewayImage
     external: true
     targetPort: targetPort
     isJava: true
@@ -81,7 +81,7 @@ module customersService '../containerapps/containerapp.bicep' = {
     name: 'customers-service'
     acrName: acrRegistry
     acrIdentityId: acrIdentityId
-    imageName: customersServiceImage
+    image: customersServiceImage
     external: false
     targetPort: targetPort
     isJava: true
@@ -117,7 +117,7 @@ module vetsService '../containerapps/containerapp.bicep' = {
     name: 'vets-service'
     acrName: acrRegistry
     acrIdentityId: acrIdentityId
-    imageName: vetsServiceImage
+    image: vetsServiceImage
     external: false
     targetPort: targetPort
     isJava: true
@@ -151,7 +151,7 @@ module visitsService '../containerapps/containerapp.bicep' = {
     name: 'visits-service'
     acrName: acrRegistry
     acrIdentityId: acrIdentityId
-    imageName: visitsServiceImage
+    image: visitsServiceImage
     external: false
     targetPort: targetPort
     isJava: true
@@ -187,7 +187,7 @@ module chatAgent '../containerapps/containerapp.bicep' = {
     name: 'chat-agent'
     acrName: acrRegistry
     acrIdentityId: acrIdentityId
-    imageName: chatAgentImage
+    image: chatAgentImage
     umiAppsIdentityId: umiAppsIdentityId
     external: false
     targetPort: targetPort
@@ -220,7 +220,7 @@ module adminServer '../containerapps/containerapp.bicep' = {
     name: 'admin-server'
     acrName: acrRegistry
     acrIdentityId: acrIdentityId
-    imageName: adminServerImage
+    image: adminServerImage
     external: true
     targetPort: targetPort
     isJava: true

@@ -23,12 +23,12 @@ param vnetEndpointInternal bool = false
 
 @description('Images for petclinic services, will replaced by new images on step `azd deploy`')
 param useMcrImage bool = false
-param apiGatewayImageSource string = ''
-param customersServiceImageSource string = ''
-param vetsServiceImageSource string = ''
-param visitsServiceImageSource string = ''
-param adminServerImageSource string = ''
-param chatAgentImageSource string = ''
+param apiGatewayImage string = ''
+param customersServiceImage string = ''
+param vetsServiceImage string = ''
+param visitsServiceImage string = ''
+param adminServerImage string = ''
+param chatAgentImage string = ''
 
 @description('Bool value to indicate reuse existing sql server. Default: false')
 param sqlServerExisting bool = false
@@ -122,40 +122,7 @@ module acr 'modules/acr/acr.bicep' = {
   }
 }
 
-// import images from public mcr registry to private registry
-var placeholderImage = 'java-microservices-aca-lab/place-holder:default'
-
-var apiGatewayImage = 'java-microservices-aca-lab/api-gateway:default'
-var chatAgentImage = 'java-microservices-aca-lab/chat-agent:default'
-var adminServerImage = 'java-microservices-aca-lab/admin-server:default'
-var customersServiceImage = 'java-microservices-aca-lab/customers-service:default'
-var visitsServiceImage = 'java-microservices-aca-lab/visits-service:default'
-var vetsServiceImage = 'java-microservices-aca-lab/vets-service:default'
-
-var images = useMcrImage ? [
-  { name: 'api-gateway', source: apiGatewayImageSource, target: apiGatewayImage }
-  { name: 'chat-agent', source: chatAgentImageSource, target: chatAgentImage }
-  { name: 'admin-server', source: adminServerImageSource, target: adminServerImage }
-  { name: 'customers-service', source: customersServiceImageSource, target: customersServiceImage }
-  { name: 'visits-service', source: visitsServiceImageSource, target: visitsServiceImage }
-  { name: 'vets-service', source: vetsServiceImageSource, target: vetsServiceImage }
-] : [
-  { 
-    name: 'place-holder'
-    source: 'mcr.microsoft.com/azurespringapps/default-banner:distroless-2024022107-66ea1a62-87936983'
-    target: placeholderImage
-  }
-]
-
-module importImage 'modules/acr/importImage.bicep' = {
-  name: 'import-image'
-  scope: rg
-  params: {
-    acrName: acr.outputs.name
-    images: images
-    umiAcrContributorId : acr.outputs.umiAcrContributorId
-  }
-}
+var placeholderImage = 'mcr.microsoft.com/azurespringapps/default-banner:distroless-2024022107-66ea1a62-87936983'
 
 var acrLoginServer = acr.outputs.loginServer
 
@@ -294,9 +261,6 @@ module javaComponents 'modules/containerapps/containerapp-java-components.bicep'
 module applications 'modules/app/petclinic.bicep' = {
   name: 'petclinic-${environmentName}'
   scope: rg
-  dependsOn: [
-    importImage
-  ]
   params: {
     managedEnvironmentsName: managedEnvironment.outputs.containerAppsEnvironmentName
     eurekaId: javaComponents.outputs.eurekaId
