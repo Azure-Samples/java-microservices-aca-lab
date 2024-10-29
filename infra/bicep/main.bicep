@@ -232,7 +232,7 @@ module managedEnvironment 'modules/containerapps/aca-environment.bicep' = {
   name: 'managedEnvironment-${environmentName}'
   scope: rg
   params: {
-    name: !empty(managedEnvironmentsName) ? managedEnvironmentsName : 'aca-env-${environmentName}'
+    name: !empty(managedEnvironmentsName) ? managedEnvironmentsName : 'acalab-env-${environmentName}'
     location: location
     isVnet: true
     vnetEndpointInternal: vnetEndpointInternal
