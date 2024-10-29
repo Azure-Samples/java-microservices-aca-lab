@@ -12,7 +12,7 @@ param location string
 @description('Name of the the resource group. Default: rg-{environmentName}')
 param resourceGroupName string = ''
 
-@description('Name of the the new containerapp environment. Default: aca-env-{environmentName}')
+@description('Name of the the new containerapp environment. Default: acalab-env-{environmentName}')
 param managedEnvironmentsName string = ''
 
 @description('Name of the virtual network. Default vnet-{environmentName}')
@@ -99,6 +99,7 @@ var infraSubnetName = '${abbrs.networkVirtualNetworksSubnets}infra'
 var abbrs = loadJsonContent('./abbreviations.json')
 var tags = {
   'azd-env-name': environmentName
+  'azure-samples-java-microservices-aca-lab': true
   'utc-time': utcValue
 }
 
