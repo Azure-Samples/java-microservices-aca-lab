@@ -81,10 +81,10 @@ To get started follow the below step by step instructions:
    {: .note }
    > However in one of the lab steps you will put a GitHub PAT token in one of the configuration files, make sure to **not** commit this PAT token, since it will immediately get invalidated by GitHub. Once invalidated your next lab steps will fail. You can use the [LabTips]({% link LabTips.md %}) to recover from this.
 
-1. Navigate into the `java-microservices-aca-lab/src` folder that got created.
+1. Navigate into the `java-microservices-aca-lab` folder that got created.
 
    ```bash
-   cd java-microservices-aca-lab/src
+   cd java-microservices-aca-lab
    ```
 
 1. Open the project with Visual Studio Code
@@ -121,10 +121,21 @@ To get started follow the below step by step instructions:
 > To install JDK on Windows, follow the instructions provided in [JDK Installation Guide](https://learn.microsoft.com/java/openjdk/install#install-on-windows). Make sure to use the `FeatureJavaHome` feature during the install to update the `JAVA_HOME` environment variable.
 
 - In case you prefer to use IntelliJ IDEA as an IDE instead of Visual Studio Code: Azure Toolkit for IntelliJ IDEA 3.51.0 from the IntelliJ Plugins UI from [IntelliJ IDEA](https://www.jetbrains.com/idea/download/#section=windows)
+
 - Azure CLI version 2.49.0 or higher
+
+   Install az extensions
+
+   ```bash
+   az extension add -n containerapp -y
+   az extension add -n serviceconnector-passwordless -y
+   ```
 
 {: .note }
 > If needed, upgrade the Azure CLI version by launching Command Prompt as administrator and running `az upgrade`.
+
+- Azd
+   Guide [Install Azd](https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/install-azd)
 
 - jq command line tool available from [JQ Downloads](https://stedolan.github.io/jq/)
 
@@ -165,10 +176,10 @@ Once all these tools are installed, to get started you need to:
 
 1. In workspaces folder double check that the spring petclinic application got cloned correctly. You can use the repository in your workspaces folder to regularly push your changes to.
 
-1. Navigate into the _java-microservices-aca-lab/src_ folder that got created.
+1. Navigate into the _java-microservices-aca-lab_ folder that got created.
 
    ```bash
-   cd java-microservices-aca-lab/src
+   cd java-microservices-aca-lab
    ```
 
 1. Open the project with Visual Studio Code

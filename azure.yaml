@@ -5,8 +5,8 @@ name: java-microservices-aca-lab
 workflows:
   up:
     - azd: provision
-    - azd: package --all
-    - azd: deploy --all
+    # - azd: package --all
+    # - azd: deploy --all
 
 infra:
   provider: bicep
@@ -19,9 +19,10 @@ services:
     host: containerapp
     language: java
     docker:
-      registry: ${ACR_LOGIN_SERVER}
+      registry: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}
       image: java-microservices-aca-lab/spring-petclinic-api-gateway
-      tag: passwordless
+      tag: ${AZD_PROVISION_TIMESTAMP}
+      remoteBuild: true
 
   customers-service:
     resourceName: customers-service
@@ -29,9 +30,10 @@ services:
     host: containerapp
     language: java
     docker:
-      registry: ${ACR_LOGIN_SERVER}
+      registry: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}
       image: java-microservices-aca-lab/spring-petclinic-customers-service
-      tag: passwordless
+      tag: ${AZD_PROVISION_TIMESTAMP}
+      remoteBuild: true
 
   vets-service:
     resourceName: vets-service
@@ -39,9 +41,10 @@ services:
     host: containerapp
     language: java
     docker:
-      registry: ${ACR_LOGIN_SERVER}
+      registry: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}
       image: java-microservices-aca-lab/spring-petclinic-vets-service
-      tag: passwordless
+      tag: ${AZD_PROVISION_TIMESTAMP}
+      remoteBuild: true
 
   visits-service:
     resourceName: visits-service
@@ -49,9 +52,10 @@ services:
     host: containerapp
     language: java
     docker:
-      registry: ${ACR_LOGIN_SERVER}
+      registry: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}
       image: java-microservices-aca-lab/spring-petclinic-visits-service
-      tag: passwordless
+      tag: ${AZD_PROVISION_TIMESTAMP}
+      remoteBuild: true
 
   chat-agent:
     resourceName: chat-agent
@@ -59,9 +63,10 @@ services:
     host: containerapp
     language: java
     docker:
-      registry: ${ACR_LOGIN_SERVER}
+      registry: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}
       image: java-microservices-aca-lab/spring-petclinic-chat-agent
-      tag: passwordless
+      tag: ${AZD_PROVISION_TIMESTAMP}
+      remoteBuild: true
 
   admin-server:
     resourceName: admin-server
@@ -69,17 +74,37 @@ services:
     host: containerapp
     language: java
     docker:
-      registry: ${ACR_LOGIN_SERVER}
+      registry: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}
       image: java-microservices-aca-lab/spring-petclinic-admin-server
-      tag: passwordless
+      tag: ${AZD_PROVISION_TIMESTAMP}
+      remoteBuild: true
 
 hooks:
   postprovision:
     posix:
       shell: sh
       run: ./infra/bicep/hooks/postprovision.sh
+      interactive: true
+      continueOnError: true
+    windows:
+      shell: pwsh
+      run: ./infra/bicep/hooks/postprovision.ps1
+      interactive: true
+      continueOnError: true
+
+  predown:
+    posix:
+      shell: sh
+      run: ./infra/bicep/hooks/predown.sh
+    windows:
+      shell: pwsh
+      run: ./infra/bicep/hooks/predown.ps1
 
   prepackage:
     posix:
       shell: sh
       run: 'cd src; chmod +x ./mvnw; ./mvnw clean package -DskipTests'
+    windows:
+      shell: pwsh
+      run: 'cd src; ./mvnw.cmd clean package -DskipTests'
+

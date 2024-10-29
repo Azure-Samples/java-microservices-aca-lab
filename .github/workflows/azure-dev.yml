@@ -1,0 +1,73 @@
+name: Azd Automation
+on:
+  workflow_dispatch:
+
+# Set up permissions for deploying with secretless Azure federated credentials
+# https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Clinux#set-up-azure-login-with-openid-connect-authentication
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
+      AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      AZURE_ENV_NAME: ${{ vars.AZURE_ENV_NAME }}
+      AZURE_LOCATION: ${{ vars.AZURE_LOCATION }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install azd
+        uses: Azure/setup-azd@v1.0.0
+
+      - name: Install Az extensions
+        run: |
+          az extension add --upgrade -n containerapp --allow-preview true
+          az extension add --upgrade -n serviceconnector-passwordless --allow-preview true
+          az version
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+          cache: maven
+
+      - name: Log in with Azure (Federated Credentials)
+        run: |
+          azd auth login \
+            --client-id ${{env.AZURE_CLIENT_ID}} \
+            --federated-credential-provider "github" \
+            --tenant-id ${{env.AZURE_TENANT_ID}}
+
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          client-id: ${{env.AZURE_CLIENT_ID}}
+          tenant-id: ${{env.AZURE_TENANT_ID}}
+          subscription-id: ${{env.AZURE_SUBSCRIPTION_ID}}
+
+      - name: Set environment name with timestamp
+        id: set_env_name
+        run: |
+          current_time=$(date +%m%d%H%M)
+          azure_env_name="${{ env.AZURE_ENV_NAME }}-$current_time"
+          echo "AZURE_ENV_NAME=$azure_env_name" >> $GITHUB_ENV
+          echo "azure_env_name is $azure_env_name"
+        shell: bash
+        env:
+          AZURE_ENV_NAME: ${{ env.AZURE_ENV_NAME }}
+
+      - name: Provision
+        run: |
+          azd up --no-prompt
+
+      - name: Show azd environments
+        run: |
+          azd env list
+          azd env get-values

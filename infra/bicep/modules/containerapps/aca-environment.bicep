@@ -25,14 +25,14 @@ param workloadProfiles array = []
 //   }
 // ]
 
-@description('If true, the endpoint is an internal load balancer. If false the hosted apps are exposed on an internet-accessible IP address ')
-param vnetEndpointInternal bool
+@description('Bool value to indicate if vnet inject required. Default: false')
+param isVnet bool = false
 
-@description('Custome vnet configuration for the nevironment. NOTE: Current GA (Feb 2023): The subnet associated with a Container App Environment requires a CIDR prefix of /23 or larger')
-param subnetId string
+@description('If true, the endpoint is an internal load balancer. If false the hosted apps are exposed on an internet-accessible IP address. Default: false')
+param vnetEndpointInternal bool = false
 
-@description('optional, default is empty. App Insights instrumentation key provided to Dapr for tracing')
-param appInsightsInstrumentationKey string = ''
+@description('Custome vnet configuration for the nevironment. The subnet associated with a Container App Environment requires a CIDR prefix of /23 or larger')
+param vnetSubnetId string = ''
 
 @description('optional, default is empty. Resource group for the infrastructure resources (e.g. load balancer, public IP, etc.)')
 param infrastructureResourceGroupName string = ''
@@ -127,11 +127,10 @@ resource acaEnvironment 'Microsoft.App/managedEnvironments@2024-02-02-preview' =
   identity: identity
   properties: {
     zoneRedundant: zoneRedundant
-    daprAIInstrumentationKey: appInsightsInstrumentationKey
-    vnetConfiguration: {
+    vnetConfiguration: isVnet ? {
       internal: vnetEndpointInternal
-      infrastructureSubnetId: subnetId
-    }
+      infrastructureSubnetId: vnetSubnetId
+    } : null
     workloadProfiles: effectiveWorkloadProfiles
     appLogsConfiguration: {
         destination: 'azure-monitor'

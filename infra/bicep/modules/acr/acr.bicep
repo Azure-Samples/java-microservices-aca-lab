@@ -1,10 +1,16 @@
 import { roleAssignmentType, builtInRoleNames } from 'containerRegistryRolesDef.bicep'
 
+@description('Required. Name of the Azure Container Registry')
 param name string
 
-param groupName string
+@description('Optional. Resource Group of the Azure Container Registry')
+param resourceGroupName string
 
+@description('Optional. Subscription of the Azure Container Registry')
 param subscriptionId string
+
+@description('The location where the resources will be created.')
+param location string = resourceGroup().location
 
 @description('Optional. Tags of the resource.')
 param tags object = {}
@@ -45,10 +51,10 @@ var roleAssignments = [
   ]
 
 module acrNew './containerRegistry.bicep' = if (newOrExisting == 'new') {
-  name: 'acr-new'
+  name: 'acr-new-${name}'
   params: {
     name: name
-    location: resourceGroup().location
+    location: location
     acrAdminUserEnabled: true
     roleAssignments: roleAssignments
     tags: tags
@@ -56,8 +62,8 @@ module acrNew './containerRegistry.bicep' = if (newOrExisting == 'new') {
 }
 
 module acrExisting 'acrExisting.bicep' = if (newOrExisting == 'existing') {
-  name: 'acr-existing'
-  scope: resourceGroup(subscriptionId, groupName)   // on existing, use the sub + group from the source acr
+  name: 'acr-existing-${name}'
+  scope: resourceGroup(subscriptionId, resourceGroupName)
   params: {
     name: name
     roleAssignments: roleAssignments
@@ -66,16 +72,6 @@ module acrExisting 'acrExisting.bicep' = if (newOrExisting == 'existing') {
 
 var acrName = (newOrExisting == 'new') ? acrNew.outputs.name : acrExisting.outputs.name
 var loginServer = (newOrExisting == 'new') ? acrNew.outputs.loginServer : acrExisting.outputs.loginServer
-
-module improtImage 'importImage.bicep' = {
-  name: 'import-image'
-  params: {
-    acrName: acrName
-    source: 'mcr.microsoft.com/azurespringapps/default-banner:distroless-2024022107-66ea1a62-87936983'
-    image: 'azurespringapps/default-banner:latest'
-    umiAcrContributorId : umiAcrContributor.outputs.id
-  }
-}
 
 output name string = acrName
 output loginServer string = loginServer
