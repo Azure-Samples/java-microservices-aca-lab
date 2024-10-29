@@ -86,9 +86,17 @@ hooks:
       run: ./infra/bicep/hooks/postprovision.sh
       interactive: true
       continueOnError: true
+    windows:
+      shell: sh
+      run: ./infra/bicep/hooks/postprovision.sh
+      interactive: true
+      continueOnError: true
 
   predown:
     posix:
+      shell: sh
+      run: ./infra/bicep/hooks/predown.sh
+    windows:
       shell: sh
       run: ./infra/bicep/hooks/predown.sh
 
@@ -96,3 +104,7 @@ hooks:
     posix:
       shell: sh
       run: 'cd src; chmod +x ./mvnw; ./mvnw clean package -DskipTests'
+    windows:
+      shell: sh
+      run: 'cd src; ./mvnw.cmd clean package -DskipTests'
+
