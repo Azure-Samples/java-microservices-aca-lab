@@ -99,7 +99,7 @@ var infraSubnetName = '${abbrs.networkVirtualNetworksSubnets}infra'
 var abbrs = loadJsonContent('./abbreviations.json')
 var tags = {
   'azd-env-name': environmentName
-  'azure-samples-java-microservices-aca-lab': true
+  'java-acc-samples-java-microservices-aca-lab': true
   'utc-time': utcValue
 }
 
