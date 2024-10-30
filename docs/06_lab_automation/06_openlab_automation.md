@@ -1,7 +1,7 @@
 ---
 title: 'Lab 6: Deploy to Azure automatically'
 layout: default
-nav_order: 8
+nav_order: 9
 has_children: true
 ---
 

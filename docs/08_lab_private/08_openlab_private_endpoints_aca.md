@@ -1,7 +1,7 @@
 ---
 title: 'Lab 8: Secure MySQL database and Key Vault using a Private Endpoint'
 layout: default
-nav_order: 10
+nav_order: 11
 has_children: true
 ---
 
