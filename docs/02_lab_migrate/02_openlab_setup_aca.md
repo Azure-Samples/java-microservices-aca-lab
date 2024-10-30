@@ -19,7 +19,7 @@ After you complete this lab, you will be able to:
 
 - Create an Azure Container Apps environment
 - Set up a configuration repository
-- Create an Azure MySQL Database service
+- Create an Azure MySQL or PostgreSQL Database service
 - Create the java components for your config and discovery server
 - Deploy the microservices of the Spring Petclinic app to ACA and bind them to java components
 - Test the application through the publicly available endpoint
@@ -38,7 +38,7 @@ During the process you'll:
 
 - Create an Azure Container Apps environment
 - Set up a configuration repository
-- Create an Azure MySQL Database service
+- Create an Azure MySQL or PostgreSQL Database service
 - Create the java components for your config and discovery server
 - Deploy the microservices of the Spring Petclinic app to ACA and bind them to java components
 - Test the application through the publicly available endpoint
