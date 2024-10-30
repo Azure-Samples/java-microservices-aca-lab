@@ -1,7 +1,7 @@
 ---
 title: 'Lab 10: Build reliable Java application on ACA'
 layout: default
-nav_order: 13
+nav_order: 15
 has_children: true
 ---
 
