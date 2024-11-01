@@ -99,7 +99,7 @@ module customersService '../containerapps/containerapp.bicep' = {
   }
 }
 
-module customersServiceConnection '../containerapps/serviceLiner.bicep' = {
+module customersServiceConnection '../containerapps/serviceLinker.bicep' = {
   name: 'customers-service-sql-connection'
   params: {
     appName: customersService.outputs.appName
@@ -133,7 +133,7 @@ module vetsService '../containerapps/containerapp.bicep' = {
   }
 }
 
-module vetsServiceConnection '../containerapps/serviceLiner.bicep' = {
+module vetsServiceConnection '../containerapps/serviceLinker.bicep' = {
   name: 'vets-service-sql-connection'
   params: {
     appName: vetsService.outputs.appName
@@ -167,7 +167,7 @@ module visitsService '../containerapps/containerapp.bicep' = {
   }
 }
 
-module visitsServiceConnection '../containerapps/serviceLiner.bicep' = {
+module visitsServiceConnection '../containerapps/serviceLinker.bicep' = {
   name: 'visits-service-sql-connection'
   params: {
     appName: visitsService.outputs.appName
