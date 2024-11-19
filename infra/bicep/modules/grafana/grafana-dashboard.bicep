@@ -24,7 +24,6 @@ module azureManagedGrafana 'azure-managed-grafana.bicep' = {
 
 module grafanaRoleAssignment 'grafana-role-assignment.bicep' = {
   name: 'role-assignment-${grafanaName}'
-  scope: subscription()
   params: {
     grafanaPrincipalId: azureManagedGrafana.outputs.grafanaPrincipalId
   }
