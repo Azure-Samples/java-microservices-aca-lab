@@ -9,7 +9,7 @@ param location string = resourceGroup().location
 @description('Optional. Tags of the resource.')
 param tags object = {}
 
-resource grafana 'Microsoft.Dashboard/grafana@2021-03-01-preview' = {
+resource grafana 'Microsoft.Dashboard/grafana@2023-10-01-preview' = {
   name: grafanaName
   location: location
   properties: {
