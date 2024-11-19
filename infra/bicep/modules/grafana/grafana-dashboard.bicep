@@ -6,7 +6,6 @@ param grafanaName string
 @description('Optional. Tags of the resource.')
 param tags object = {}
 
-
 module azureManagedGrafana 'azure-managed-grafana.bicep' = {
   name: grafanaName
   scope: resourceGroup()
