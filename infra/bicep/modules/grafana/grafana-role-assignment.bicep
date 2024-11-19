@@ -1,8 +1,5 @@
 targetScope = 'subscription'
 
-@description('Required. The subscription ID where the role assignment will be created.')
-param subscriptionId string = subscription().id
-
 @description('Required. The principal ID of the Managed Identity for the Grafana resource.')
 param grafanaPrincipalId string
 
@@ -11,10 +8,10 @@ param grafanaRoleDefinitionId string = 'b0d8363b-8ddd-447d-831f-62ca05bff136' //
 
 resource roleAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
   name: guid(subscription().id, grafanaPrincipalId, grafanaRoleDefinitionId)
+  scope: subscription()
   properties: {
     roleDefinitionId: grafanaRoleDefinitionId
     principalId: grafanaPrincipalId
     principalType: 'ServicePrincipal'
-    scope: subscriptionId
   }
 }
