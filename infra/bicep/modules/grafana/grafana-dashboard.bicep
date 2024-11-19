@@ -13,7 +13,7 @@ resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' existing = {
   name: resourceGroupName
 }
 
-module azureManagedGrafana 'grafana.bicep' = {
+module azureManagedGrafana 'azure-managed-grafana.bicep' = {
   name: grafanaName
   scope: rg
   params: {
@@ -29,3 +29,6 @@ module grafanaRoleAssignment 'grafana-role-assignment.bicep' = {
     grafanaPrincipalId: azureManagedGrafana.outputs.grafanaPrincipalId
   }
 }
+
+output grafanaDashboardEndpoint string = azureManagedGrafana.outputs.grafanaDashboardEndpoint
+
