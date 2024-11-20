@@ -285,8 +285,11 @@ module applications 'modules/app/petclinic.bicep' = {
   }
 }
 
+output environmentPortal string = environment().portal
 output subscriptionId string = subscription().subscriptionId
+
 output resourceGroupName string = rg.name
+output resourceGroupId string = rg.id
 
 output acrLoginServer string = acrLoginServer
 

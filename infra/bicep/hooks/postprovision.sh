@@ -24,3 +24,6 @@ echo -e "${GREEN}INFO:${NC} Deploy finish succeed!"
 echo -e "${GREEN}INFO:${NC} Api Gateway App url: https://$gatewayFqdn"
 
 echo -e "${GREEN}INFO:${NC} Spring Boot Admin url: https://$springbootAdminFqdn"
+
+domain=$(az account show -o tsv --query tenantDefaultDomain)
+echo -e "${GREEN}INFO:${NC} Resource Group: $environmentPortal/#@$domain/resource$resourceGroupId"
