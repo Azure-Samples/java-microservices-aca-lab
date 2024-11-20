@@ -23,3 +23,7 @@ Write-Host "Api Gateway App url: https://$env:gatewayFqdn"
 
 Write-Host "INFO: " -ForegroundColor Green -NoNewline;
 Write-Host "Spring Boot Admin url: https://$env:springbootAdminFqdn"
+
+$domain = (az account show -o tsv --query tenantDefaultDomain)
+Write-Host "INFO: " -ForegroundColor Green -NoNewline;
+Write-Host "Resource Group: $env:environmentPortal/#@$domain/resource$env:resourceGroupId"
