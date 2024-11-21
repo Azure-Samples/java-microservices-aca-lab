@@ -122,7 +122,7 @@ To get started follow the below step by step instructions:
 
 - In case you prefer to use IntelliJ IDEA as an IDE instead of Visual Studio Code: Azure Toolkit for IntelliJ IDEA 3.51.0 from the IntelliJ Plugins UI from [IntelliJ IDEA](https://www.jetbrains.com/idea/download/#section=windows)
 
-- Azure CLI version 2.49.0 or higher
+- Azure CLI version 2.60.0 or higher
 
    Install az extensions
 
