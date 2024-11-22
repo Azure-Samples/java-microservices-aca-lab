@@ -2,6 +2,7 @@
 title: 'Lab 9: Send messages between microservices'
 layout: default
 nav_order: 11
+nav_exclude: true
 has_children: true
 ---
 

@@ -2,6 +2,7 @@
 title: 'Lab 7: Protect endpoints using Web Application Firewalls'
 layout: default
 nav_order: 9
+nav_exclude: true
 has_children: true
 ---
 
