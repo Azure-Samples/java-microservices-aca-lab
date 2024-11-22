@@ -41,7 +41,7 @@ The [git repository of this lab](https://github.com/Azure-Samples/java-microserv
 The [git repository of this lab](https://github.com/Azure-Samples/java-microservices-aca-lab) contains a dev container for Java development. This container contains all the needed tools for running this lab. For this option you need the following tools to be installed on your local system:
 
 - Visual Studio Code available from [Visual Studio Code Downloads](https://code.visualstudio.com/download)
-- Git for Windows 2.3.61 available from [Git Downloads](https://git-scm.com/downloads), or similar on another OS.
+- Git for Windows available from [Git Downloads](https://git-scm.com/downloads), or similar on another OS.
   - **Note**: If needed, reinstall Git and, during installation, ensure that the Git Credential Manager is enabled.
 - [Visual Studio Code Remote Containers option](https://code.visualstudio.com/docs/remote/containers). 
 - [docker](https://docs.docker.com/get-docker/).
