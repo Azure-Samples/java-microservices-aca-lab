@@ -82,6 +82,16 @@ services:
       remoteBuild: true
 
 hooks:
+  preprovision:
+    posix:
+      shell: sh
+      run: ./infra/bicep/hooks/preprovision.sh
+      interactive: true
+    windows:
+      shell: pwsh
+      run: ./infra/bicep/hooks/preprovision.ps1
+      interactive: true
+
   postprovision:
     posix:
       shell: sh

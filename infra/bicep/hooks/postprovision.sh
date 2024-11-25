@@ -15,7 +15,7 @@ echo -e "${GREEN}INFO:${NC} Updating container apps connection ..."
 # refresh service connection, via customers-service
 az containerapp connection create mysql-flexible --subscription $subscriptionId -g $resourceGroupName \
   --connection $sqlConnectName --source-id $customersServiceId --target-id $sqlDatabaseId --client-type springBoot \
-  --user-identity client-id=$appUserIdentityClientId subs-id=$subscriptionId mysql-identity-id=$sqlAdminIdentityId \
+  --user-identity client-id=$appUserIdentityClientId subs-id=$subscriptionId mysql-identity-id=$sqlAdminIdentityId user-object-id=$aadUserId \
   -c $customersServiceName -y > /dev/null
 
 echo ""

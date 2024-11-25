@@ -17,7 +17,6 @@ param apiGatewayImage string
 param customersServiceImage string
 param vetsServiceImage string
 param visitsServiceImage string
-param adminServerImage string
 param chatAgentImage string
 
 param targetPort int = 8080
@@ -213,30 +212,7 @@ module chatAgent '../containerapps/containerapp.bicep' = {
   }
 }
 
-module adminServer '../containerapps/containerapp.bicep' = {
-  name: 'admin-server'
-  params: {
-    containerAppsEnvironmentName: managedEnvironmentsName
-    name: 'admin-server'
-    acrName: acrRegistry
-    acrIdentityId: acrIdentityId
-    image: adminServerImage
-    external: true
-    targetPort: targetPort
-    isJava: true
-    serviceBinds: serviceBindings
-    tags: tags
-    env: concat(env, empty(applicationInsightsConnString) ? [] : [
-      {
-        name: 'APPLICATIONINSIGHTS_CONFIGURATION_CONTENT'
-        value: '{"role": {"name": "admin-server"}}'
-      }
-    ])
-  }
-}
-
 output gatewayFqdn string = apiGateway.outputs.appFqdn
-output adminFqdn string = adminServer.outputs.appFqdn
 
 output customersServiceName string = customersService.outputs.appName
 output customersServiceId string = customersService.outputs.appId
