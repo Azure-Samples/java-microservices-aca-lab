@@ -302,6 +302,8 @@ output sqlConnectName string = applications.outputs.connectionName
 output appUserIdentityClientId string = umiApps.outputs.clientId
 output appUserIdentityId string = umiApps.outputs.id
 
+output containerAppsEnvironmentId string = managedEnvironment.outputs.containerAppsEnvironmentId
+
 output customersServiceName string = applications.outputs.customersServiceName
 output customersServiceId string = applications.outputs.customersServiceId
 output vetsServiceName string = applications.outputs.vetsServiceName

@@ -15,8 +15,16 @@ echo -e "${GREEN}INFO:${NC} Updating container apps connection ..."
 # refresh service connection, via customers-service
 az containerapp connection create mysql-flexible --subscription $subscriptionId -g $resourceGroupName \
   --connection $sqlConnectName --source-id $customersServiceId --target-id $sqlDatabaseId --client-type springBoot \
-  --user-identity client-id=$appUserIdentityClientId subs-id=$subscriptionId mysql-identity-id=$sqlAdminIdentityId user-object-id=$aadUserId \
+  --user-identity client-id=$appUserIdentityClientId subs-id=$subscriptionId mysql-identity-id=$sqlAdminIdentityId \
+    user-object-id=$AAD_USER_ID \
   -c $customersServiceName -y > /dev/null
+
+# Allow user to visit Spring Boot Admin dashboard
+az role assignment create --role "Container Apps ManagedEnvironments Contributor" \
+  --scope $containerAppsEnvironmentId \
+  --assignee-principal-type User \
+  --assignee-object-id $AAD_USER_ID \
+  --description "allow user to visit Spring Boot Admin dashboard"
 
 echo ""
 echo -e "${GREEN}INFO:${NC} Deploy finish succeed!"
