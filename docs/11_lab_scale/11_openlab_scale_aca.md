@@ -1,12 +1,12 @@
 ---
-title: 'Lab 11: Set up autoscaling for microservices on ACA'
+title: 'Set up autoscaling for microservices'
 layout: default
 nav_order: 13
-nav_exclude: true
+parent: 'More useful topics'
 has_children: true
 ---
 
-# Lab 11: Set up autoscaling for microservices on ACA
+# Set up autoscaling for microservices
 
 # Student manual
 

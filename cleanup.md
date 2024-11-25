@@ -1,7 +1,7 @@
 ---
 title: Clean up resources
 layout: home
-nav_order: 13
+nav_order: 90
 ---
 
 # Cleanup

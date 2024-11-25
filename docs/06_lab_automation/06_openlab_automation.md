@@ -1,12 +1,12 @@
 ---
-title: 'Lab 6: Deploy to Azure automatically'
+title: 'Deploy to Azure automatically'
 layout: default
-nav_order: 8
-nav_exclude: true
+parent: 'More useful topics'
+nav_order: 10
 has_children: true
 ---
 
-# Lab 6: Deploy to Azure automatically
+# Deploy to Azure automatically
 
 # Student manual
 
