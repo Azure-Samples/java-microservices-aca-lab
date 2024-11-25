@@ -1,3 +1,8 @@
+# This file is for running the doc pages in a local Docker environment
+# Usage:
+#   run "docker-compose up"
+#   open "http://localhost:4000" in your browser
+
 services:
   jekyll:
     build:
