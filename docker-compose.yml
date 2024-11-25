@@ -1,0 +1,16 @@
+# This file is for running the doc pages in a local Docker environment
+# Usage:
+#   run "docker-compose up"
+#   open "http://localhost:4000" in your browser
+
+services:
+  jekyll:
+    build:
+      context: ./
+    ports:
+      - 4000:4000
+    volumes:
+      - .:/usr/src/app
+    stdin_open: true
+    tty: true
+    command: bundle exec jekyll serve -H 0.0.0.0 -t

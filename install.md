@@ -41,7 +41,7 @@ The [git repository of this lab](https://github.com/Azure-Samples/java-microserv
 The [git repository of this lab](https://github.com/Azure-Samples/java-microservices-aca-lab) contains a dev container for Java development. This container contains all the needed tools for running this lab. For this option you need the following tools to be installed on your local system:
 
 - Visual Studio Code available from [Visual Studio Code Downloads](https://code.visualstudio.com/download)
-- Git for Windows 2.3.61 available from [Git Downloads](https://git-scm.com/downloads), or similar on another OS.
+- Git for Windows available from [Git Downloads](https://git-scm.com/downloads), or similar on another OS.
   - **Note**: If needed, reinstall Git and, during installation, ensure that the Git Credential Manager is enabled.
 - [Visual Studio Code Remote Containers option](https://code.visualstudio.com/docs/remote/containers). 
 - [docker](https://docs.docker.com/get-docker/).
@@ -79,7 +79,7 @@ To get started follow the below step by step instructions:
 1. In workspaces folder double check that the spring petclinic application got cloned correctly. You can use the repository in your workspaces folder to regularly push your changes to.
 
    {: .note }
-   > However in one of the lab steps you will put a GitHub PAT token in one of the configuration files, make sure to **not** commit this PAT token, since it will immediately get invalidated by GitHub. Once invalidated your next lab steps will fail. You can use the [LabTips]({% link LabTips.md %}) to recover from this.
+   > However in one of the lab steps you will put a GitHub PAT token in one of the configuration files, make sure to **not** commit this PAT token, since it will immediately get invalidated by GitHub. Once invalidated your next lab steps will fail. You can use the [LabTips]({% link tips.md %}) to recover from this.
 
 1. Navigate into the `java-microservices-aca-lab` folder that got created.
 
@@ -122,7 +122,7 @@ To get started follow the below step by step instructions:
 
 - In case you prefer to use IntelliJ IDEA as an IDE instead of Visual Studio Code: Azure Toolkit for IntelliJ IDEA 3.51.0 from the IntelliJ Plugins UI from [IntelliJ IDEA](https://www.jetbrains.com/idea/download/#section=windows)
 
-- Azure CLI version 2.49.0 or higher
+- Azure CLI version 2.60.0 or higher
 
    Install az extensions
 
