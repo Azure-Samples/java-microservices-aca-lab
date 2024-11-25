@@ -14,6 +14,7 @@ try {
 Write-Output "Checking AAD_USER_ID: $env:AAD_USER_ID"
 if ($env:AAD_USER_ID -match '^[A-F0-9a-f]{8}-[A-F0-9a-f]{4}-[A-F0-9a-f]{4}-[A-F0-9a-f]{4}-[A-F0-9a-f]{12}$') {
     Write-Output "Using AAD_USER_ID from input: $env:AAD_USER_ID"
+    azd env set AAD_USER_ID $AAD_USER_ID
     exit 0
 }
 
@@ -21,7 +22,7 @@ Write-Output "Retrieving the current user's object id..."
 $AAD_USER_ID = (az ad signed-in-user show --query id --output tsv)
 if ($AAD_USER_ID -match '^[A-F0-9a-f]{8}-[A-F0-9a-f]{4}-[A-F0-9a-f]{4}-[A-F0-9a-f]{4}-[A-F0-9a-f]{12}$') {
     Write-Output "Using AAD_USER_ID: $AAD_USER_ID"
-    $env:AAD_USER_ID = $AAD_USER_ID
+    azd env set AAD_USER_ID $AAD_USER_ID
     exit 0
 }
 
