@@ -19,7 +19,7 @@ az containerapp connection create mysql-flexible --subscription $env:subscriptio
 
 # Allow user to visit Spring Boot Admin dashboard
 az role assignment create --role "Container Apps ManagedEnvironments Contributor" `
-  --scope $containerAppsEnvironmentId `
+  --scope $env:containerAppsEnvironmentId `
   --assignee-principal-type User `
   --assignee-object-id $env:AAD_USER_ID `
   --description "allow user to visit Spring Boot Admin dashboard"
