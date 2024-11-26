@@ -27,7 +27,6 @@ param apiGatewayImage string = ''
 param customersServiceImage string = ''
 param vetsServiceImage string = ''
 param visitsServiceImage string = ''
-param adminServerImage string = ''
 param chatAgentImage string = ''
 
 @description('Bool value to indicate reuse existing sql server. Default: false')
@@ -273,7 +272,6 @@ module applications 'modules/app/petclinic.bicep' = {
     acrIdentityId: acr.outputs.umiAcrPullId
     apiGatewayImage: useMcrImage ? apiGatewayImage : placeholderImage
     chatAgentImage: useMcrImage ? chatAgentImage : placeholderImage
-    adminServerImage: useMcrImage ? adminServerImage : placeholderImage
     customersServiceImage: useMcrImage ? customersServiceImage : placeholderImage
     vetsServiceImage: useMcrImage ? vetsServiceImage : placeholderImage
     visitsServiceImage: useMcrImage ? visitsServiceImage : placeholderImage
@@ -295,7 +293,6 @@ output acrLoginServer string = acrLoginServer
 
 output springbootAdminFqdn string = javaComponents.outputs.springbootAdminFqdn
 output gatewayFqdn string = applications.outputs.gatewayFqdn
-output adminFqdn string = applications.outputs.adminFqdn
 
 output sqlDatabaseId string = mysql.outputs.databaseId
 output sqlAdminIdentityClientId string = mysql.outputs.adminIdentityClientId
@@ -304,6 +301,8 @@ output sqlConnectName string = applications.outputs.connectionName
 
 output appUserIdentityClientId string = umiApps.outputs.clientId
 output appUserIdentityId string = umiApps.outputs.id
+
+output containerAppsEnvironmentId string = managedEnvironment.outputs.containerAppsEnvironmentId
 
 output customersServiceName string = applications.outputs.customersServiceName
 output customersServiceId string = applications.outputs.customersServiceId

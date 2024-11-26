@@ -161,7 +161,7 @@ resource acaEnvironment_diagnosticSettings 'Microsoft.Insights/diagnosticsetting
 output containerAppsEnvironmentName string = acaEnvironment.name
 
 @description('The resource ID of the Azure container app environment.')
-output containerAppsEnvironmentNameId string = acaEnvironment.id
+output containerAppsEnvironmentId string = acaEnvironment.id
 
 @description('The default domain of the Azure container app environment.')
 output containerAppsEnvironmentDefaultDomain string = acaEnvironment.properties.defaultDomain

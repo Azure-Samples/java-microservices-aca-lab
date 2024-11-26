@@ -70,29 +70,26 @@ services:
       tag: ${AZD_PROVISION_TIMESTAMP}
       remoteBuild: true
 
-  admin-server:
-    resourceName: admin-server
-    project: ./src/spring-petclinic-admin-server
-    host: containerapp
-    language: java
-    docker:
-      registry: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}
-      image: java-microservices-aca-lab/spring-petclinic-admin-server
-      tag: ${AZD_PROVISION_TIMESTAMP}
-      remoteBuild: true
-
 hooks:
+  preprovision:
+    posix:
+      shell: sh
+      run: ./infra/bicep/hooks/preprovision.sh
+      interactive: true
+    windows:
+      shell: pwsh
+      run: ./infra/bicep/hooks/preprovision.ps1
+      interactive: true
+
   postprovision:
     posix:
       shell: sh
       run: ./infra/bicep/hooks/postprovision.sh
       interactive: true
-      continueOnError: true
     windows:
       shell: pwsh
       run: ./infra/bicep/hooks/postprovision.ps1
       interactive: true
-      continueOnError: true
 
   predown:
     posix:

@@ -1,3 +1,5 @@
+#!/usr/bin/env pwsh
+
 azd env set AZURE_RESOURCE_GROUP $env:resourceGroupName
 
 azd env set AZURE_CONTAINER_REGISTRY_ENDPOINT $env:acrLoginServer
@@ -12,7 +14,15 @@ Write-Host "Updating container apps connection ..."
 az containerapp connection create mysql-flexible --subscription $env:subscriptionId -g $env:resourceGroupName `
   --connection $env:sqlConnectName --source-id $env:customersServiceId --target-id $env:sqlDatabaseId --client-type springBoot `
   --user-identity client-id=$env:appUserIdentityClientId subs-id=$env:subscriptionId mysql-identity-id=$env:sqlAdminIdentityId `
+    user-object-id=$env:AAD_USER_ID `
   -c $env:customersServiceName -y | Out-Null
+
+# Allow user to visit Spring Boot Admin dashboard
+az role assignment create --role "Container Apps ManagedEnvironments Contributor" `
+  --scope $env:containerAppsEnvironmentId `
+  --assignee-principal-type User `
+  --assignee-object-id $env:AAD_USER_ID `
+  --description "allow user to visit Spring Boot Admin dashboard"
 
 Write-Host ""
 Write-Host "INFO: " -ForegroundColor Green -NoNewline;
