@@ -1,12 +1,12 @@
 ---
-title: 'Lab 10: Build reliable Java application on ACA'
+title: 'Build reliable Java application on ACA'
 layout: default
+parent: 'More useful topics'
 nav_order: 12
-nav_exclude: true
 has_children: true
 ---
 
-# Lab 10: Build reliable Java application on ACA
+# Build reliable Java application on ACA
 
 # Student manual
 
