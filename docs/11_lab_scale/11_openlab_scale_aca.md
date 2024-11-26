@@ -2,7 +2,7 @@
 title: 'Set up autoscaling for microservices'
 layout: default
 nav_order: 13
-parent: 'More useful topics'
+nav_exclude: true
 has_children: true
 ---
 

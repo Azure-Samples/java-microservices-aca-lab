@@ -22,7 +22,7 @@ az role assignment create --role "Container Apps ManagedEnvironments Contributor
   --scope $env:containerAppsEnvironmentId `
   --assignee-principal-type User `
   --assignee-object-id $env:AAD_USER_ID `
-  --description "allow user to visit Spring Boot Admin dashboard"
+  --description "allow user to visit Spring Boot Admin dashboard" | Out-Null
 
 Write-Host ""
 Write-Host "INFO: " -ForegroundColor Green -NoNewline;
