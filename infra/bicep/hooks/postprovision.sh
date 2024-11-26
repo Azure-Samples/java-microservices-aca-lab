@@ -24,7 +24,7 @@ az role assignment create --role "Container Apps ManagedEnvironments Contributor
   --scope $containerAppsEnvironmentId \
   --assignee-principal-type User \
   --assignee-object-id $AAD_USER_ID \
-  --description "allow user to visit Spring Boot Admin dashboard"
+  --description "allow user to visit Spring Boot Admin dashboard" > /dev/null
 
 echo ""
 echo -e "${GREEN}INFO:${NC} Deploy finish succeed!"
