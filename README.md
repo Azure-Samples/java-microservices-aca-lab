@@ -36,7 +36,7 @@ This project provides the following features:
 
 ### Architecture Diagram
 
-![Architecture Diagram](./images/acalab-overview.png)
+![Architecture Diagram](./images/acalab6.png)
 
 ## Getting Started
 
