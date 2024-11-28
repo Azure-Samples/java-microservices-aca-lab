@@ -12,7 +12,7 @@ This lab teaches you how to deploy the [Spring Petclinic Microservices](https://
 
 This lab has modules on:
 
-* Plan a Java application migration to Azure Container Apps Service
+* A general introduction to the sample microservices and the related Azure resources
 * Launch a Spring Apps microservices application to Azure Container Apps Service
 * Enable monitoring and end-to-end tracing
 * Secure application secrets using Key Vault
@@ -44,7 +44,7 @@ For running this lab you will need:
 Based on your current knowledge background and your plan, there are some typical usage scenarios for your reference:
 
 * If you are not familiar with Azure Spring Apps and want to learn how to deploy new project in Azure Container Apps, you may start from these labs:
-  * [Lab 2: Migrate a Spring Apps microservices application to Azure Container Apps]({% link docs/02_lab_launch/02_openlab_setup_aca.md %})
+  * [Lab 2: Launch a Spring Apps microservices application to Azure Container Apps]({% link docs/02_lab_launch/02_openlab_setup_aca.md %})
   * [Lab 3: Enable monitoring and end-to-end tracing]({% link docs/03_lab_monitor/03_openlab_monitoring_aca.md %})
   * [Lab 4: Connect to Database securely using identity]({% link docs/04_lab_secrets/04_openlab_secrets_aca.md %})
 
