@@ -22,6 +22,7 @@ services:
     language: java
     docker:
       registry: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}
+      path: ./ai.Dockerfile
       image: java-microservices-aca-lab/spring-petclinic-api-gateway
       tag: ${AZD_PROVISION_TIMESTAMP}
       remoteBuild: true
@@ -33,6 +34,7 @@ services:
     language: java
     docker:
       registry: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}
+      path: ./ai.Dockerfile
       image: java-microservices-aca-lab/spring-petclinic-customers-service
       tag: ${AZD_PROVISION_TIMESTAMP}
       remoteBuild: true
@@ -44,6 +46,7 @@ services:
     language: java
     docker:
       registry: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}
+      path: ./ai.Dockerfile
       image: java-microservices-aca-lab/spring-petclinic-vets-service
       tag: ${AZD_PROVISION_TIMESTAMP}
       remoteBuild: true
@@ -55,6 +58,7 @@ services:
     language: java
     docker:
       registry: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}
+      path: ./ai.Dockerfile
       image: java-microservices-aca-lab/spring-petclinic-visits-service
       tag: ${AZD_PROVISION_TIMESTAMP}
       remoteBuild: true
@@ -66,6 +70,7 @@ services:
     language: java
     docker:
       registry: ${AZURE_CONTAINER_REGISTRY_ENDPOINT}
+      path: ./ai.Dockerfile
       image: java-microservices-aca-lab/spring-petclinic-chat-agent
       tag: ${AZD_PROVISION_TIMESTAMP}
       remoteBuild: true
