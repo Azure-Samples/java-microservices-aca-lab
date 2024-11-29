@@ -1,11 +1,11 @@
 ---
-title: More useful topics
+title: More topics
 layout: home
 nav_order: 95
 has_children: true
 ---
 
-# More useful topics
+# More topics
 {: .no_toc }
 
 There are some more topics based on the petclinic microservice repo, you may find your interested topics to check:
