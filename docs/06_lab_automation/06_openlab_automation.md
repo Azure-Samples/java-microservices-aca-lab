@@ -35,19 +35,19 @@ After you complete this lab, you will be able to:
 
 During this lab, you will:
 
-- Run `azd up` command to deploy the sample soluton to Azure Container Apps.
+- Deploy the sample microservices to Azure Container Apps automatically.
 - Learn how to triage some problems with the one-click solution.
 
 ## Others
 
    - This version of azd templates includes most operations in:
-      - [Lab 2: Migrate a Spring Apps microservices application to Azure Container Apps](https://azure-samples.github.io/java-microservices-aca-lab/docs/02_lab_migrate/02_openlab_setup_aca.html)
+      - [Lab 2: Launch a Spring Apps microservices application to Azure Container Apps](https://azure-samples.github.io/java-microservices-aca-lab/docs/02_lab_launch/02_openlab_setup_aca.html)
       - [Lab 3: Enable monitoring and end-to-end tracing](https://azure-samples.github.io/java-microservices-aca-lab/docs/03_lab_monitor/03_openlab_monitoring_aca.html)
       - [Lab 4: Connect to Database securely using identity](https://azure-samples.github.io/java-microservices-aca-lab/docs/04_lab_secrets/04_openlab_secrets_aca.html)
       - [Lab 5: Integrate with Azure OpenAI](https://azure-samples.github.io/java-microservices-aca-lab/docs/05_lab_openai/05_openlab_openai_aca.html)
 
-   - By default, the automation process will create MySQL server admin user password with random string, you may reset the admin password
-      - Portal: Go to your MySQL server instance page, `Overview` > `Reset password`
+   - By default, the automation process will create MySQL server admin user password with random string, you can reset the admin password in either way:
+      - Portal: Go to your MySQL server instance page, navigate to `Overview` and click <kbd>Reset password</kbd>
       - CLI: `az mysql flexible-server update -g <group-name> -n <server-name> --admin-password "<new-password>"`
 
 {: .note }
