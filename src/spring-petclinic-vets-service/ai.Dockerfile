@@ -8,7 +8,7 @@ ARG AI_VERSION=3.5.4
 RUN yum update -y && \
     yum install -y wget
 
-RUN wget https://github.com/microsoft/ApplicationInsights-Java/releases/download/$AI_VERSION/applicationinsights-agent-$AI_VERSION.jar -O ai.jar
+RUN wget https://github.com/microsoft/ApplicationInsights-Java/releases/download/$AI_VERSION/applicationinsights-agent-$AI_VERSION.jar -O ai.jar --quiet
 
 # run
 FROM mcr.microsoft.com/openjdk/jdk:17-distroless
