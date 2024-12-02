@@ -41,10 +41,10 @@ During this lab, you will:
 ## Others
 
    - This version of azd templates includes most operations in:
-      - [Lab 2: Launch a Spring Apps microservices application to Azure Container Apps](https://azure-samples.github.io/java-microservices-aca-lab/docs/02_lab_launch/02_openlab_setup_aca.html)
-      - [Lab 3: Enable monitoring and end-to-end tracing](https://azure-samples.github.io/java-microservices-aca-lab/docs/03_lab_monitor/03_openlab_monitoring_aca.html)
-      - [Lab 4: Connect to Database securely using identity](https://azure-samples.github.io/java-microservices-aca-lab/docs/04_lab_secrets/04_openlab_secrets_aca.html)
-      - [Lab 5: Integrate with Azure OpenAI](https://azure-samples.github.io/java-microservices-aca-lab/docs/05_lab_openai/05_openlab_openai_aca.html)
+      - [Lab 2: Launch a Spring Apps microservices application to Azure Container Apps]({% link docs/02_lab_launch/02_openlab_setup_aca.md %})
+      - [Lab 3: Enable monitoring and end-to-end tracing]({% link docs/03_lab_monitor/03_openlab_monitoring_aca.md %})
+      - [Lab 4: Connect to Database securely using identity]({% link docs/04_lab_secrets/04_openlab_secrets_aca.md %})
+      - [Lab 5: Integrate with Azure OpenAI]({% link docs/05_lab_openai/05_openlab_openai_aca.md %})
 
    - By default, the automation process will create MySQL server admin user password with random string, you can reset the admin password in either way:
       - Portal: Go to your MySQL server instance page, navigate to `Overview` and click <kbd>Reset password</kbd>

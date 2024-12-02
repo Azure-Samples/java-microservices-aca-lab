@@ -15,7 +15,7 @@ This lab has modules on:
 * A general introduction to the sample microservices and the related Azure resources
 * Launch a Spring Apps microservices application to Azure Container Apps Service
 * Enable monitoring and end-to-end tracing
-* Secure application secrets using Key Vault
+* Connect to services securely with managed identity
 * Build intelligent Spring Apps with Azure OpenAI
 * Automatically launch the microservices to Azure
 * Build reliable java apps on Azure Container Apps

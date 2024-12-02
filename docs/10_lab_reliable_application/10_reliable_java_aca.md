@@ -1,12 +1,12 @@
 ---
-title: 'Build reliable Java application on ACA'
+title: 'Build reliable Java application'
 layout: default
 parent: 'More useful topics'
 nav_order: 12
 has_children: true
 ---
 
-# Build reliable Java application on ACA
+# Build reliable Java application on Azure Container Apps
 
 # Student manual
 

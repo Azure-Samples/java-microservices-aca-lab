@@ -121,14 +121,19 @@ To get started follow the below step by step instructions:
    Install the CLI extensions:
 
    ```bash
-   az extension add --name containerapp --upgrade
+   az extension add --name containerapp --upgrade --allow-preview true
    az extension add --name serviceconnector-passwordless --upgrade
+   ```
+
+   Register the namespaces:
+
+   ```bash
+   az provider register --namespace Microsoft.App
+   az provider register --namespace Microsoft.OperationalInsights
    ```
 
 {: .note }
 > If needed, upgrade the Azure CLI version by launching Command Prompt as administrator and running `az upgrade`.
-
-- Docker available from [docker docs](https://docs.docker.com/get-docker/).
 
 {: .note }
 > Following the installation of Git, ensure to set the global configuration variables `user.email` and `user.name` by running the following commands from the Git Bash shell (replace the `<your-email-address>` and `<your-full-name>` placeholders with your email address and your full name):
