@@ -39,7 +39,7 @@ done
 wait < <(jobs -p)
 
 if [[ -f $CHECK_FAIL ]]; then
-    echo "Error happens on build and depploy apps, please check the logs for more detail info"
+    echo "Error happens on build and depploy apps, please check the logs for more details"
     exit 1
 else
     echo "Build and deploy apps succeed"
