@@ -1,7 +1,7 @@
 ---
 title: 'Deploy to Azure automatically'
 layout: default
-parent: 'More useful topics'
+parent: 'More topics'
 nav_order: 10
 has_children: true
 ---
