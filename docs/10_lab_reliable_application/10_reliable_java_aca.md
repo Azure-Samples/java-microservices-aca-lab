@@ -1,7 +1,7 @@
 ---
 title: 'Build reliable Java application'
 layout: default
-parent: 'More useful topics'
+parent: 'More topics'
 nav_order: 12
 has_children: true
 ---
