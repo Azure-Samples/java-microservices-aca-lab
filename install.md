@@ -17,7 +17,7 @@ For running this lab with all the needed tooling, there are 3 options available:
 
 ## Using a GitHub Codespace
 
-The [git repository of this lab](https://github.com/Azure-Samples/java-microservices-aca-lab) contains a dev container for Java development. This container contains all the needed tools for running this lab. In case you want to use this dev container you can use a [GitHub CodeSpace](https://github.com/features/codespaces) in case your GitHub account is enabled for Codespaces. 
+The [git repository of this lab](https://github.com/Azure-Samples/java-microservices-aca-lab) contains a dev container for Java development. This container contains all the needed tools for running this lab. In case you want to use this dev container you can use a [GitHub CodeSpace](https://github.com/features/codespaces) in case your GitHub account is enabled for Codespaces.
 
 1. Navigate to the [GitHub repository of this lab](https://github.com/Azure-Samples/java-microservices-aca-lab) and select **Fork**.
 
