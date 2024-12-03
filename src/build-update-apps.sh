@@ -7,7 +7,8 @@ build_and_deploy() {
 
     echo "Start building and deploying app $APP_NAME with application insights agent ..."
 
-    az acr build --image spring-petclinic-$APP_NAME:$IMAGE_TAG --registry $MYACR \
+    az acr build -g $RESOURCE_GROUP --registry $MYACR \
+        --image spring-petclinic-$APP_NAME:$IMAGE_TAG \
         --file spring-petclinic-$APP_NAME/ai.Dockerfile spring-petclinic-$APP_NAME \
         > $DIR/$APP_NAME.build.log 2>&1
     if [[ $? -ne 0 ]]; then
