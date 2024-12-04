@@ -39,7 +39,7 @@ In this lab, you will:
 - Configure Application Insights to receive monitoring information from your applications
 - Analyze application specific monitoring data
 - Analyze logs
-- (Optional) Build Java metrics dashboard with Azure Managed Grafana
+- Build Java metrics dashboard with Azure Managed Grafana
 
 {: .note }
 > The instructions provided in this exercise assume that you successfully completed the previous exercise and are using the same lab environment, including your Git Bash session with the relevant environment variables already set.
