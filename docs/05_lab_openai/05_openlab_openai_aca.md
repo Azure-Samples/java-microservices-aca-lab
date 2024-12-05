@@ -33,7 +33,7 @@ The below image illustrates the end state you will be building in this lab.
 During this lab, you will:
 
 - Create an Azure Open AI account, and deploy language models
-- Deploy a sample AI application, and explore the power of Azure Open AI 
+- Deploy an AI chat-agent, and explore the power of Azure Open AI
 
 {: .note }
 > The instructions provided in this exercise assume that you successfully completed the previous exercise and are using the same lab environment, including your Git Bash session with the relevant environment variables already set.
