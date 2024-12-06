@@ -9,7 +9,7 @@ create_app() {
 
     echo "Start creating app $APP_NAME ..."
 
-    cp ../tools/ai.Dockerfile spring-petclinic-$APP_NAME/Dockerfile
+    cp -f ../tools/ai.Dockerfile spring-petclinic-$APP_NAME/Dockerfile
 
     az containerapp create \
         --name $APP_NAME \
