@@ -36,7 +36,7 @@ If you're not going to continue to use this lab environment, run the following c
 
       `az cognitiveservices account deployment list -g $RESOURCE_GROUP -n $OPEN_AI_SERVICE_NAME -o table`
 
-   - delete the deployments on by one
+   - delete the deployments one by one
 
       `az cognitiveservices account deployment delete -g $RESOURCE_GROUP -n $OPEN_AI_SERVICE_NAME --deployment-name <deployment-name>`
 
