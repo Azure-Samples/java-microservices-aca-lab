@@ -40,15 +40,15 @@ During this lab, you will:
 
 ## Others
 
-   - This version of azd templates includes most operations in:
-      - [Lab 2: Launch a Spring Apps microservices application to Azure Container Apps]({% link docs/02_lab_launch/02_openlab_setup_aca.md %})
-      - [Lab 3: Enable monitoring and end-to-end tracing]({% link docs/03_lab_monitor/03_openlab_monitoring_aca.md %})
-      - [Lab 4: Connect to Database securely using identity]({% link docs/04_lab_secrets/04_openlab_secrets_aca.md %})
-      - [Lab 5: Integrate with Azure OpenAI]({% link docs/05_lab_openai/05_openlab_openai_aca.md %})
+- This version of azd templates includes most operations in:
+   - [Lab 2: Launch a Spring Apps microservices application to Azure Container Apps]({% link docs/02_lab_launch/02_openlab_setup_aca.md %})
+   - [Lab 3: Enable monitoring and end-to-end tracing]({% link docs/03_lab_monitor/03_openlab_monitoring_aca.md %})
+   - [Lab 4: Connect to Database securely using identity]({% link docs/04_lab_secrets/04_openlab_secrets_aca.md %})
+   - [Lab 5: Integrate with Azure OpenAI]({% link docs/05_lab_openai/05_openlab_openai_aca.md %})
 
-   - By default, the automation process will create MySQL server admin user password with random string, you can reset the admin password in either way:
-      - Portal: Go to your MySQL server instance page, navigate to `Overview` and click <kbd>Reset password</kbd>
-      - CLI: `az mysql flexible-server update -g <group-name> -n <server-name> --admin-password "<new-password>"`
+- By default, the automation process will create MySQL server admin password with random string, you can reset the admin password in either way:
+   - Portal: Go to your MySQL server instance page, navigate to `Overview` and click <kbd>Reset password</kbd>
+   - CLI: `az mysql flexible-server update -g <group-name> -n <server-name> --admin-password "<new-password>"`
 
 {: .note }
 > The instructions provided in this exercise assume that you successfully completed the previous exercise and are using the same lab environment, including your Git Bash session with the relevant environment variables already set.
