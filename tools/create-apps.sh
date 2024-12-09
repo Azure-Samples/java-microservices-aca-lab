@@ -16,9 +16,9 @@ create_app() {
         --resource-group $RESOURCE_GROUP \
         --source ./spring-petclinic-$APP_NAME \
         --registry-server $MYACR.azurecr.io \
-        --registry-identity $USER_ID \
+        --registry-identity $APPS_IDENTITY_ID \
         --environment $ACA_ENVIRONMENT \
-        --user-assigned $USER_ID \
+        --user-assigned $APPS_IDENTITY_ID \
         --ingress $INGRESS \
         --target-port 8080 \
         --min-replicas 1 \
