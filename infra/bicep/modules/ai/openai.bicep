@@ -32,7 +32,7 @@ param tags object = {}
 ])
 param newOrExisting string = 'new'
 
-resource account 'Microsoft.CognitiveServices/accounts@2023-05-01' = if (newOrExisting == 'new') {
+resource account 'Microsoft.CognitiveServices/accounts@2024-10-01' = if (newOrExisting == 'new') {
   name: accountName
   location: location
   sku: {
