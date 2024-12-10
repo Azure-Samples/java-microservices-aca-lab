@@ -9,16 +9,16 @@ create_app() {
 
     echo "Start creating app $APP_NAME ..."
 
-    cp -f ../tools/ai.Dockerfile spring-petclinic-$APP_NAME/Dockerfile
+    cp -f ../tools/Dockerfile spring-petclinic-$APP_NAME/Dockerfile
 
     az containerapp create \
         --name $APP_NAME \
         --resource-group $RESOURCE_GROUP \
         --source ./spring-petclinic-$APP_NAME \
         --registry-server $MYACR.azurecr.io \
-        --registry-identity $USER_ID \
+        --registry-identity $APPS_IDENTITY_ID \
         --environment $ACA_ENVIRONMENT \
-        --user-assigned $USER_ID \
+        --user-assigned $APPS_IDENTITY_ID \
         --ingress $INGRESS \
         --target-port 8080 \
         --min-replicas 1 \
@@ -30,6 +30,7 @@ create_app() {
         return 1
     fi
 
+    echo "Create app $APP_NAME succeed"
     return 0
 }
 
@@ -45,7 +46,7 @@ if [[ -f $CHECK_FAIL ]]; then
     echo "Error happens on create apps, please check the logs for more details"
     exit 1
 else
-    echo "Create apps succeed"
+    echo "Create succeed"
     exit 0
 fi
 

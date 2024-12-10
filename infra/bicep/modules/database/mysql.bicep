@@ -32,16 +32,13 @@ param newOrExisting string = 'new'
 @description('Optional. Tags of the resource.')
 param tags object = {}
 
-@description('Optional. The version of MySQL.')
-param version string = '8.0.21'
-
 resource mysqlUserAssignedIdentityAdmin 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
   name: 'umi-${serverName}-admin'
   location: location
 }
 
 // new
-resource dbServer 'Microsoft.DBforMySQL/flexibleServers@2023-06-30' = if (newOrExisting == 'new') {
+resource dbServer 'Microsoft.DBforMySQL/flexibleServers@2023-12-30' = if (newOrExisting == 'new') {
   name: serverName
   location: location
   tags: tags
@@ -57,7 +54,6 @@ resource dbServer 'Microsoft.DBforMySQL/flexibleServers@2023-06-30' = if (newOrE
   }
   properties: {
     createMode: 'Default'
-    version: version
     administratorLogin: administratorLogin
     administratorLoginPassword: administratorLoginPassword
     network: {

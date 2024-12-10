@@ -3,9 +3,7 @@
 # run
 FROM mcr.microsoft.com/openjdk/jdk:17-distroless
 
-ARG VERSION=3.2.5
-
-COPY ./target/spring-petclinic-admin-server-$VERSION.jar app.jar
+COPY ./target/*.jar app.jar
 
 EXPOSE 8080
 
