@@ -1,5 +1,3 @@
-#!/usr/bin/env pwsh
-
 azd env set AZURE_RESOURCE_GROUP $env:resourceGroupName
 
 azd env set AZURE_CONTAINER_REGISTRY_ENDPOINT $env:acrLoginServer

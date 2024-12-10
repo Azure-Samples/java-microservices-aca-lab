@@ -20,7 +20,9 @@ if [[ $AAD_USER_ID =~ ^\{?[A-F0-9a-f]{8}-[A-F0-9a-f]{4}-[A-F0-9a-f]{4}-[A-F0-9a-
     exit 0
 fi
 
-echo -e "${GREEN}INFO:${NC} Invalid input AAD_USER_ID: '$AAD_USER_ID'"
+if [[ -n $AAD_USER_ID ]]; then
+    echo -e "${GREEN}INFO:${NC} Invalid input AAD_USER_ID: '$AAD_USER_ID'"
+fi
 
 echo -e "${GREEN}INFO:${NC} Retrieving the current user's object id..."
 AAD_USER_ID=$(az ad signed-in-user show --query id --output tsv)
