@@ -20,6 +20,7 @@ update_app_with_ai() {
         return 2
     fi
 
+    echo "Update app $APP_NAME succeed"
     return 0
 }
 
@@ -35,7 +36,7 @@ if [[ -f $CHECK_FAIL ]]; then
     echo "Error happens on update apps, please check the logs for more details"
     exit 1
 else
-    echo "Update apps succeed"
+    echo "Update succeed"
     exit 0
 fi
 

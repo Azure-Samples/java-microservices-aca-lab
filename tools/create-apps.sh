@@ -30,6 +30,7 @@ create_app() {
         return 1
     fi
 
+    echo "Create app $APP_NAME succeed"
     return 0
 }
 
@@ -45,7 +46,7 @@ if [[ -f $CHECK_FAIL ]]; then
     echo "Error happens on create apps, please check the logs for more details"
     exit 1
 else
-    echo "Create apps succeed"
+    echo "Create succeed"
     exit 0
 fi
 
