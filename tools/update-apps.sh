@@ -5,7 +5,7 @@ DIR=/tmp
 update_app_with_ai() {
     APP_NAME=$1
 
-    echo "Start updating app $APP_NAME with application insights agent ..."
+    echo "Updating app $APP_NAME with application insights agent ..."
 
     cp -f ../tools/ai.Dockerfile ./spring-petclinic-$APP_NAME/Dockerfile
 
@@ -13,6 +13,7 @@ update_app_with_ai() {
         --name $APP_NAME \
         --resource-group $RESOURCE_GROUP \
         --source ./spring-petclinic-$APP_NAME \
+        --set-env-vars APPLICATIONINSIGHTS_CONNECTION_STRING=$AI_CONNECTIONSTRING APPLICATIONINSIGHTS_CONFIGURATION_CONTENT='{"role": {"name": "'$APP_NAME'"}}' \
         > $DIR/$APP_NAME.update.log 2>&1
 
     if [[ $? -ne 0 ]]; then

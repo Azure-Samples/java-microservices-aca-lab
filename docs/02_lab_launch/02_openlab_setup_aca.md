@@ -5,7 +5,7 @@ nav_order: 4
 has_children: true
 ---
 
-# Lab 02: Launch a Spring Apps microservices application to Azure Container Apps
+# Lab 02: Launch the spring petclinic microservices to Azure Container Apps
 
 # Student manual
 
@@ -21,7 +21,7 @@ After you complete this lab, you will be able to:
 - Set up a configuration repository
 - Create an Azure MySQL Database service
 - Create the ACA managed java components for your services
-- Deploy the microservices of the Spring Petclinic app to ACA and bind them to java components
+- Deploy the microservices of the Spring Petclinic app to ACA and bind them to managed java components
 - Test the application through the publicly available endpoint
 
 The below image illustrates the end state you will be building in this lab.

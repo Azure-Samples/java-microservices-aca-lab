@@ -7,9 +7,7 @@ PROFILE=passwordless
 update_app_passwordless() {
     APP_NAME=$1
 
-    echo "Start updating app $APP_NAME with application insights agent ..."
-
-    cp -f ../tools/ai.Dockerfile ./spring-petclinic-$APP_NAME/Dockerfile
+    echo "Updating app $APP_NAME with PROFILE=passwordless ..."
 
     az containerapp update \
         --name $APP_NAME \
