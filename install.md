@@ -47,7 +47,7 @@ The [git repository of this lab](https://github.com/Azure-Samples/java-microserv
 - [docker](https://docs.docker.com/get-docker/).
 
 {: .note }
-> Following the installation of Git, ensure to set the global configuration variables `user.email` and `user.name` by running the following commands from the Git Bash shell (replace the `<your-email-address>` and `<your-full-name>` placeholders with your email address and your full name):
+> Following the installation of Git, ensure to set the global configuration variables `user.email` and `user.name` by running the following commands from the commandline shell (replace the `<your-email-address>` and `<your-full-name>` placeholders with your email address and your full name):
 
    ```bash
    git config --global user.email "<your-email-address>"
@@ -65,7 +65,7 @@ To get started follow the below step by step instructions:
    {: .note }
    > In case you are using a GitHub EMU account, it might be you are not able to fork a public repository. In that case, create a new repository with the same name, clone the original repository, add your new repository as a remote and push to this new remote.
 
-1. On your lab computer, in the Git Bash window, run the following commands to clone your fork of the spring-petclinic-microservices project to your workstation. Make sure to replace `<your-github-account>` in the below command:
+1. On your lab computer, in the commandline window, run the following commands to clone your fork of the spring-petclinic-microservices project to your workstation. Make sure to replace `<your-github-account>` in the below command:
 
    ```bash
    mkdir workspaces
@@ -109,7 +109,7 @@ To get started follow the below step by step instructions:
 - Apache Maven available from [Apache Maven Project downloads](https://maven.apache.org/download.cgi)
 
 {: .note }
-> To install Apache Maven, extract the content of the .zip file by running `unzip apache-maven-3.8.5-bin.zip`. Next, add the path to the bin directory of the extracted content to the `PATH` environment variable. Assuming that you extracted the content directly into your home directory, you could accomplish this by running the following command from the Git Bash shell: `export PATH=~/apache-maven-3.8.5/bin:$PATH`.
+> To install Apache Maven, extract the content of the .zip file by running `unzip apache-maven-3.8.5-bin.zip`. Next, add the path to the bin directory of the extracted content to the `PATH` environment variable. Assuming that you extracted the content directly into your home directory, you could accomplish this by running the following command from the commandline shell: `export PATH=~/apache-maven-3.8.5/bin:$PATH`.
 
 - Java 17 and the Java Development Kit (JDK) available from [JDK downloads](https://aka.ms/download-jdk/microsoft-jdk-17.0.13-windows-x64.msi)
 
@@ -136,7 +136,7 @@ To get started follow the below step by step instructions:
 > If needed, upgrade the Azure CLI version by launching Command Prompt as administrator and running `az upgrade`.
 
 {: .note }
-> Following the installation of Git, ensure to set the global configuration variables `user.email` and `user.name` by running the following commands from the Git Bash shell (replace the `<your-email-address>` and `<your-full-name>` placeholders with your email address and your full name):
+> Following the installation of Git, ensure to set the global configuration variables `user.email` and `user.name` by running the following commands from the commandline shell (replace the `<your-email-address>` and `<your-full-name>` placeholders with your email address and your full name):
 
    ```bash
    git config --global user.email "<your-email-address>"
@@ -154,7 +154,7 @@ Once all these tools are installed, to get started you need to:
 
 1. Select **Create fork**. This will create a copy or fork of this project in your own account.
 
-1. On your lab computer, in the Git Bash window, run the following commands to clone your fork of the spring-petclinic-microservices project to your workstation. Make sure to replace `<your-github-account>` in the below command:
+1. On your lab computer, in the commandline shell, run the following commands to clone your fork of the spring-petclinic-microservices project to your workstation. Make sure to replace `<your-github-account>` in the below command:
 
    ```bash
    mkdir workspaces

@@ -4,8 +4,8 @@
 spring:
   datasource:
     url: jdbc:mysql://<your-mysql-server-name>.mysql.database.azure.com:3306/petclinic?useSSL=true
-    username: myadmin
-    password: <your-mysql-password>
+    username: sqladmin
+    password: '<your-mysql-password>'
   sql:
     init:
       schema-locations: classpath*:db/mysql/schema.sql
