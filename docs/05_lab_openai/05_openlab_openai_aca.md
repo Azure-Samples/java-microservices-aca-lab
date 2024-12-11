@@ -11,7 +11,7 @@ has_children: true
 
 ## Lab scenario
 
-Azure OpenAI enables your applications to take advantage of large-scale, generative AI models with deep understandings of language and code to enable new reasoning and comprehension capabilities. In this lab you will integrate your application with Azure Open AI to build an inteligent `chat-agent` service for the pet-clinic.
+Azure OpenAI enables your applications to take advantage of large-scale, generative AI models with deep understandings of language and code to enable new reasoning and comprehension capabilities. In this lab you will integrate your application with Azure Open AI to build an inteligent `chat-agent` service for the petclinic microservices.
 
 ## Objectives
 

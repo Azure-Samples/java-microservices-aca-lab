@@ -7,15 +7,33 @@ PROFILE=passwordless
 update_app_passwordless() {
     APP_NAME=$1
 
-    echo "Updating app $APP_NAME with PROFILE=passwordless ..."
+    APP_ID=$(az containerapp show \
+            --resource-group $RESOURCE_GROUP \
+            --name $APP_NAME \
+            --query id \
+            -o tsv)
 
+   echo "Creating service connection for app $APP_NAME ..."
+   az containerapp connection create mysql-flexible \
+      --resource-group $RESOURCE_GROUP \
+      --connection mysql_conn \
+      --source-id $APP_ID \
+      --target-id $DB_ID \
+      --client-type SpringBoot \
+      --user-identity client-id=$APPS_IDENTITY_CLIENT_ID subs-id=$SUBID mysql-identity-id=$ADMIN_IDENTITY_RESOURCE_ID user-object-id=$AAD_USER_ID \
+      -c $APP_NAME -y > $DIR/$APP_NAME.connection.log 2>&1
+    if [[ $? -ne 0 ]]; then
+        echo "Create service connection for $APP_NAME failed, check $DIR/$APP_NAME.connection.log for more details"
+        return 1
+    fi
+
+    echo "Updating app $APP_NAME with PROFILE=passwordless ..."
     az containerapp update \
         --name $APP_NAME \
         --resource-group $RESOURCE_GROUP \
         --source ./spring-petclinic-$APP_NAME \
         --set-env-vars SPRING_PROFILES_ACTIVE=$PROFILE \
         > $DIR/$APP_NAME.update.log 2>&1
-
     if [[ $? -ne 0 ]]; then
         echo "Update app $APP_NAME failed, check $DIR/$APP_NAME.update.log for more details"
         return 2
@@ -26,7 +44,7 @@ update_app_passwordless() {
 
 CHECK_FAIL=$DIR/aca-lab.$$
 
-for name in customers-service vets-service visits-service; do
+for name in vets-service visits-service; do
     update_app_passwordless $name || touch $CHECK_FAIL &
 done
 
@@ -39,4 +57,3 @@ else
     echo "Update apps succeed"
     exit 0
 fi
-
