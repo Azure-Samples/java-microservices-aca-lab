@@ -4,9 +4,9 @@ layout: home
 nav_order: 1
 ---
 
-# Lab: Deploying and running Java Applications with AI in Azure Container Apps
+# Lab: Deploying and running Java Applications in Azure Container Apps
 
-This lab teaches you how to deploy the [Spring Petclinic Microservices](https://github.com/Azure-Samples/java-microservices-aca-lab/tree/main/src) application with OpenAI to [Azure Container Apps](https://learn.microsoft.com/azure/container-apps/overview) and integrate it with additional Azure services, also some samples for Azure Container Apps features.
+This lab teaches you how to deploy the upstream [Spring Petclinic Microservices](https://github.com/spring-petclinic/spring-petclinic-microservices) application to [Azure Container Apps](https://learn.microsoft.com/azure/container-apps/overview) and integrate it with additional Azure services. Azure Container Apps support spring applications with managed components.
 
 ## Modules
 
