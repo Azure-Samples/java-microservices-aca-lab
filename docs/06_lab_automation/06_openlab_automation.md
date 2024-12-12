@@ -51,4 +51,4 @@ During this lab, you will:
    - CLI: `az mysql flexible-server update -g <group-name> -n <server-name> --admin-password "<new-password>"`
 
 {: .note }
-> The instructions provided in this exercise assume that you successfully completed the previous exercise and are using the same lab environment, including your Git Bash session with the relevant environment variables already set.
+> The instructions provided in this exercise assume that you successfully completed the previous exercise and are using the same lab environment, including your commandline session with the relevant environment variables already set.
