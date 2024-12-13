@@ -11,6 +11,11 @@ else
     exit 1
 fi
 
+if [[ "$CREATE_ROLE_FOR_USER" == false ]]; then
+    echo -e "${GREEN}INFO:${NC} CREATE_ROLE_FOR_USER = false, skipping AAD_USER_ID."
+    exit 0
+fi
+
 # Check input AAD User Id
 echo -e "${GREEN}INFO:${NC} Checking AAD_USER_ID: '$AAD_USER_ID'"
 if [[ $AAD_USER_ID =~ ^\{?[A-F0-9a-f]{8}-[A-F0-9a-f]{4}-[A-F0-9a-f]{4}-[A-F0-9a-f]{4}-[A-F0-9a-f]{12}\}?$ ]]; then
