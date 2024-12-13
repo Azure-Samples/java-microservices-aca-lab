@@ -7,13 +7,10 @@ update_app_with_ai() {
 
     echo "Updating app $APP_NAME with application insights agent ..."
 
-    cp -f ../tools/ai.Dockerfile ./spring-petclinic-$APP_NAME/Dockerfile
-
     az containerapp update \
         --name $APP_NAME \
         --resource-group $RESOURCE_GROUP \
-        --source ./spring-petclinic-$APP_NAME \
-        --set-env-vars APPLICATIONINSIGHTS_CONNECTION_STRING=$AI_CONNECTIONSTRING APPLICATIONINSIGHTS_CONFIGURATION_CONTENT='{"role": {"name": "'$APP_NAME'"}}' \
+        --set-env-vars JAVA_TOOL_OPTIONS=-javaagent:/applicationinsights-agent.jar APPLICATIONINSIGHTS_CONNECTION_STRING=$AI_CONNECTIONSTRING APPLICATIONINSIGHTS_CONFIGURATION_CONTENT='{"role": {"name": "'$APP_NAME'"}}' \
         > $DIR/$APP_NAME.update.log 2>&1
 
     if [[ $? -ne 0 ]]; then
