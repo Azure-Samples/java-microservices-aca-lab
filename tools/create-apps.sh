@@ -13,11 +13,11 @@ create_app() {
 
     az containerapp create \
         --name $APP_NAME \
+        --environment $ACA_ENVIRONMENT \
         --resource-group $RESOURCE_GROUP \
         --source ./spring-petclinic-$APP_NAME \
         --registry-server $MYACR.azurecr.io \
         --registry-identity $APPS_IDENTITY_ID \
-        --environment $ACA_ENVIRONMENT \
         --user-assigned $APPS_IDENTITY_ID \
         --ingress $INGRESS \
         --target-port 8080 \

@@ -66,6 +66,8 @@ If you're not going to continue to use this lab environment, run the following c
 
    ```bash
    az group delete --name $RESOURCE_GROUP
+
+   az configure --default group=''
    ```
 
 {: .note }
