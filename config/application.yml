@@ -4,8 +4,8 @@
 spring:
   datasource:
     url: jdbc:mysql://${SQL_SERVER}.mysql.database.azure.com:3306/petclinic?useSSL=true
-    username: ${SQL_USER}
-    password: ${SQL_PASSWORD}
+    username: ${SQL_USER:sqladmin}
+    password: ${SQL_PASSWORD:}
   sql:
     init:
       schema-locations: classpath*:db/mysql/schema.sql
@@ -36,6 +36,9 @@ spring:
     open-in-view: false
     hibernate:
       ddl-auto: none
+  # disable zipkin, see https://stackoverflow.com/questions/75474597/how-to-disable-zipkin-reporter-in-spring-boot-3
+  autoconfigure:
+    exclude: org.springframework.boot.actuate.autoconfigure.tracing.zipkin.ZipkinAutoConfiguration
 
 # Spring Boot 1.5 makes actuator secure by default
 management.security.enabled: false
