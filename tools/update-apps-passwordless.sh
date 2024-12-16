@@ -32,12 +32,20 @@ update_app_passwordless() {
         --name $APP_NAME \
         --resource-group $RESOURCE_GROUP \
         --source ./spring-petclinic-$APP_NAME \
+        --user-assigned $APPS_IDENTITY_ID \
         --set-env-vars SPRING_PROFILES_ACTIVE=$PROFILE \
+        --remove-env-vars SQL_SERVER SQL_USER SQL_PASSWORD
         > $DIR/$APP_NAME.update.log 2>&1
+
     if [[ $? -ne 0 ]]; then
         echo "Update app $APP_NAME failed, check $DIR/$APP_NAME.update.log for more details"
         return 2
     fi
+
+    az containerapp secret remove \
+        --name $APP_NAME \
+        --resource-group $RESOURCE_GROUP \
+        --secret-names sql-password
 
     return 0
 }
