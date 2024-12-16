@@ -18,10 +18,11 @@ create_app() {
         --source ./spring-petclinic-$APP_NAME \
         --registry-server $MYACR.azurecr.io \
         --registry-identity $APPS_IDENTITY_ID \
-        --user-assigned $APPS_IDENTITY_ID \
         --ingress $INGRESS \
         --target-port 8080 \
         --min-replicas 1 \
+        --env-vars SQL_SERVER=$MYSQL_SERVER_NAME SQL_USER=$MYSQL_ADMIN_USERNAME SQL_PASSWORD=secretref:sql-password \
+        --secrets "sql-password=$MYSQL_ADMIN_PASSWORD" \
         --bind $JAVA_CONFIG_COMP_NAME $JAVA_EUREKA_COMP_NAME \
         --runtime java \
         > $DIR/$APP_NAME.create.log 2>&1
