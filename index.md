@@ -1,5 +1,5 @@
 ---
-title: Introduction
+title: Overview
 layout: home
 nav_order: 1
 ---
@@ -38,7 +38,7 @@ For running this lab you will need:
 1. The template uses [Azure Database for MySQL - Flexible Server](https://learn.microsoft.com/en-us/azure/mysql/flexible-server/overview). You may select a region suite for this service.
 
 {: .note }
-> We recommend running the lab in regions **East US**, **East US 2**, **North Central US**, **Sweden Central**.
+> We recommend running the lab in regions **West US**, **West US 2**, **East US 2**, **North Central US**, **Sweden Central**.
 
 ### Installation
 

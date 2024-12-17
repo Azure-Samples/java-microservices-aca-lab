@@ -28,7 +28,7 @@ The below image illustrates the end state you will be building in this lab.
 
 ## Lab Duration
 
-- **Estimated Time**: 60 minutes
+- **Estimated Time**: 30 minutes
 
 ## Instructions
 
