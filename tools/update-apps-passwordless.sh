@@ -27,11 +27,6 @@ update_app_passwordless() {
         return 1
     fi
 
-    az containerapp identity assign \
-        --name $APP_NAME \
-        --resource-group $RESOURCE_GROUP \
-        --user-assigned $APPS_IDENTITY_ID
-
     echo "Updating app $APP_NAME with PROFILE=passwordless ..."
     az containerapp update \
         --name $APP_NAME \
