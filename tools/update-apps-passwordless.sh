@@ -21,7 +21,8 @@ update_app_passwordless() {
         --target-id $DB_ID \
         --client-type SpringBoot \
         --user-identity client-id=$APPS_IDENTITY_CLIENT_ID subs-id=$SUBID mysql-identity-id=$ADMIN_IDENTITY_RESOURCE_ID user-object-id=$AAD_USER_ID \
-        --container $APP_NAME > $DIR/$APP_NAME.connection.log 2>&1
+        --container $APP_NAME \
+        --yes > $DIR/$APP_NAME.connection.log 2>&1
     if [[ $? -ne 0 ]]; then
         echo "Create service connection for $APP_NAME failed, check $DIR/$APP_NAME.connection.log for more details"
         return 1
