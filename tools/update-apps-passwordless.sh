@@ -13,15 +13,15 @@ update_app_passwordless() {
             --query id \
             -o tsv)
 
-   echo "Creating service connection for app $APP_NAME ..."
-   az containerapp connection create mysql-flexible \
-      --resource-group $RESOURCE_GROUP \
-      --connection mysql_conn \
-      --source-id $APP_ID \
-      --target-id $DB_ID \
-      --client-type SpringBoot \
-      --user-identity client-id=$APPS_IDENTITY_CLIENT_ID subs-id=$SUBID mysql-identity-id=$ADMIN_IDENTITY_RESOURCE_ID user-object-id=$AAD_USER_ID \
-      -c $APP_NAME -y > $DIR/$APP_NAME.connection.log 2>&1
+    echo "Creating service connection for app $APP_NAME ..."
+    az containerapp connection create mysql-flexible \
+        --resource-group $RESOURCE_GROUP \
+        --connection mysql_conn \
+        --source-id $APP_ID \
+        --target-id $DB_ID \
+        --client-type SpringBoot \
+        --user-identity client-id=$APPS_IDENTITY_CLIENT_ID subs-id=$SUBID mysql-identity-id=$ADMIN_IDENTITY_RESOURCE_ID user-object-id=$AAD_USER_ID \
+        --container $APP_NAME > $DIR/$APP_NAME.connection.log 2>&1
     if [[ $? -ne 0 ]]; then
         echo "Create service connection for $APP_NAME failed, check $DIR/$APP_NAME.connection.log for more details"
         return 1
@@ -32,7 +32,6 @@ update_app_passwordless() {
         --name $APP_NAME \
         --resource-group $RESOURCE_GROUP \
         --source ./spring-petclinic-$APP_NAME \
-        --user-assigned $APPS_IDENTITY_ID \
         --set-env-vars SPRING_PROFILES_ACTIVE=$PROFILE \
         --remove-env-vars SQL_SERVER SQL_USER SQL_PASSWORD
         > $DIR/$APP_NAME.update.log 2>&1

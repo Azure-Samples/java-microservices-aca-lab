@@ -3,6 +3,7 @@
 DIR=/tmp
 
 INGRESS=internal
+PROFILE=mysql
 
 create_app() {
     APP_NAME=$1
@@ -21,7 +22,7 @@ create_app() {
         --ingress $INGRESS \
         --target-port 8080 \
         --min-replicas 1 \
-        --env-vars SQL_SERVER=$MYSQL_SERVER_NAME SQL_USER=$MYSQL_ADMIN_USERNAME SQL_PASSWORD=secretref:sql-password \
+        --env-vars SQL_SERVER=$MYSQL_SERVER_NAME SQL_USER=$MYSQL_ADMIN_USERNAME SQL_PASSWORD=secretref:sql-password SPRING_PROFILES_ACTIVE=$PROFILE \
         --secrets "sql-password=$MYSQL_ADMIN_PASSWORD" \
         --bind $JAVA_CONFIG_COMP_NAME $JAVA_EUREKA_COMP_NAME \
         --runtime java \
