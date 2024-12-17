@@ -10,7 +10,7 @@ update_app_with_ai() {
     az containerapp update \
         --name $APP_NAME \
         --resource-group $RESOURCE_GROUP \
-        --set-env-vars JAVA_TOOL_OPTIONS='-javaagent:/applicationinsights-agent.jar' APPLICATIONINSIGHTS_CONNECTION_STRING=$APP_INSIGHTS_CONN APPLICATIONINSIGHTS_CONFIGURATION_CONTENT='{"role": {"name": "'$APP_NAME'"}}' \
+        --set-env-vars JAVA_TOOL_OPTIONS='-javaagent:/applicationinsights-agent.jar' APPLICATIONINSIGHTS_CONNECTION_STRING="$APP_INSIGHTS_CONN" APPLICATIONINSIGHTS_CONFIGURATION_CONTENT='{"role": {"name": "'$APP_NAME'"}}' \
         > $DIR/$APP_NAME.update.log 2>&1
 
     if [[ $? -ne 0 ]]; then

@@ -1,11 +1,11 @@
 ---
-title: 'Lab 4: Connect to Database securely using identity'
+title: 'Lab 4: Connect to database securely using identity'
 layout: default
 nav_order: 6
 has_children: true
 ---
 
-# Lab 04: Connect to Database securely using identity
+# Lab 04: Connect to database securely using identity
 
 # Student manual
 
@@ -29,7 +29,7 @@ The below image illustrates the end state you will be building in this lab.
 
 ## Lab Duration
 
-- **Estimated Time**: 40 minutes
+- **Estimated Time**: 30 minutes
 
 {: .note }
 > The instructions provided in this exercise assume that you successfully completed the previous exercise and are using the same lab environment, including your commandline session with the relevant environment variables already set.
