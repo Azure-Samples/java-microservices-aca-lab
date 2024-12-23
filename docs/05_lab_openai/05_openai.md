@@ -1,5 +1,5 @@
 ---
-title: 'Create AI application step by step'
+title: 'Create AI application from zero'
 layout: default
 nav_order: 3
 parent: 'Lab 5: Integrate with Azure OpenAI'
