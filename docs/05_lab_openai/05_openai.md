@@ -101,7 +101,7 @@ We utilize the `Github Copilot Chat` extension in VSCode to help us to initial t
    wget https://raw.githubusercontent.com/spring-projects/spring-ai/refs/heads/main/models/spring-ai-azure-openai/src/test/java/org/springframework/ai/azure/openai/AzureOpenAiChatClientIT.java -P spring-petclinic-chat-service/src/main/resources/
    ```
 
-   Open the `Github Copilot Chat` window and drag the downloaded file to the chat window. And input the prompt:
+   Open the `Github Copilot Chat` window and drag the downloaded file into the chat window. And input the prompt:
 
    ```text
    * In the existed workspace, create a new ChatController with POST endpoint at '/chatclient' that provides the chat completion
@@ -123,7 +123,7 @@ We utilize the `Github Copilot Chat` extension in VSCode to help us to initial t
 
 1. Build and run your first AI application.
 
-   First update the system prompt. Replace the system prompt with new:
+   First update the system prompt. Replace the system prompt with the new:
 
    ```text
    You are a friendly AI assistant designed to help with the management of a veterinarian pet clinic called Spring Petclinic.
@@ -140,7 +140,7 @@ We utilize the `Github Copilot Chat` extension in VSCode to help us to initial t
    - Add a new line `spring.config.import=optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888/}` to file `src/main/resources/application.properties`.
    - In ChatController.java: `response.getResults().get(0).getOutput().getText()` --> `response.getResults().get(0).getOutput().getContent()`
    - In ChatConfigure.java: `AzureOpenAiChatOptions.builder().deploymentName("gpt-4o").maxTokens(1000).build());` --> `AzureOpenAiChatOptions.builder().withDeploymentName("gpt-4o").withMaxTokens(1000).build());`
-   - In ChatController.java, if the generated code use `String systemPrompt = Files.readString(systemTextResource.getFile().toPath());` to read system prompts from file, rewrite it to `String systemPrompt = FileCopyUtils.copyToString(new InputStreamReader(systemTextResource.getInputStream()));`. Or this works in local environment, but will fail with error message like `java.io.FileNotFoundException: class path resource [prompts/system-message.st] cannot be resolved to absolute file path because it does not reside in the file system: jar:nested:/app.jar/!BOOT-INF/classes/!/prompts/system-message.st`.
+   - In ChatController.java, if the generated code use `String systemPrompt = Files.readString(systemTextResource.getFile().toPath());` to read system prompts from file, rewrite it to `String systemPrompt = FileCopyUtils.copyToString(new InputStreamReader(systemTextResource.getInputStream()));`. While this works in local environment, but will fail with error message like `java.io.FileNotFoundException: class path resource [prompts/system-message.st] cannot be resolved to absolute file path because it does not reside in the file system: jar:nested:/app.jar/!BOOT-INF/classes/!/prompts/system-message.st`.
 
    In your VSCode terminal:
 
@@ -208,8 +208,6 @@ We utilize the `Github Copilot Chat` extension in VSCode to help us to initial t
    The Spring AI API is under development and the interface may change time to time. At this moment, we are using the API version `1.0.0-M4` in this sample.
 
    In this sample, we will implement a FunctionCallback interface for AI to get the owners information from existing petclinic solution.
-
-   For demo purpose, we put the source code files into the same code directory.
 
    - Create a new folder named `model` and add a class `Owner` for owner details.
 
