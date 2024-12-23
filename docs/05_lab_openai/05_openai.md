@@ -61,7 +61,7 @@ We utilize the `Github Copilot Chat` extension in VSCode to help us to initial t
 
 1. Create a new spring boot application
 
-   We create a new spring boot application from [spring initializr](https://start.spring.io/). First we need a `Web` base spring boot applicaiton. And this is an AI application so we add the dependency `Azure OpenAI`. To running and monitoring well in Azure Container Apps, we add some dependencies like `Spring Boot Actuator`, `Config Client` and `Eureka Discovery Client`.
+   We create a new spring boot application from [spring initializr](https://start.spring.io/). First we need a `Web` base spring boot application. And this is an AI application so we add the dependency `Azure OpenAI`. To running and monitoring well in Azure Container Apps, we add some dependencies like `Spring Boot Actuator`, `Config Client` and `Eureka Discovery Client`.
 
    Fill the other variables according to the structure of the existing petclinic microservices. Use the command below to create the new service:
 
@@ -85,7 +85,7 @@ We utilize the `Github Copilot Chat` extension in VSCode to help us to initial t
 
    Edit with VSCode will accelerate your work in the next steps.
 
-1. Open file `ChatServiceApplication.java` in the new project, add `@EnableDiscoveryClient` annotation to the class `ChatServiceApplication`. This will enable the new application visit the other service via eureka registred names.
+1. Open file `ChatServiceApplication.java` in the new project, add `@EnableDiscoveryClient` annotation to the class `ChatServiceApplication`. This will enable the new application visit the other service via eureka registered names.
 
    Fix the alert via VSCode hint like below.
 
@@ -93,7 +93,7 @@ We utilize the `Github Copilot Chat` extension in VSCode to help us to initial t
 
 1. Generate the first AI code
 
-   GitHub Copilot is specially trained LLM model that can generate code snippets based on the context. As Spring AI is very new project and the LLM model may not have the latest knowledge about Spring AI. To overcome this limitation, we can use the prompt engineering to provide the context to Copilot.
+   GitHub Copilot is a specially trained LLM model that can generate code snippets based on the context. As Spring AI is very new project and the LLM model may not have the latest knowledge about Spring AI. To overcome this limitation, we can use the prompt engineering to provide the context to Copilot.
 
    Here we use the latest test code from Spring AI as part of the prompt. Download the latest chat client sample to your local environment:
 
