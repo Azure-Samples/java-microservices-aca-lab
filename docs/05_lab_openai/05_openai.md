@@ -69,12 +69,12 @@ We utilize the `Github Copilot Chat` extension in VSCode to help us to initial t
    mkdir spring-petclinic-chat-service
 
    curl https://start.spring.io/starter.tgz \
-   -d dependencies=web,cloud-eureka,cloud-config-client,actuator,lombok,spring-ai-azure-openai \
-   -d bootVersion=3.3.6 -d name=chat-service -d type=maven-project \
-   -d jvmVersion=17 -d language=java -d packaging=jar \
-   -d groupId=org.springframework.samples.petclinic -d artifactId=chat-service \
-   -d description="Spring Petclinic Chat Service" \
-   | tar -xzvf - -C spring-petclinic-chat-service
+       -d dependencies=web,cloud-eureka,cloud-config-client,actuator,lombok,spring-ai-azure-openai \
+       -d bootVersion=3.3.6 -d name=chat-service -d type=maven-project \
+       -d jvmVersion=17 -d language=java -d packaging=jar \
+       -d groupId=org.springframework.samples.petclinic -d artifactId=chat-service \
+       -d description="Spring Petclinic Chat Service" \
+       | tar -xzvf - -C spring-petclinic-chat-service
    ```
 
    We may open the new application in VSCode to next operations.
@@ -98,7 +98,8 @@ We utilize the `Github Copilot Chat` extension in VSCode to help us to initial t
    Here we use the latest test code from Spring AI as part of the prompt. Download the latest chat client sample to your local environment:
 
    ```bash
-   wget https://raw.githubusercontent.com/spring-projects/spring-ai/refs/heads/main/models/spring-ai-azure-openai/src/test/java/org/springframework/ai/azure/openai/AzureOpenAiChatClientIT.java -P spring-petclinic-chat-service/src/main/resources/
+   IT_FILE="https://raw.githubusercontent.com/spring-projects/spring-ai/refs/heads/1.0.0-M4/models/spring-ai-azure-openai/src/test/java/org/springframework/ai/azure/openai/AzureOpenAiChatClientIT.java"
+   wget $IT_FILE -P spring-petclinic-chat-service/src/main/resources/
    ```
 
    Open the `Github Copilot Chat` window and drag the downloaded file into the chat window. And input the prompt:
@@ -221,17 +222,17 @@ We utilize the `Github Copilot Chat` extension in VSCode to help us to initial t
    @Data
    public class Owner implements Serializable {
 
-   private Integer id;
+       private Integer id;
 
-   private String firstName;
+       private String firstName;
 
-   private String lastName;
+       private String lastName;
 
-   private String address;
+       private String address;
 
-   private String city;
+       private String city;
 
-   private String telephone;
+       private String telephone;
    }
    ```
 
@@ -303,7 +304,7 @@ We utilize the `Github Copilot Chat` extension in VSCode to help us to initial t
 
    ```bash
    az containerapp update --name $APP_NAME --resource-group $RESOURCE_GROUP \
-    --source ./spring-petclinic-$APP_NAME
+       --source ./spring-petclinic-$APP_NAME
    ```
 
    - Verify the new RAG empowered AI bot about owners.
