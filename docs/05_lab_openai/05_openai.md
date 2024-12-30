@@ -69,7 +69,7 @@ We utilize the `Github Copilot Chat` extension in VSCode to help us to initial t
    mkdir spring-petclinic-chat-service
 
    curl https://start.spring.io/starter.tgz \
-       -d dependencies=web,cloud-eureka,cloud-config-client,actuator,lombok,spring-ai-azure-openai \
+       -d dependencies=web,cloud-eureka,actuator,lombok,spring-ai-azure-openai \
        -d bootVersion=3.3.6 -d name=chat-service -d type=maven-project \
        -d jvmVersion=17 -d language=java -d packaging=jar \
        -d groupId=org.springframework.samples.petclinic -d artifactId=chat-service \
@@ -138,7 +138,6 @@ We utilize the `Github Copilot Chat` extension in VSCode to help us to initial t
 
    You might need some minor fixes in the AI generated code. Some of the fixes including:
 
-   - Add a new line `spring.config.import=optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888/}` to file `src/main/resources/application.properties`.
    - In ChatController.java: `response.getResults().get(0).getOutput().getText()` --> `response.getResults().get(0).getOutput().getContent()`
    - In ChatConfigure.java: `AzureOpenAiChatOptions.builder().deploymentName("gpt-4o").maxTokens(1000).build());` --> `AzureOpenAiChatOptions.builder().withDeploymentName("gpt-4o").withMaxTokens(1000).build());`
    - In ChatController.java, if the generated code use `String systemPrompt = Files.readString(systemTextResource.getFile().toPath());` to read system prompts from file, rewrite it to `String systemPrompt = FileCopyUtils.copyToString(new InputStreamReader(systemTextResource.getInputStream()));`. While this works in local environment, but will fail with error message like `java.io.FileNotFoundException: class path resource [prompts/system-message.st] cannot be resolved to absolute file path because it does not reside in the file system: jar:nested:/app.jar/!BOOT-INF/classes/!/prompts/system-message.st`.

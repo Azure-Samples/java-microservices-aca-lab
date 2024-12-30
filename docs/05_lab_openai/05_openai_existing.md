@@ -25,6 +25,22 @@ Start from a simple spring boot application, we will add AI components to the pr
    code spring-petclinic-chat-service
    ```
 
+   Note we already have spring-ai dependencies in `pom.xml`:
+
+   ```xml
+   <spring-ai.version>1.0.0-M4</spring-ai.version>
+   ```
+
+   and
+
+   ```xml
+   <dependency>
+       <groupId>org.springframework.ai</groupId>
+       <artifactId>spring-ai-azure-openai-spring-boot-starter</artifactId>
+
+  </dependency>
+   ```
+
 1. In the VSCode IDE, make sure you have extension `Github Copilot Chat` installed, and login to Copilot with your github account.
 
    Open the Github Copilot Chat Window, you can ask copliot in the "Ask Copilot" input box.
