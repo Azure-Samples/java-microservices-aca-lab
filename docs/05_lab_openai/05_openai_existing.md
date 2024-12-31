@@ -35,10 +35,9 @@ Start from a simple spring boot application, we will add AI components to the pr
 
    ```xml
    <dependency>
-       <groupId>org.springframework.ai</groupId>
-       <artifactId>spring-ai-azure-openai-spring-boot-starter</artifactId>
-
-  </dependency>
+      <groupId>org.springframework.ai</groupId>
+      <artifactId>spring-ai-azure-openai-spring-boot-starter</artifactId>
+   </dependency>
    ```
 
 1. In the VSCode IDE, make sure you have extension `Github Copilot Chat` installed, and login to Copilot with your github account.
