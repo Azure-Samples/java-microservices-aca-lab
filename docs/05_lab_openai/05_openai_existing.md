@@ -55,7 +55,9 @@ Start from a simple spring boot application, we will add AI components to the pr
 
 1. Ask Copilot to create code for open AI integration.
 
-   Click the file `src/main/resources/AzureOpenAiChatClientIT.java`, and input the following prompt to "Ask Copilot":
+   Click the file `src/main/resources/AzureOpenAiChatClientIT.java`, note the file name will show in the "Ask Copilot" input box as "Current file context".
+
+   Input the following prompt to "Ask Copilot":
 
    ```text
    Refer to the sample file named "AzureOpenAIChatClientIT.java", add a new ChatController with POST endpoint at '/chatclient' to the chat-service project:
