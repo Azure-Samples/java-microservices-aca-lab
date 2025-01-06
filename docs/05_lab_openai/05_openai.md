@@ -5,9 +5,9 @@ nav_order: 3
 parent: 'Lab 5: Integrate with Azure OpenAI'
 ---
 
-# Create AI application scratch on petclinic services
+# Create AI application from scratch on petclinic services
 
-In this chapter, we will learn how to create AI Java applications using Azure OpenAI and Spring AI, and enpower AI to answer questions related the the petclinic services.
+In this chapter, we will learn how to create AI Java applications using Azure OpenAI and Spring AI, and empower AI to answer questions related to the the petclinic services.
 
 We will start by creating a new Spring Boot application to connect with Azure OpenAI. Then we'll implement a simple chatbot using Azure OpenAI's GPT-4o model to demonstrate seamless AI integration into the existing petclinic Java applications.
 
@@ -324,7 +324,7 @@ Prerequisites:
 
 1. (Optional) Update service `api-gateway` to add a new chat window.
 
-   Now we already have a chatbot on petclinic, but we can only use curl command to talk to the chat-servce.
+   Now we already have a chatbot on petclinic, but we can only use curl command to talk to the chat-service.
 
    Here we have a more friendly way to talk to the new chat-service from the api-gateway dashboard.
 
