@@ -70,7 +70,9 @@ Prerequisites:
    wget $TEST_FILE -P spring-petclinic-chat-service/src/main/resources/
    ```
 
-   In your VSCode IDE, open the `Github Copilot Chat` window, and drag the file `src/main/resources/AzureOpenAiChatClientIT.java` to the "Ask Copilot" window, note the file name will show in the "Ask Copilot" input box as "Current file context".
+   In your VSCode IDE, open the `Github Copilot Chat` window, click file `ChatServiceApplication.java`, you will see the file name show in the "Ask Copilot" input box as "Current file context".
+
+   Drag the file `src/main/resources/AzureOpenAiChatClientIT.java` to the "Ask Copilot" window, note the file name will show in the "Ask Copilot" input box.
 
    ![lab 5 ai-ask-copilot](../../images/open-ai-ask-copilot.png)
 
