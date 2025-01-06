@@ -94,6 +94,9 @@ Prerequisites:
 
    Follow the steps to make changes to your project. Click "Apply in Editor" to apply the AI generated code. See the screenshot above.
 
+   {: .note }
+   The AI generated code may differs from time to time, sometimes it is not correct.
+
 1. Build and run your first AI application.
 
    - In your VSCode terminal, build the new AI project.
