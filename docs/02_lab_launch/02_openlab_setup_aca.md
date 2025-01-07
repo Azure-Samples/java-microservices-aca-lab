@@ -1,36 +1,34 @@
 ---
-title: 'Lab 2: Launch to Azure Container Apps'
+title: 'Lab 2: Deploy the application to Azure Container Apps'
 layout: default
 nav_order: 4
 has_children: true
 ---
 
-# Lab 02: Launch the spring petclinic microservices to Azure Container Apps
+# Lab 02: Deploy the application to Azure Container Apps
 
-# Student manual
+## Introduction
 
-## Lab scenario
+In the previous lab, you reviewed the sample Spring Petclinic Microservices application that you’ll deploy, examined the Azure services that the application will rely on, and made sure that the necessary tooling is configured and ready in your development environment. Now it’s time to deploy the app to an Azure Container Apps instance.
 
-You have a general description about the microservice application. It is time to launch the components to Azure Container Apps.
+## What you’ll cover
 
-## Objectives
+As you work through this lab, you’ll learn how to:
 
-After you complete this lab, you will be able to:
+-   Create an Azure Container Apps environment.
+-   Create an Azure Database for MySQL instance.
+-   Set up a configuration repository.
+-   Create the managed Java components for your services.
+-   Deploy the application’s microservices to the Azure Container Apps environment and bind them to the managed Java components.
+-   Test the deployed application through the publicly available endpoint.
 
-- Create an Azure Container Apps environment
-- Set up a configuration repository
-- Create an Azure MySQL Database service
-- Create the Container Apps Environment managed java components for your services
-- Deploy the microservices of the Spring Petclinic applications to Azure Container Apps environment and bind them to managed java components
-- Test the application through the publicly available endpoint
-
-The below image illustrates the end state you will be building in this lab.
+The following image shows how your application’s architecture should look once you complete this lab.
 
 ![lab 2 overview](../../images/acalab2.png)
 
-## Lab Duration
+## Duration
 
-- **Estimated Time**: 60 minutes
+**Estimated time:** 60 minutes
 
 {: .note }
-> The Azure-Samples/java-microservices-aca-lab repository contains a dev container for Java development. This container contains all the needed tools for running this lab. In case you want to use this dev container you can either use a [GitHub CodeSpace](https://github.com/features/codespaces) in case your GitHub account is enabled for Codespaces. Or you can use the [Visual Studio Code Remote Containers option](https://code.visualstudio.com/docs/remote/containers). You can find all steps to get this set up in the [installation instructions]({% link install.md %}).
+> The [Azure-Samples/java-microservices-aca-lab](https://github.com/Azure-Samples/java-microservices-aca-lab/) repository contains a dev container for Java development, and it has all the tools for running this lab. If you want to use this dev container, you can do so via either [GitHub Codespaces](https://github.com/features/codespaces) (if your GitHub account is enabled for Codespaces) or the [Visual Studio Code Remote Containers](https://code.visualstudio.com/docs/remote/containers) option. You can find the setup steps in the [Installation instructions]({% link install.md %}).
