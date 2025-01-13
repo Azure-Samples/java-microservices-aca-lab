@@ -25,6 +25,21 @@ Start from a simple spring boot application, we will add AI components to the pr
    code spring-petclinic-chat-service
    ```
 
+   Note we already have spring-ai dependencies in `pom.xml`:
+
+   ```xml
+   <spring-ai.version>1.0.0-M4</spring-ai.version>
+   ```
+
+   and
+
+   ```xml
+   <dependency>
+      <groupId>org.springframework.ai</groupId>
+      <artifactId>spring-ai-azure-openai-spring-boot-starter</artifactId>
+   </dependency>
+   ```
+
 1. In the VSCode IDE, make sure you have extension `Github Copilot Chat` installed, and login to Copilot with your github account.
 
    Open the Github Copilot Chat Window, you can ask copliot in the "Ask Copilot" input box.
@@ -39,7 +54,9 @@ Start from a simple spring boot application, we will add AI components to the pr
 
 1. Ask Copilot to create code for open AI integration.
 
-   Click the file `src/main/resources/AzureOpenAiChatClientIT.java`, and input the following prompt to "Ask Copilot":
+   Click the file `src/main/resources/AzureOpenAiChatClientIT.java`, note the file name will show in the "Ask Copilot" input box as "Current file context".
+
+   Input the following prompt to "Ask Copilot":
 
    ```text
    Refer to the sample file named "AzureOpenAIChatClientIT.java", add a new ChatController with POST endpoint at '/chatclient' to the chat-service project:
@@ -220,6 +237,18 @@ Start from a simple spring boot application, we will add AI components to the pr
 
      Fix the `import` issues with the help of VSCode.
 
+   - Update the content in file `prompts/system-message.st` to
+
+   ```text
+   You are a friendly AI assistant designed to help with the management of a veterinarian pet clinic called Spring Petclinic.
+   Your job is to answer questions about and to perform actions on the user's behalf, mainly around veterinarians, owners, owners' pets and owners' visits.
+   You are required to answer an a professional manner. If you don't know the answer, politely tell the user you don't know the answer, then ask the user a followup question to try and clarify the question they are asking.
+   If you do know the answer, provide the answer but do not provide any additional followup questions.
+   When dealing with vets, if the user is unsure about the returned results, explain that there may be additional data that was not returned.
+   Only if the user is asking about the total number of all vets, answer that there are a lot and ask for some additional criteria.
+   For owners, pets or visits - provide the correct data.
+   ```
+
    - Rebuild the project in the VSCode termimal window (current directory spring-petclinic-chat-service):
 
    ```bash
@@ -324,7 +353,7 @@ Start from a simple spring boot application, we will add AI components to the pr
 
    Verify the version of spring-ai is `1.0.0-M4`
 
-   Download the template file from branch `1.0.0.4`
+   Download the template file from branch `1.0.0-M4`
 
    ```bash
    IT_FILE="https://raw.githubusercontent.com/spring-projects/spring-ai/refs/heads/1.0.0-M4/models/spring-ai-azure-openai/src/test/java/org/springframework/ai/azure/openai/AzureOpenAiChatClientIT.java"
