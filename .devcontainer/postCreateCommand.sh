@@ -2,22 +2,29 @@
 
 azd config set alpha.deployment.stacks on
 
-DEV_ENV_FILE="\$HOME/.dev-environment"
+LC_ALL=C type saveenv 2>&1 | grep "is a function" > /dev/null
+#if [ $? -ne 0 ]; then
 
-cat <<EOT >> "$HOME/.bashrc"
+    DEV_ENV_FILE="$HOME/.dev-environment"
 
-# auto load
-if [[ -f "$DEV_ENV_FILE" ]]; then
-    source "$DEV_ENV_FILE"
-fi
+    function loadenv() {
+        if [ -f $DEV_ENV_FILE ]; then
+            source $DEV_ENV_FILE
+        fi
+    }
 
-saveenv() {
-    # Check if var_save is set
-    declare -p | grep -v "declare -[a-z]*r" > "$DEV_ENV_FILE"
-}
+    function saveenv() {
+        declare -p | grep "declare --\|declare -x" |  grep -v  "declare -- PS[0-9]\|declare -- BASH_\|declare -x PATH=" > $DEV_ENV_FILE
+    }
 
-clearenv() {
-    echo "" > "$DEV_ENV_FILE"
-}
+    function clearenv() {
+        echo "" > $DEV_ENV_FILE
+    }
 
-EOT
+    # save functions
+    echo 'DEV_ENV_FILE="$HOME/.dev-environment"' >> "$HOME/.bashrc"
+    declare -f loadenv saveenv clearenv >> "$HOME/.bashrc"
+
+    # auto load
+    loadenv
+#fi
