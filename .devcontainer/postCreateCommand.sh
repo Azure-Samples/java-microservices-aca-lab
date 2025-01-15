@@ -1,30 +1,24 @@
 #!/usr/bin/env bash
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+source "$DIR/funcs.sh"
+
 azd config set alpha.deployment.stacks on
 
-LC_ALL=C type saveenv 2>&1 | grep "is a function" > /dev/null
-#if [ $? -ne 0 ]; then
+grep saveenv "$HOME/.bashrc" > /dev/null 2>&1
+if [[ $? -ne 0 ]]; then
 
-    DEV_ENV_FILE="$HOME/.dev-environment"
+    cat <<EOT >> "$HOME/.bashrc"
 
-    function loadenv() {
-        if [ -f $DEV_ENV_FILE ]; then
-            source $DEV_ENV_FILE
-        fi
-    }
+DEV_ENV_FILE="\$HOME/.dev-environment"
 
-    function saveenv() {
-        declare -p | grep "declare --\|declare -x" |  grep -v  "declare -- PS[0-9]\|declare -- BASH_\|declare -x PATH=" > $DEV_ENV_FILE
-    }
+# auto load
+if [[ -f "\$DEV_ENV_FILE" ]]; then
+    source "\$DEV_ENV_FILE"
+fi
 
-    function clearenv() {
-        echo "" > $DEV_ENV_FILE
-    }
+EOT
 
-    # save functions
-    echo 'DEV_ENV_FILE="$HOME/.dev-environment"' >> "$HOME/.bashrc"
-    declare -f loadenv saveenv clearenv >> "$HOME/.bashrc"
+    declare -f saveenv clearenv >> "$HOME/.bashrc"
 
-    # auto load
-    loadenv
-#fi
+fi
