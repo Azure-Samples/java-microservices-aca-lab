@@ -1,23 +1,24 @@
 #!/usr/bin/env bash
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+source "$DIR/funcs.sh"
+
 azd config set alpha.deployment.stacks on
+
+grep saveenv "$HOME/.bashrc" > /dev/null 2>&1
+if [[ $? -ne 0 ]]; then
+
+    cat <<EOT >> "$HOME/.bashrc"
 
 DEV_ENV_FILE="\$HOME/.dev-environment"
 
-cat <<EOT >> "$HOME/.bashrc"
-
 # auto load
-if [[ -f "$DEV_ENV_FILE" ]]; then
-    source "$DEV_ENV_FILE"
+if [[ -f "\$DEV_ENV_FILE" ]]; then
+    source "\$DEV_ENV_FILE"
 fi
 
-saveenv() {
-    # Check if var_save is set
-    declare -p | grep -v "declare -[a-z]*r" > "$DEV_ENV_FILE"
-}
-
-clearenv() {
-    echo "" > "$DEV_ENV_FILE"
-}
-
 EOT
+
+    declare -f saveenv clearenv >> "$HOME/.bashrc"
+
+fi
