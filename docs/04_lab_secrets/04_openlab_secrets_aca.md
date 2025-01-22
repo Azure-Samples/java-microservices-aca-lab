@@ -9,9 +9,11 @@ has_children: true
 
 ## Introduction
 
-You now have your copy of the Spring Petclinic Microservices application running in Azure. However, there are application secrets, such as your database connection string, in your configuration repository, and you’d like a better way to protect these secrets.
+You now have your copy of the Spring Petclinic Microservices workload running in Azure. However, your applications use secrets, such as your database connection string, which depend on passwords that are stored in your configuration repository.
 
-In this lab, you’ll implement a more secure way to protect your application secrets by connecting the application to your database with managed identities and [Azure Service Connector](https://learn.microsoft.com/azure/service-connector/overview).
+Passwords are insecure. They can be stolen, guessed, or found via brute force attacks, so protecting your passwords can be a major challenge. You want to find a way to connect to your database without having to deal with this potential vulnerability. 
+
+In this lab, you’ll implement a more secure way to protect your application secrets by connecting the application to your database with managed identities and [Azure Service Connector](https://learn.microsoft.com/azure/service-connector/overview). This approach allows you to implement secure passwordless connectivity without modifying your application code, giving you  a ["zero code, zero secrets, and zero trust"](https://learn.microsoft.com/azure/developer/intro/passwordless-overview) solution. 
 
 ## What you’ll cover
 
@@ -19,7 +21,7 @@ As you work through this lab, you’ll learn how to:
 
 -   Create a database administrator account.
 -   Update the application dependencies to enable passwordless connectivity.
--   Create service connections from your microservices to the database server.
+-   Create service connections from your applications to the database server.
 
 The following diagram illustrates how your application’s architecture should look after you’ve completed this lab.
 

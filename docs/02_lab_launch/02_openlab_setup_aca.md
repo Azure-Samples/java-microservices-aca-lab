@@ -1,15 +1,15 @@
 ---
-title: 'Lab 2: Deploy the application to Azure Container Apps'
+title: 'Lab 2: Deploy applications to Azure Container Apps'
 layout: default
 nav_order: 4
 has_children: true
 ---
 
-# Lab 02: Deploy the application to Azure Container Apps
+# Lab 02: Deploy the applications to Azure Container Apps
 
 ## Introduction
 
-In the previous lab, you reviewed the sample Spring Petclinic Microservices application that you’ll deploy, examined the Azure services that the application will rely on, and made sure that the necessary tooling is configured and ready in your development environment. Now it’s time to deploy the app to an Azure Container Apps instance.
+In the previous lab, you reviewed the sample Spring Petclinic Microservices workload that you’ll deploy, examined the Azure services that the component Spring applications will rely on, and made sure that the necessary tooling is configured and ready in your development environment. Now it’s time to deploy the workload to an Azure Container Apps instance.
 
 ## What you’ll cover
 
@@ -18,11 +18,11 @@ As you work through this lab, you’ll learn how to:
 -   Create an Azure Container Apps environment.
 -   Create an Azure Database for MySQL instance.
 -   Set up a configuration repository.
--   Create the managed Java components for your services.
--   Deploy the application’s microservices to the Azure Container Apps environment and bind them to the managed Java components.
--   Test the deployed application through the publicly available endpoint.
+-   Create the required managed Java components.
+-   Deploy the workload's component applications to the Azure Container Apps environment and bind them to the managed Java components.
+-   Test the deployed applications through the publicly available endpoint.
 
-The following image shows how your application’s architecture should look once you complete this lab.
+The following image shows how your workload's architecture should look once you complete this lab.
 
 ![lab 2 overview](../../images/acalab2.png)
 

@@ -9,9 +9,9 @@ has_children: true
 
 ## Introduction
 
-Before you can deploy the example Spring Petclinic Microservices app to Azure, you need to determine what application components need to move to Azure , which Azure resources you’ll use to host these components, and what tools you’ll need to perform the deployment.
+Before you can deploy the example Spring Petclinic Microservices workload to Azure, you need to determine what application components need to run on Azure, which Azure resources you’ll use to host these components, and what tools you’ll need to perform the deployment.
 
-In this first lab session, you’ll explore the sample application code and configure your development environment. You’ll also evaluate the application’s technical and operational requirements to determine the best hosting, storage, and organizational approach for moving the Spring Petclinic Microservices app to Azure.
+In this first lab session, you’ll explore the sample application code and configure your development environment. You’ll also evaluate the application’s technical and operational requirements to determine the best hosting, storage, and organizational approach for moving the Spring Petclinic Microservices workload to Azure.
 
 ## What you’ll cover
 

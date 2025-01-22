@@ -8,7 +8,7 @@ nav_order: 2
 
 {: .no_toc }
 
-Before you begin working through the lab, you’ll need to make sure that you have all the required tools installed and configured in your development environment. Additionally, in this same environment, before you start the process of deploying to Azure, you’ll need to have cloned a copy of the Spring Petclinic Microservices application code from the GitHub repo.
+Before you begin working through the lab, you’ll need to make sure that you have all the required tools installed and configured in your development environment. Additionally, in this same environment, before you start the process of deploying to Azure, you’ll need to have cloned a copy of the example Spring Petclinic Microservices workload code from the GitHub repo.
 
 There are three options for setting up your development environment. Choose *only one* of the following:
 
