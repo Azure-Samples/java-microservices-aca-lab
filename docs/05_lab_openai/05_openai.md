@@ -2,39 +2,39 @@
 title: '2. Create AI application from scratch'
 layout: default
 nav_order: 3
-parent: 'Lab 5: Integrate Azure OpenAI with your apps'
+parent: 'Lab 5: Integrate Azure OpenAI Service with your apps'
 ---
 
 # Create an AI application from scratch for the Petclinic workload
 
 In this section, you’ll learn how to create an AI-enabled Java application using Azure OpenAI and Spring AI. You’ll then configure this application to answer questions about the sample Spring Petclinic Microservices application that you’ve deployed and configured in previous labs.
 
-You’ll start by creating a new Spring Boot service application that connects with your Azure OpenAI instance. Then you'll use this service to implement a simple chatbot that takes advantage of the Azure OpenAI GPT-4o model, learning how to seamlessly integrate AI into your existing Spring Petclinic Microservices application as you go.
+You’ll start by creating a new Spring Boot service application that connects with your Azure OpenAI instance. Then you'll use this application to implement a simple chatbot that takes advantage of the Azure OpenAI GPT-4o model, learning how to seamlessly integrate AI into your existing Spring Petclinic Microservices application as you go.
 
-Prerequisites:
+## Prerequisites:
 
 -   A GitHub Copilot subscription. (If you don’t already have a subscription, try [GitHub Copilot Free](https://docs.github.com/en/copilot/quickstart#sign-up-for-github-copilot).)
 -   The [GitHub Copilot Chat extension](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-chat) installed in your copy of Visual Studio Code.
 -   A prepared Azure OpenAI instance with the `gpt-4o` model deployed. For more details, refer to the instructions [in previous section of this lab]({% link docs/05_lab_openai/0501.md %}).
 -   The `endpoint` and `api-key` values for your Azure OpenAI instance. You can find these by going to your Azure OpenAI instance in the Azure portal and looking in the `Resource Management` \> `Keys and Endpoint` section.
 
-# Step by step guide
+## Step by step guidance
 
-### Create a new Spring Boot service application
+### Create a new Spring Boot application
 
-Your first step in this process is to create a new Spring Boot service application:
+Your first step in this process is to create a new Spring Boot application:
 
-1. Use the [spring initializr](https://start.spring.io/) tool to create a new Spring Boot service application. When you create the new service, you’ll need to specify the following dependencies:
+1. Use the [spring initializr](https://start.spring.io/) tool to create a new Spring Boot application. When you create the new application, you’ll need to specify the following dependencies:
 
     - **Spring Web** (`web`). Supports the base Spring Boot app functionality.
-    - **Eureka Discovery Client** (`cloud-eureka`). Support for locating services within the microservices application.
+    - **Eureka Discovery Client** (`cloud-eureka`). Supports locating other component applications within overall workload.
     - **Spring Boot Actuator** (`actuator`). Supports endpoints that help monitor and manage your application.
-    - **Lombok** (`lombok`). Java annotation library, which helps to reduce boilerplate code.
+    - **Lombok** (`lombok`). A Java annotation library, which helps to reduce boilerplate code.
     - **Azure OpenAI** (`spring-ai-azure-openai`). Spring AI support for Azure OpenAI.
 
     You’ll also need to provide additional settings, such as project type, Java code details, and naming to match the structure of the existing Spring Petclinic Microservices application.
 
-    To create the new Spring Boot service application using the settings we discussed earlier, in your command-line window, go to the `src` folder of your local code repo and run the following command:
+    To create the new Spring Boot  application using these settings, in your command-line window, go to the `src` folder of your local code repo and run the following command:
 
     ```bash
     mkdir spring-petclinic-chat-service
@@ -48,7 +48,7 @@ Your first step in this process is to create a new Spring Boot service applicati
         | tar -xzvf - -C spring-petclinic-chat-service
     ```
 
-1.  Open the newly created service folder in Visual Studio Code.
+1.  Open the newly created application folder in Visual Studio Code.
 
     ```bash
     code spring-petclinic-chat-service
@@ -98,13 +98,13 @@ To do this, you’ll download a version-appropriate example code file from the S
     * Use a configure file "ChatConfigure.java" file to init OpenAI ChatClient with Azure OpenAI Endpoint and API Key.
     ```
 
-    You’ll notice a screen like the one that follows.
+    You’ll notice a screen that looks like this:
 
     ![lab 5 ai-gen-code 1](../../images/open-ai-gen-1.png)
 
-    ![lab 5 ai-gen-code 2](../../images/open-ai-gen-2.png)
-
     Follow the steps to make changes to your project. To apply the AI-generated code, select **Apply in Editor**. For details, refer to the following screenshot.
+
+    ![lab 5 ai-gen-code 2](../../images/open-ai-gen-2.png)
 
     {: .note }
     > The AI-generated code may not always be the same and is sometimes incorrect. If you run into errors, try repeating these steps to regenerate it.
@@ -112,7 +112,7 @@ To do this, you’ll download a version-appropriate example code file from the S
 
 ### Build and run your new AI application
 
-Now that your project is updated with the Copilot-generated code, you’re ready to build the new service and test it in your local development environment.
+Now that your project is updated with the Copilot-generated code, you’re ready to build the new application and test it in your local development environment.
 
 1.  In your Visual Studio Code terminal, build the new AI project.
 
@@ -125,7 +125,7 @@ Now that your project is updated with the Copilot-generated code, you’re ready
     {: .note }
     > You might need to implement some minor fixes in the AI-generated code. The most common fix involves modifying the following line in the ChatController.java file: `response.getResults().get(0).getOutput().getText()` --> `response.getResults().get(0).getOutput().getContent()`
 
-1.  Run the new project locally.
+1.  Now you'll run the new project locally.
 
     After a successful build, use your Visual Studio Code terminal to run the project.
 
@@ -136,7 +136,7 @@ Now that your project is updated with the Copilot-generated code, you’re ready
     mvn spring-boot:run
     ```
 
-1.  In another command-line window, verify that the service is running by making the following call:
+1.  In another command-line window, verify that the application is running by making the following call:
 
     ```bash
     curl -XPOST http://localhost:8080/chatclient -d 'tell a joke'
@@ -173,7 +173,7 @@ With your `chat-service` app built and working, you’re ready to deploy it to y
         --runtime java
     ```
 
-1.  Get the endpoint of the newly deployed chat service.
+1.  Get the endpoint of the newly deployed chat service application.
 
     ```bash
     CHAT_URL=$(az containerapp show \
@@ -195,7 +195,7 @@ With your `chat-service` app built and working, you’re ready to deploy it to y
 
 Getting this initial joke bot deployed is a good first step in understanding how to use Azure OpenAI within Spring applications. However, to make it useful for the Petclinic application, you’ll have to make some changes to how the bot works.
 
-1.  You’ll enable the discovery client so that the chat service can find other service components of the Spring Petclinic application.
+1.  First you’ll enable the discovery client so that the chat service can find other application components of the Spring Petclinic workload.
 
     Open the `ChatServiceApplication.java` file in the AI chat project, and add the `@EnableDiscoveryClient` annotation to the `ChatServiceApplication` class. This enables the new chat service to find other registered services.
 
@@ -203,7 +203,7 @@ Getting this initial joke bot deployed is a good first step in understanding how
 
      ![lab 5 eureka client](../../images/open-ai-eureka-client.png)
 
-1.  Update the system prompt to tell the AI service to help Petclinic app users.
+1.  Next, update the system prompt to tell the AI service application to help Petclinic app users.
 
     In the `ChatController.java` file, replace the system prompt with the following statement:
 
@@ -219,11 +219,11 @@ Getting this initial joke bot deployed is a good first step in understanding how
           """;
     ```
 
-1.  Implement function calling with Spring AI.
+1.  Now, you'll extend the functionality of the bot by implementing Spring AI function calling.
 
-    In this section, you’ll implement a basic [Retrieval-Augmented Generation (RAG)](https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview) pattern using Spring AI. This pattern is an industry-standard approach to building language model–based applications which use specific or proprietary data that is not already known to the model. You’ll need to use this method to help Azure OpenAI interact with the Petclinic application and provide relevant responses using Petclinic data.
+    To do this, you’ll implement a basic [Retrieval-Augmented Generation (RAG)](https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview) pattern using Spring AI. This pattern is an industry-standard approach to building language model–based applications which use specific or proprietary data that is not already known to an AI model. You’ll need to use this method to help Azure OpenAI interact with the Petclinic application and provide relevant responses using Petclinic data.
 
-    For more information about how Spring AI supports these capabilities, refer to the [Spring AI FunctionCallback API](https://docs.spring.io/spring-ai/reference/1.0/api/function-callback.html).
+    For more information about how Spring AI supports these capabilities, refer to the [Spring AI FunctionCallback API](https://docs.spring.io/spring-ai/reference/1.0/api/function-callback.html) documentation.
 
     {: .note }
     > The Spring AI API is under development and the interface may change over time. In this sample, we’re using the `$SPRING_AI_VERSION` API version.
@@ -312,7 +312,7 @@ Getting this initial joke bot deployed is a good first step in understanding how
               .chatResponse();
     ```
 
-    Fix any remaining `import` issues with the help of Visual Studio Code.
+    Fix any remaining `import` issues with the help of the Visual Studio Code hint feature.
 
 1.  Rebuild the project in your Visual Studio Code terminal window.
 
@@ -320,7 +320,7 @@ Getting this initial joke bot deployed is a good first step in understanding how
     mvn clean package -DskipTests
     ```
 
-1.  Update the chat service by using the following command:
+1.  Update the chat service application by using the following command:
 
     ```bash
     az containerapp update --name $APP_NAME --resource-group $RESOURCE_GROUP \
@@ -335,4 +335,4 @@ Getting this initial joke bot deployed is a good first step in understanding how
      ![lab 5 open-ai-petclinic-curl](../../images/open-ai-petclinic-curl.png)
 
 
-Congratulations! You now have a chatbot that can answer questions specifically about the Spring Petclinic service. This is a good example of how easy it is to integrate the capabilities of Azure OpenAI with your existing services.
+Congratulations! You now have a chatbot that can answer questions specifically about the Spring Petclinic application. This is a good example of how easy it is to integrate the capabilities of Azure OpenAI with your existing services and applications.

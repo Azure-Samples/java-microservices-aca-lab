@@ -9,9 +9,9 @@ has_children: true
 
 ## Introduction
 
-Azure OpenAI Service is a cloud-based service that provides access to the powerful AI models of OpenAI. With Azure OpenAI, you can easily add large-scale, generative AI capabilities to your applications and provide powerful interactive reasoning, natural language processing, and code generation capabilities to your applications and services.
+[Azure OpenAI Service](https://learn.microsoft.com/azure/ai-services/openai/overview) is a cloud-based service that provides access to the powerful AI models of OpenAI. With Azure OpenAI, you can easily add large-scale, generative AI capabilities to your applications, integrating powerful interactive reasoning, natural language processing, and code generation capabilities with minimal additional effort.
 
-In this lab, you’ll extend the Spring Petclinic Microservices application that you deployed in our previous sessions by building and integrating an intelligent `chat-agent` service powered by Azure OpenAI.
+In this lab, you’ll extend the Spring Petclinic Microservices application that you deployed in our previous sessions by building and integrating an intelligent chat agent application powered by Azure OpenAI.
 
 ## What you’ll cover
 
