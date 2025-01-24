@@ -1,39 +1,32 @@
 ---
-title: 'Lab 5: Integrate with Azure OpenAI'
+title: 'Lab 5: Integrate Azure OpenAI Service with your apps'
 layout: default
 nav_order: 7
 has_children: true
 ---
 
-# Lab 5: Integrate with Azure OpenAI
+# Lab 5: Integrate Azure OpenAI Service with your applications
 
-# Student manual
+## Introduction
 
-## Lab scenario
+[Azure OpenAI Service](https://learn.microsoft.com/azure/ai-services/openai/overview) is a cloud-based service that provides access to the powerful AI models of OpenAI. With Azure OpenAI, you can easily add large-scale, generative AI capabilities to your applications, integrating powerful interactive reasoning, natural language processing, and code generation capabilities with minimal additional effort.
 
-Azure OpenAI enables your applications to take advantage of large-scale, generative AI models with deep understandings of language and code to enable new reasoning and comprehension capabilities. In this lab you will integrate your application with Azure Open AI to build an inteligent `chat-agent` service for the petclinic microservices.
+In this lab, you’ll extend the Spring Petclinic Microservices application that you deployed in our previous sessions by building and integrating an intelligent chat agent application powered by Azure OpenAI.
 
-## Objectives
+## What you’ll cover
 
-After you complete this lab, you will be able to:
+As you work through this lab, you’ll learn how to:
 
-- Create an Azure Open AI account, and deploy language models
-- Deploy a sample AI application, and explore the power of Azure Open AI 
+- Create an Azure OpenAI instance and deploy language models to it.
+- Deploy a sample AI chat service application to Azure Container Apps and use it to explore the power of Azure OpenAI.
 
-The below image illustrates the end state you will be building in this lab.
+The following image illustrates how your application’s architecture should look after you’ve completed this lab.
 
 ![lab 5 overview](../../images/acalab5.png)
 
-## Lab Duration
+## Duration
 
-- **Estimated Time**: 60 minutes
-
-## Instructions
-
-During this lab, you will:
-
-- Create an Azure Open AI account, and deploy language models
-- Deploy an AI chat-agent, and explore the power of Azure Open AI
+**Estimated time:** 60 minutes
 
 {: .note }
-> The instructions provided in this exercise assume that you successfully completed the previous exercise and are using the same lab environment, including your commandline session with the relevant environment variables already set.
+> This lab assumes that you successfully completed the previous labs and are using the same lab environment, including your command-line session, with the relevant environment variables already set.

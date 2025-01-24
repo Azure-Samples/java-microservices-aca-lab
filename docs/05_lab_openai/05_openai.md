@@ -2,388 +2,337 @@
 title: '2. Create AI application from scratch'
 layout: default
 nav_order: 3
-parent: 'Lab 5: Integrate with Azure OpenAI'
+parent: 'Lab 5: Integrate Azure OpenAI Service with your apps'
 ---
 
-# Create AI application from scratch on petclinic services
+# Create an AI application from scratch for the Petclinic workload
 
-In this chapter, we will learn how to create AI Java applications using Azure OpenAI and Spring AI, and empower AI to answer questions related to the the petclinic services.
+In this section, you’ll learn how to create an AI-enabled Java application using Azure OpenAI and Spring AI. You’ll then configure this application to answer questions about the sample Spring Petclinic Microservices application that you’ve deployed and configured in previous labs.
 
-We will start by creating a new Spring Boot application to connect with Azure OpenAI. Then we'll implement a simple chatbot using Azure OpenAI's GPT-4o model to demonstrate seamless AI integration into the existing petclinic Java applications.
+You’ll start by creating a new Spring Boot service application that connects with your Azure OpenAI instance. Then you'll use this application to implement a simple chatbot that takes advantage of the Azure OpenAI GPT-4o model, learning how to seamlessly integrate AI into your existing Spring Petclinic Microservices application as you go.
 
-Prerequisites:
+## Prerequisites:
 
-- Install extension `GitHub Copilot Chat` in VSCode, try [GitHub Copilot Free](https://docs.github.com/en/copilot/managing-copilot/managing-copilot-as-an-individual-subscriber/about-github-copilot-free#vs-code).
-- Prepare the Open AI instance and install deployment `gpt-4o`, see [guide]({% link docs/05_lab_openai/0501.md %}).
-- Get the `endpoint` and `api-key` from the Open AI instance.
+-   A GitHub Copilot subscription. (If you don’t already have a subscription, try [GitHub Copilot Free](https://docs.github.com/en/copilot/quickstart#sign-up-for-github-copilot).)
+-   The [GitHub Copilot Chat extension](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-chat) installed in your copy of Visual Studio Code.
+-   A prepared Azure OpenAI instance with the `gpt-4o` model deployed. For more details, refer to the instructions [in previous section of this lab]({% link docs/05_lab_openai/0501.md %}).
+-   The `endpoint` and `api-key` values for your Azure OpenAI instance. You can find these by going to your Azure OpenAI instance in the Azure portal and looking in the `Resource Management` \> `Keys and Endpoint` section.
 
-# Step by step guide
+## Step by step guidance
 
-1. Create a new spring boot application
+### Create a new Spring Boot application
 
-   We create a new spring boot application from [spring initializr](https://start.spring.io/). First we need a `Web` base spring boot application. And this is an AI application so we add the dependency `Azure OpenAI`. To running and monitoring well in Azure Container Apps, we add some dependencies like `Spring Boot Actuator` and `Eureka Discovery Client`.
+Your first step in this process is to create a new Spring Boot application:
 
-   Fill the other variables according to the structure of the existing petclinic microservices. Use the command below to create the new service:
+1. Use the [spring initializr](https://start.spring.io/) tool to create a new Spring Boot application. When you create the new application, you’ll need to specify the following dependencies:
 
-   ```bash
-   mkdir spring-petclinic-chat-service
+    - **Spring Web** (`web`). Supports the base Spring Boot app functionality.
+    - **Eureka Discovery Client** (`cloud-eureka`). Supports locating other component applications within overall workload.
+    - **Spring Boot Actuator** (`actuator`). Supports endpoints that help monitor and manage your application.
+    - **Lombok** (`lombok`). A Java annotation library, which helps to reduce boilerplate code.
+    - **Azure OpenAI** (`spring-ai-azure-openai`). Spring AI support for Azure OpenAI.
 
-   curl https://start.spring.io/starter.tgz \
-       -d dependencies=web,cloud-eureka,actuator,lombok,spring-ai-azure-openai \
-       -d name=chat-service -d type=maven-project \
-       -d jvmVersion=17 -d language=java -d packaging=jar \
-       -d groupId=org.springframework.samples.petclinic -d artifactId=chat \
-       -d description="Spring Petclinic Chat Service" \
-       | tar -xzvf - -C spring-petclinic-chat-service
-   ```
+    You’ll also need to provide additional settings, such as project type, Java code details, and naming to match the structure of the existing Spring Petclinic Microservices application.
 
-   We may open the new application in VSCode to next operations.
+    To create the new Spring Boot  application using these settings, in your command-line window, go to the `src` folder of your local code repo and run the following command:
 
-   ```bash
-   code spring-petclinic-chat-service
-   ```
+    ```bash
+    mkdir spring-petclinic-chat-service
 
-   Edit with VSCode will accelerate your work in the next steps.
+    curl https://start.spring.io/starter.tgz \
+        -d dependencies=web,cloud-eureka,actuator,lombok,spring-ai-azure-openai \
+        -d name=chat-service -d type=maven-project \
+        -d jvmVersion=17 -d language=java -d packaging=jar \
+        -d groupId=org.springframework.samples.petclinic -d artifactId=chat \
+        -d description="Spring Petclinic Chat Service" \
+        | tar -xzvf - -C spring-petclinic-chat-service
+    ```
 
-   Get the `spring-ai` version from the file `pom.xml` in the project.
+1.  Open the newly created application folder in Visual Studio Code.
 
-   ```xml
-   <spring-ai.version>1.0.0-M5</spring-ai.version>
-   ```
+    ```bash
+    code spring-petclinic-chat-service
+    ```
 
-   Here the spring-ai version is `1.0.0-M5`, save it as variable in your command-line window:
+1.  In Visual Studio Code, open the `pom.xml` file and find the `spring-ai.version` value for the project.
 
-   ```bash
-   SPRING_AI_VERSION=1.0.0-M5
-   ```
+    ```xml
+    <spring-ai.version>1.0.0-M5</spring-ai.version>
+    ```
 
-1. Generate the first AI code
+1.  In your command-line window, save this version number as an environment variable for later use (modifying the version number to match the value you see in your actual `pom.xml` file).
 
-   GitHub Copilot is a specially trained LLM model that can generate code snippets based on the context. As Spring AI is very new project and the LLM model may not have the latest knowledge about Spring AI. To overcome this limitation, we can use the prompt engineering to provide the context to Copilot.
+    ```bash
+    SPRING_AI_VERSION=1.0.0-M5
+    ```
 
-   Here we use the versioned test code from Spring AI as part of the prompt. Download the chat client sample matching the spring-ai version to your local environment.
+### Generate AI code using Github Copilot
 
-   In your command line window (current directory spring-petclinic-microservices), run commands:
+GitHub Copilot is a specially trained language model that you can use to generate code snippets. However, since the Spring AI project that you’ll be using to interact with Azure OpenAI is relatively new, Copilot may not have the context and data required to create Spring AI code. To overcome this potential limitation, you can use [prompt engineering](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/prompt-engineering?tabs=chat) to provide the contextual information that Copilot needs.
 
-   ```bash
-   TEST_FILE="https://raw.githubusercontent.com/spring-projects/spring-ai/refs/heads/${SPRING_AI_VERSION}/models/spring-ai-azure-openai/src/test/java/org/springframework/ai/azure/openai/AzureOpenAiChatClientIT.java"
-   wget $TEST_FILE -P spring-petclinic-chat-service/src/main/resources/
-   ```
+To do this, you’ll download a version-appropriate example code file from the Spring AI project and then submit it as a part of your Copilot code generation prompt.
 
-   In your VSCode IDE, open the `Github Copilot Chat` window, click file `ChatServiceApplication.java`, you will see the file name show in the "Ask Copilot" input box as "Current file context".
+1.  Download the version-appropriate Spring AI chat client sample code to your local environment.
 
-   Drag the file `src/main/resources/AzureOpenAiChatClientIT.java` to the "Ask Copilot" window, note the file name will show in the "Ask Copilot" input box.
+    In your command-line window, go to the directory `spring-petclinic-microservices` and run the following commands:
 
-   ![lab 5 ai-ask-copilot](../../images/open-ai-ask-copilot.png)
+    ```bash
+    TEST_FILE="https://raw.githubusercontent.com/spring-projects/spring-ai/refs/heads/${SPRING_AI_VERSION}/models/spring-ai-azure-openai/src/test/java/org/springframework/ai/azure/openai/AzureOpenAiChatClientIT.java"
+    wget $TEST_FILE -P spring-petclinic-chat-service/src/main/resources/
+    ```
 
-   Input the following text to the input box:
+1.  In Visual Studio Code, open the `Github Copilot Chat` window and select the `ChatServiceApplication.java` file. The file name appears in the "Ask Copilot" input box as "Current file context".
 
-   ```text
-   You are a Java engineer want to write your first AI empowered service and you start the new project from some samples.
-   Refer to the sample file named "AzureOpenAIChatClientIT.java", add a new ChatController with POST endpoint at '/chatclient' to the chat-service project:
-   * Use ChatClient to do the chat completion with Azure OpenAI Endpoint
-   * Use system prompt from static string "You are a joke bot. You are funny and witty."
-   * The input of the endpoint '/chatclient' is a string from the request, and the output is a string returned by AI.
-   * Use a configure file "ChatConfigure.java" file to init OpenAI ChatClient with Azure OpenAI Endpoint and API Key.
-   ```
+1.  Drag the file `src/main/resources/AzureOpenAiChatClientIT.java` to the "Ask Copilot" window. Note that the file name appears in the "Ask Copilot" input box.
 
-   You will see screen like this:
+    ![lab 5 ai-ask-copilot](../../images/open-ai-ask-copilot.png)
 
-   ![lab 5 ai-gen-code 1](../../images/open-ai-gen-1.png)
+1.  Enter the following text in the “Ask Copilot” input box:
 
-   ![lab 5 ai-gen-code 2](../../images/open-ai-gen-2.png)
+    ```text
+    You are a Java engineer who wants to write your first AI empowered service and you’re going to start a new project from some samples.
+    Refer to the sample file named "AzureOpenAIChatClientIT.java", add a new ChatController class with POST endpoint at '/chatclient' to the chat-service project:
+    * Use ChatClient to do the chat completion with Azure OpenAI Endpoint
+    * Use the system prompt from this static string: "You are a joke bot. You are funny and witty."
+    * The input of the endpoint '/chatclient' is a string from the request, and the output is a string returned by AI.
+    * Use a configure file "ChatConfigure.java" file to init OpenAI ChatClient with Azure OpenAI Endpoint and API Key.
+    ```
 
-   Follow the steps to make changes to your project. Click "Apply in Editor" to apply the AI generated code. See the screenshot above.
+    You’ll notice a screen that looks like this:
 
-   {: .note }
-   The AI generated code may differs from time to time, sometimes it is not correct.
+    ![lab 5 ai-gen-code 1](../../images/open-ai-gen-1.png)
 
-1. Build and run your first AI application.
+    Follow the steps to make changes to your project. To apply the AI-generated code, select **Apply in Editor**. For details, refer to the following screenshot.
 
-   - In your VSCode terminal, build the new AI project.
+    ![lab 5 ai-gen-code 2](../../images/open-ai-gen-2.png)
 
-     ```bash
-     mvn clean package -DskipTests
-     ```
+    {: .note }
+    > The AI-generated code may not always be the same and is sometimes incorrect. If you run into errors, try repeating these steps to regenerate it.
 
-     Read the code generated by GitHub Copilot. Refer to [Azure OpenAI chat properties](https://docs.spring.io/spring-ai/reference/api/chat/azure-openai-chat.html) for more info on configuration properties.
 
-     - Fix some potential errors. You might need some minor fixes in the AI generated code. Some of the fixes including:
+### Build and run your new AI application
 
-       a. In ChatController.java: `response.getResults().get(0).getOutput().getText()` --> `response.getResults().get(0).getOutput().getContent()`
+Now that your project is updated with the Copilot-generated code, you’re ready to build the new application and test it in your local development environment.
 
-   - Run the new project locally:
+1.  In your Visual Studio Code terminal, build the new AI project.
 
-     After a success build, run the project in your VSCode terminal:
+    ```bash
+    mvn clean package -DskipTests
+    ```
 
-     ```bash
-     export AZURE_OPENAI_API_KEY="<AZURE-OPENAI-API-KEY>"
-     export AZURE_OPENAI_ENDPOINT="<AZURE-OPENAI-ENDPOINT>"
+    Review the code generated by GitHub Copilot. For more information on configuration properties, refer to [Azure OpenAI chat properties](https://docs.spring.io/spring-ai/reference/api/chat/azure-openai-chat.html).
+    
+    {: .note }
+    > You might need to implement some minor fixes in the AI-generated code. The most common fix involves modifying the following line in the ChatController.java file: `response.getResults().get(0).getOutput().getText()` --> `response.getResults().get(0).getOutput().getContent()`
 
-     mvn spring-boot:run
-     ```
+1.  Now you'll run the new project locally.
 
-     In another command line window, verifty the service with
+    After a successful build, use your Visual Studio Code terminal to run the project.
 
-     ```bash
-     curl -XPOST http://localhost:8080/chatclient -d 'tell a joke'
-     ```
+    ```bash
+    export AZURE_OPENAI_API_KEY="<AZURE-OPENAI-API-KEY>"
+    export AZURE_OPENAI_ENDPOINT="<AZURE-OPENAI-ENDPOINT>"
 
-     Now we have a AI empowered joke bot!
+    mvn spring-boot:run
+    ```
 
-1. Deploy the `chat-service` to your Container Apps Environment.
+1.  In another command-line window, verify that the application is running by making the following call:
 
-   In your commandline environment, run:
+    ```bash
+    curl -XPOST http://localhost:8080/chatclient -d 'tell a joke'
+    ```
 
-   ```bash
-   APP_NAME=chat-service
+  You now have a functioning AI-powered joke bot!
 
-   AZURE_OPENAI_API_KEY="<AZURE-OPENAI-API-KEY>"
-   AZURE_OPENAI_ENDPOINT="<AZURE-OPENAI-ENDPOINT>"
 
-   cp -f ../tools/Dockerfile ./spring-petclinic-$APP_NAME/Dockerfile
-   az containerapp create \
-       --name $APP_NAME \
-       --resource-group $RESOURCE_GROUP \
-       --environment $ACA_ENVIRONMENT \
-       --source ./spring-petclinic-$APP_NAME \
-       --registry-server $MYACR.azurecr.io \
-       --registry-identity $APPS_IDENTITY_ID \
-       --ingress external \
-       --target-port 8080 \
-       --min-replicas 1 \
-       --env-vars AZURE_OPENAI_API_KEY="$AZURE_OPENAI_API_KEY" AZURE_OPENAI_ENDPOINT="$AZURE_OPENAI_ENDPOINT" \
-       --bind $JAVA_EUREKA_COMP_NAME \
-       --runtime java
-   ```
+### Deploy your new `chat-service` to your Container Apps environment
 
-   Get the endpoint of the chat-service:
+With your `chat-service` app built and working, you’re ready to deploy it to your Container Apps environment alongside the other components of the Spring Petclinic Microservices application.
 
-   ```bash
-   CHAT_URL=$(az containerapp show \
+1.  In your command-line environment, run the following command to deploy the app:
+
+    ```bash
+    APP_NAME=chat-service
+
+    AZURE_OPENAI_API_KEY="<AZURE-OPENAI-API-KEY>"
+    AZURE_OPENAI_ENDPOINT="<AZURE-OPENAI-ENDPOINT>"
+
+    cp -f ../tools/Dockerfile ./spring-petclinic-$APP_NAME/Dockerfile
+    az containerapp create \
+        --name $APP_NAME \
+        --resource-group $RESOURCE_GROUP \
+        --environment $ACA_ENVIRONMENT \
+        --source ./spring-petclinic-$APP_NAME \
+        --registry-server $MYACR.azurecr.io \
+        --registry-identity $APPS_IDENTITY_ID \
+        --ingress external \
+        --target-port 8080 \
+        --min-replicas 1 \
+        --env-vars AZURE_OPENAI_API_KEY="$AZURE_OPENAI_API_KEY" AZURE_OPENAI_ENDPOINT="$AZURE_OPENAI_ENDPOINT" \
+        --bind $JAVA_EUREKA_COMP_NAME \
+        --runtime java
+    ```
+
+1.  Get the endpoint of the newly deployed chat service application.
+
+    ```bash
+    CHAT_URL=$(az containerapp show \
       --resource-group $RESOURCE_GROUP \
       --name $APP_NAME \
       --query properties.configuration.ingress.fqdn \
       -o tsv)
-   ```
+    ```
 
-   And verify with curl:
+1.  Verify that the endpoint is working by using curl.
 
-   ```bash
-   curl -XPOST https://$CHAT_URL/chatclient -d 'Hi, tell a joke'
-   ```
+    ```bash
+    curl -XPOST https://$CHAT_URL/chatclient -d 'Hi, tell a joke'
+    ```
 
-   Congratulations, your get a joke bot running on Azure Container Apps!
+  Congratulations, your joke bot is running on Azure Container Apps!
 
-1. Empower AI to petclinic project.
+### Empower your AI service to support the Petclinic project
 
-   The first joke bot is not what we want for the petclinic project, some changes required to the new AI project.
+Getting this initial joke bot deployed is a good first step in understanding how to use Azure OpenAI within Spring applications. However, to make it useful for the Petclinic application, you’ll have to make some changes to how the bot works.
 
-   - Enable DiscorveryClient, so the chat service can visit the other services in petclinic.
+1.  First you’ll enable the discovery client so that the chat service can find other application components of the Spring Petclinic workload.
 
-     Open file `ChatServiceApplication.java` in the new project, add `@EnableDiscoveryClient` annotation to the class `ChatServiceApplication`. This will enable the new chat-service visiting the other service via registered services.
+    Open the `ChatServiceApplication.java` file in the AI chat project, and add the `@EnableDiscoveryClient` annotation to the `ChatServiceApplication` class. This enables the new chat service to find other registered services.
 
-     Update code and fix the alert via VSCode hint like below.
+    To update the code and fix any alerts, use the Visual Studio Code hint feature, as shown in the following screenshot.
 
      ![lab 5 eureka client](../../images/open-ai-eureka-client.png)
 
-   - Update the system prompt.
+1.  Next, update the system prompt to tell the AI service application to help Petclinic app users.
 
-     In `ChatController.java`, replace the system prompt with the statement below:
+    In the `ChatController.java` file, replace the system prompt with the following statement:
 
-     ```java
-     private static final String SYSTEM_PROMPT = """
-               You are a friendly AI assistant designed to help with the management of a veterinarian pet clinic called Spring Petclinic.
-               Your job is to answer questions about and to perform actions on the user's behalf, mainly around veterinarians, owners, owners' pets and owners' visits.
-               You are required to answer an a professional manner. If you don't know the answer, politely tell the user you don't know the answer, then ask the user a followup question to try and clarify the question they are asking.
-               If you do know the answer, provide the answer but do not provide any additional followup questions.
-               When dealing with vets, if the user is unsure about the returned results, explain that there may be additional data that was not returned.
-               Only if the user is asking about the total number of all vets, answer that there are a lot and ask for some additional criteria.
-               For owners, pets or visits - provide the correct data.
-            """;
-     ```
+    ```java
+    private static final String SYSTEM_PROMPT = """
+              You are a friendly AI assistant designed to help with the management of a veterinarian pet clinic called Spring Petclinic.
+              Your job is to answer questions about and to perform actions on the user's behalf, mainly around veterinarians, owners, owners' pets and owners' visits.
+              You are required to answer in a professional manner. If you don't know the answer, politely tell the user you don't know the answer, then ask the user a follow-up question to try and clarify the question they are asking.
+              If you do know the answer, provide the answer but do not provide any additional follow-up questions.
+              When dealing with vets, if the user is unsure about the returned results, explain that there may be additional data that was not returned.
+              Only if the user is asking about the total number of all vets, answer that there are a lot and ask for some additional criteria.
+              For owners, pets or visits - provide the correct data.
+          """;
+    ```
 
-   - Function Calling with SpringAI
+1.  Now, you'll extend the functionality of the bot by implementing Spring AI function calling.
 
-     In this section, we will implement a basic RAG (Retrieval-Augmented Generation) pattern using Spring AI. The Retrieval-Augmented Generation (RAG) pattern is an industry standard approach to building applications that use large language models to reason over specific or proprietary data that is not already known to the large language model. This is critical because Azure Open AI model that we integrated in the previous step don't know anything about the PetClinic application.
+    To do this, you’ll implement a basic [Retrieval-Augmented Generation (RAG)](https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview) pattern using Spring AI. This pattern is an industry-standard approach to building language model–based applications which use specific or proprietary data that is not already known to an AI model. You’ll need to use this method to help Azure OpenAI interact with the Petclinic application and provide relevant responses using Petclinic data.
 
-     Refer to [Spring AI FunctionCallback API](https://docs.spring.io/spring-ai/reference/1.0/api/function-callback.html) for more information.
+    For more information about how Spring AI supports these capabilities, refer to the [Spring AI FunctionCallback API](https://docs.spring.io/spring-ai/reference/1.0/api/function-callback.html) documentation.
 
-     {: .note }
-     The Spring AI API is under development and the interface may change time to time. At this moment, we are using the API version `$SPRING_AI_VERSION` in this sample.
+    {: .note }
+    > The Spring AI API is under development and the interface may change over time. In this sample, we’re using the `$SPRING_AI_VERSION` API version.
 
-     In this sample, we will implement a FunctionCallback interface for AI to get the owners information from existing petclinic solution.
+    In the following steps, you’ll implement a FunctionCallback interface which allows the AI to get pet owner information that’s stored in your existing Spring Petclinic application.
 
-       - Create a new folder named `model` and add a class `Owner` for owner details.
+    - Create a new folder named `model` and add a class `Owner` in that folder for owner details.
 
-         ```java
-         package org.springframework.samples.petclinic.chat.model;
+        ```java
+        package org.springframework.samples.petclinic.chat.model;
 
-         import lombok.Data;
+        import lombok.Data;
 
-         import java.io.Serializable;
+        import java.io.Serializable;
 
-         @Data
-         public class Owner implements Serializable {
+        @Data
+        public class Owner implements Serializable {
 
-            private Integer id;
+          private Integer id;
 
-            private String firstName;
+          private String firstName;
 
-            private String lastName;
+          private String lastName;
 
-            private String address;
+          private String address;
 
-            private String city;
+          private String city;
 
-            private String telephone;
-         }
-         ```
+          private String telephone;
+        }
+        ```
 
-       - Create a new folder named `services` and create class `OwnerService` to retrieve owner info from `api-gateway`.
+    - Create a new folder named `services`, and create the class `OwnerService` in that folder to retrieve owner info from `api-gateway`.
 
-         ```java
-         package org.springframework.samples.petclinic.chat.services;
+        ```java
+        package org.springframework.samples.petclinic.chat.services;
 
-         import java.util.List;
+        import java.util.List;
 
-         import org.springframework.core.ParameterizedTypeReference;
-         import org.springframework.http.HttpMethod;
-         import org.springframework.samples.petclinic.chat.model.Owner;
-         import org.springframework.stereotype.Service;
-         import org.springframework.web.client.RestTemplate;
+        import org.springframework.core.ParameterizedTypeReference;
+        import org.springframework.http.HttpMethod;
+        import org.springframework.samples.petclinic.chat.model.Owner;
+        import org.springframework.stereotype.Service;
+        import org.springframework.web.client.RestTemplate;
 
-         @Service
-         public class OwnerService {
+        @Service
+        public class OwnerService {
 
-            public List<Owner> getOwners() {
+          public List<Owner> getOwners() {
 
-               RestTemplate restTemplate = new RestTemplate();
-               var responseEntity = restTemplate.exchange(
-                        "http://api-gateway/api/customer/owners",
-                        HttpMethod.GET,
-                        null,
-                        new ParameterizedTypeReference<List<Owner>>() {
-                        });
+              RestTemplate restTemplate = new RestTemplate();
+              var responseEntity = restTemplate.exchange(
+                      "http://api-gateway/api/customer/owners",
+                      HttpMethod.GET,
+                      null,
+                      new ParameterizedTypeReference<List<Owner>>() {
+                      });
 
-               List<Owner> owners = responseEntity.getBody();
-               return owners;
-            }
-         }
-         ```
+              List<Owner> owners = responseEntity.getBody();
+              return owners;
+          }
+        }
+        ```
 
-   - Add FunctionCallbacks to chat client.
+1.  Add the necessary FunctionCallback code to the chat client.
 
-     First Add an attribute to ChatController
+    First, add the following attribute to the `ChatController` class:
 
-     ```java
-     @Autowired
-     private OwnerService ownerService;
-     ```
+    ```java
+    @Autowired
+    private OwnerService ownerService;
+    ```
 
-     Add Functions to chat client. The new code segment would like, see the `functions` part.
+    Add the new FunctionCallback to the chat client. The new code segment would like, see the `functions` part.
 
-     ```java
-             ChatResponse response = this.chatClient.prompt()
-                .system(systemPrompt)
-                .user(userPrompt)
-                .functions(FunctionCallback.builder()
-                        .description("list all owners")
-                        .method("getOwners")
-                        .targetObject(ownerService)
-                        .build())
-                .call()
-                .chatResponse();
-     ```
+    ```java
+            ChatResponse response = this.chatClient.prompt()
+              .system(systemPrompt)
+              .user(userPrompt)
+              .functions(FunctionCallback.builder()
+                      .description("list all owners")
+                      .method("getOwners")
+                      .targetObject(ownerService)
+                      .build())
+              .call()
+              .chatResponse();
+    ```
 
-     Fix the `import` issues with the help of VSCode.
+    Fix any remaining `import` issues with the help of the Visual Studio Code hint feature.
 
-   - Rebuild the project in the VSCode termimal window:
+1.  Rebuild the project in your Visual Studio Code terminal window.
 
-     ```bash
-     mvn clean package -DskipTests
-     ```
+    ```bash
+    mvn clean package -DskipTests
+    ```
 
-   - Update the chat-service in your commandline window:
+1.  Update the chat service application by using the following command:
 
-     ```bash
-     az containerapp update --name $APP_NAME --resource-group $RESOURCE_GROUP \
-         --source ./spring-petclinic-$APP_NAME
-     ```
+    ```bash
+    az containerapp update --name $APP_NAME --resource-group $RESOURCE_GROUP \
+        --source ./spring-petclinic-$APP_NAME
+    ```
 
-   - Verify the new RAG empowered AI bot about owners.
+1.  Verify the new RAG-empowered AI bot by asking it a question about owner information.
 
-     ```bash
-     curl -XPOST https://$CHAT_URL/chatclient -d 'which owners live in Monona?'
-     ```
-
+    ```bash
+    curl -XPOST https://$CHAT_URL/chatclient -d 'which owners live in Monona?'
+    ```
      ![lab 5 open-ai-petclinic-curl](../../images/open-ai-petclinic-curl.png)
 
-   Congratulations! We have a chat bot who can answer questions on the petclinic service.
 
-1. Now we have finished the step by step lab to build a chat bot on the petclinic service. This is a good sample to demostrate the AI ability and how easy it is to integrate with existing services.
-
-   You may continue the next optional steps to improve the user experience to talk to the chat service.
-
-1. (Optional) Update service `api-gateway` to add a new chat window.
-
-   Now we already have a chatbot on petclinic, but we can only use curl command to talk to the chat-service.
-
-   Here we have a more friendly way to talk to the new chat-service from the api-gateway dashboard.
-
-   Follw the steps to add a new chatbox into the petclinic dashboard, it may take about extra 10 minutes.
-
-   - Add new route entry for `chat-service`. Note this name will be used later. Open file `spring-petclinic-api-gateway/src/main/resources/application.yml` and append new entry like below:
-
-     ```yml
-             - id: chat-service
-               uri: lb://chat-service
-               predicates:
-                 - Path=/api/chat/**
-               filters:
-                 - StripPrefix=2
-     ```
-
-   - Add chatbox for api gateway
-
-     ```bash
-     git apply ../tools/api-gateway-chatbox.patch
-     ```
-
-     {: .note }
-     This patch is not gurranteed to work through all versions.
-
-   - In the command line window, rebuild the api-gateway project and update the container app.
-
-     ```bash
-     APP_NAME=api-gateway
-     mvn clean package -DskipTests -pl spring-petclinic-$APP_NAME
-     az containerapp update --name $APP_NAME --resource-group $RESOURCE_GROUP \
-        --source ./spring-petclinic-$APP_NAME
-     ```
-
-   - Check the new chatbox in the petclinic page.
-
-     ```bash
-     api_gateway_FQDN=$(az containerapp show \
-        --resource-group $RESOURCE_GROUP \
-        --name $APP_NAME \
-        --query properties.configuration.ingress.fqdn \
-           -o tsv)
-
-     echo https://$api_gateway_FQDN
-     ```
-
-     Open the api-gateway url and there is a chatbox at the right bottom corner.
-
-     ![lab 5 api-gateway new chat box](../../images/api-gateway-chatbox.png)
-
-     Here are some chat samples to ask the chat bot:
-
-     ![lab 5 open-ai-rag-bot](../../images/open-ai-rag-bot.png)
-
-1. (Optional) Enhance the AI model by adding more function callbacks.
-
-   Currently the chat bot only know some thing about the owners, you may enahce the AI chatbot by adding more functions, `add new owners`, `add pets` etc. Implement the service function and configure to chatClient as `FunctionCallback`.
-
-   Have fun!
+Congratulations! You now have a chatbot that can answer questions specifically about the Spring Petclinic application. This is a good example of how easy it is to integrate the capabilities of Azure OpenAI with your existing services and applications.
