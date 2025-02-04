@@ -1,11 +1,11 @@
-title: Java microservices on ACA
-description: This lab walks you through the creation of a Java microservices application on Azure Container Apps integrated with multiple Azure services
+title: Java on ACA
+description: This lab walks you through the creation of a Java application on Azure Container Apps integrated with multiple Azure services
 theme: just-the-docs
 
 # url: https://Azure-Samples.github.io/java-microservices-aca-lab
 
 aux_links:
-  "Java microservices on ACA lab on GitHub": 
+  "Java on ACA lab on GitHub": 
     - "https://github.com/Azure-Samples/java-microservices-aca-lab"
 
 
