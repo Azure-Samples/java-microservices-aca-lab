@@ -2,6 +2,7 @@
 title: More topics
 layout: home
 nav_order: 95
+nav_exclude: true
 has_children: true
 ---
 
