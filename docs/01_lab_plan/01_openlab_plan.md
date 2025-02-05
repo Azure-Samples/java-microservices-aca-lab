@@ -1,28 +1,26 @@
 ---
-title: 'Lab 1: Plan the microservices to Azure'
+title: 'Lab 1: Plan your application deployment'
 layout: default
 nav_order: 3
 has_children: true
 ---
 
-# Lab 01: Plan a Java application to Azure Container App
+# Lab 01: Plan your application deployment
 
-# Student manual
+## Introduction
 
-## Lab scenario
+Before you can deploy the example Spring Petclinic Microservices workload to Azure, you need to determine what application components need to run on Azure, which Azure resources you’ll use to host these components, and what tools you’ll need to perform the deployment.
 
-You want to establish a plan for the Spring Petclinic microservices application to Azure.
+In this first lab session, you’ll explore the sample application code and configure your development environment. You’ll also evaluate the application’s technical and operational requirements to determine the best hosting, storage, and organizational approach for moving the Spring Petclinic Microservices workload to Azure.
 
-## Objectives
+## What you’ll cover
 
-After you complete this lab, you will be able to:
+As you work through this lab, you’ll:
 
-- Examine the application components based on the information provided in its GitHub repository
-- Identified the Azure services to host the application
-- Identify tools for connecting to and managing your Azure environment
+-   Examine the information provided in the sample application’s GitHub repository and dive into the app’s various components.
+-   Review the Azure services that you’ll use to host the application.
+-   Make sure that your lab development environment is set up to connect and manage your Azure resources.
 
-## Lab Duration
+Duration
 
-- **Estimated Time**: 20 minutes
-
-This first lab will be mainly a conceptual exercise that does not involve deploying any of the application components to Azure. You will run the initial deployment in the next exercise.
+**Estimated time:** 20 minutes

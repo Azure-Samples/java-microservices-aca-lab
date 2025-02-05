@@ -1,10 +1,21 @@
 {
     "cSpell.words": [
+        "acalab",
+        "APPNAME",
+        "autoinstrumentation",
+        "azcli",
         "codespace",
         "Codespaces",
+        "containerapp",
+        "Entra",
         "kubenet",
+        "Kusto",
+        "MSYS",
+        "PATHCONV",
         "petclinic",
-        "VM's"
+        "serviceconnector",
+        "VM's",
+        "vnet"
     ],
     "java.compile.nullAnalysis.mode": "automatic"
 }
