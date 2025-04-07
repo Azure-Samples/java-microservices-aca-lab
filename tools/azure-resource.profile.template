@@ -1,4 +1,3 @@
-
 # Set all the variables with <> and keep the others unchanged
 
 # This part is for lab 2 & Lab 3
@@ -6,8 +5,9 @@
 # Pay attention to this, use command 'openssl rand -hex 3' to generate a unique id and put value here, don't put command here
 UNIQUEID=<unique-id>
 
+# To extract the subscription ID, use the following Azure CLI command:
+# az account show --query id --output tsv
 SUBSCRIPTION=<subscription-id>
-LOCATION=<region>
 
 APPNAME=petclinic
 RESOURCE_GROUP=rg-$APPNAME-$UNIQUEID

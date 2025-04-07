@@ -1,0 +1,39 @@
+{
+    "$schema": "https://aka.ms/azd-extension-schema",
+    "name": "java-on-ai-extension",
+    "version": "1.1.0",
+    "description": "Java on AI AZD extension with bash",
+    "publisher": "Pete Tian",
+    "commands": [
+        {
+            "name": "collecte user information",
+            "description": "Before performing any additional actions, you’ll need to store your user info as an environment variable that you can use in subsequent steps.",
+            "entryPoint": "./lab2/collect-user-info.sh"
+        },
+        {
+            "name": "Create an Azure Container Apps environment",
+            "description": "With your user information stored in environment variables, you’re ready to begin the first step in the deployment: creating an Azure Container Apps instance.",
+            "entryPoint": "./lab-2/create-aca-env.sh"
+        },
+        {
+            "name": "Create an Azure Database for MySQL instance",
+            "description": "Create an Azure Database for MySQL - Flexible Server–hosted database.",
+            "entryPoint": "./lab-2/create-mysql.sh"
+        },
+        {
+            "name": "Set up a configuration repository",
+            "description": "Set up the application configuration settings that allow your Spring Boot application to connect with the database.",
+            "entryPoint": "./lab-2/create-container-registry.sh"
+        },
+        {
+            "name": "Create the Java components",
+            "description": "Configure the config, discovery, and admin applications.",
+            "entryPoint": "./lab-2/create-java-components.sh"
+        },
+        {
+            "name": "Deploy the component applications to Azure Container Apps",
+            "description": "Deploy the workload’s component applications to Azure.",
+            "entryPoint": "./lab-2/deploy-component-apps.sh"
+        }
+    ]
+}
